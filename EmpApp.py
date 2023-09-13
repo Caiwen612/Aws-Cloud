@@ -68,9 +68,33 @@ def AddEmp():
         cursor.close()
 
     #TODO: Pass back data to the html
-    emp_name = str("test")
+    emp_name = str("test add")
     print("The student data had added successfully")
     return render_template('AddEmpOutput.html', name=emp_name)
+
+@app.route("/updateemp", methods=['POST'])
+def updateEmp():
+    #TODO: READ THE DATA FROM HTML, the 'emp_id' is refer to the name of the form
+
+    cursor = db_conn.cursor()
+    update_sql = "UPDATE student SET student_name = %s, student_email = %s, student_cohort = %s, student_programme = %s WHERE student_id = %s"
+    #TODO: Replace the value with the above form 
+    value = ("zdf","zdf@gmail.com","c","RSF",3) 
+    
+    try:
+        cursor.execute(update_sql, value)
+        db_conn.commit()
+    except mariadb.Error as e:
+        print(f"Error update student data: {e}")
+
+    finally:
+        cursor.close()
+
+    emp_name = str("test update")
+    print("The student data had update successfully")
+    return render_template('AddEmpOutput.html',name=emp_name)
+
+
 
 
 
@@ -79,3 +103,4 @@ if __name__ == '__main__':
     # app.run(host='0.0.0.0', port=80, debug=True) //Deployment
     app.run(debug=True)
 
+    
