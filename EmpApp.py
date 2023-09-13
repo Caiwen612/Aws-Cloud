@@ -74,7 +74,7 @@ def AddEmp():
 
 @app.route("/updateemp", methods=['POST'])
 def updateEmp():
-    #TODO: READ THE DATA FROM HTML, the 'emp_id' is refer to the name of the form
+    #TODO: READ THE DATA FROM HTML
 
     cursor = db_conn.cursor()
     update_sql = "UPDATE student SET student_name = %s, student_email = %s, student_cohort = %s, student_programme = %s WHERE student_id = %s"
@@ -94,7 +94,24 @@ def updateEmp():
     print("The student data had update successfully")
     return render_template('AddEmpOutput.html',name=emp_name)
 
+@app.route("/deleteemp", methods=['POST'])
+def deleteEmp():
+    #TODO: READ THE DATA FROM HTML
+     
+    cursor = db_conn.cursor()
+    delete_sql = "DELETE FROM student WHERE student_id = %s"
+    #TODO: Replace the value with the above form 
+    value = (10,)
 
+    try:
+        cursor.execute(delete_sql,value)
+        db_conn.commit()
+    except mariadb.Error as e:
+        print(f"Error delete student data: {e}")
+
+    emp_name = str("test delete")
+    print("The student data had delete successfully")
+    return render_template('AddEmpOutput.html',name=emp_name)
 
 
 
