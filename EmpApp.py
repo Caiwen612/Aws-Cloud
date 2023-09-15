@@ -35,12 +35,8 @@ db_conn.autocommit = False
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('about.html')
+    return render_template('index.html')
 
-
-@app.route("/about", methods=['POST'])
-def about():
-    return render_template('www.tarc.edu.my')
 
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
@@ -112,6 +108,40 @@ def deleteEmp():
     emp_name = str("test delete")
     print("The student data had delete successfully")
     return render_template('AddEmpOutput.html',name=emp_name)
+
+
+#-----------------ROUTING-----------------
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/job_listing')
+def job_listing():
+    return render_template('job_listing.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html')
+
+@app.route('/single_blog')
+def single_blog():
+    return render_template('single-blog.html')
+
+@app.route('/elements')
+def elements():
+    return render_template('elements.html')
+
+@app.route('/job_details')
+def job_details():
+    return render_template('job_details.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 
 

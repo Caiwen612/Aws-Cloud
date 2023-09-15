@@ -7,21 +7,21 @@
 	<title>Job board HTML-5 Template </title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.png">
 	
 	<!-- CSS here -->
-		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-		<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-		<link rel="stylesheet" href="assets/css/slicknav.css">
-		<link rel="stylesheet" href="assets/css/price_rangs.css">
-		<link rel="stylesheet" href="assets/css/animate.min.css">
-		<link rel="stylesheet" href="assets/css/magnific-popup.css">
-		<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-		<link rel="stylesheet" href="assets/css/themify-icons.css">
-		<link rel="stylesheet" href="assets/css/slick.css">
-		<link rel="stylesheet" href="assets/css/nice-select.css">
-		<link rel="stylesheet" href="assets/css/style.css">
-		<link rel="stylesheet" href="assets/css/responsive.css">
+		<link rel="stylesheet" href="static/css/bootstrap.min.css">
+		<link rel="stylesheet" href="static/css/owl.carousel.min.css">
+		<link rel="stylesheet" href="static/css/slicknav.css">
+		<link rel="stylesheet" href="static/css/price_rangs.css">
+		<link rel="stylesheet" href="static/css/animate.min.css">
+		<link rel="stylesheet" href="static/css/magnific-popup.css">
+		<link rel="stylesheet" href="static/css/fontawesome-all.min.css">
+		<link rel="stylesheet" href="static/css/themify-icons.css">
+		<link rel="stylesheet" href="static/css/slick.css">
+		<link rel="stylesheet" href="static/css/nice-select.css">
+		<link rel="stylesheet" href="static/css/style.css">
+		<link rel="stylesheet" href="static/css/responsive.css">
 </head>
 
 <body>
@@ -32,7 +32,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="assets/img/logo/logo.png" alt="">
+                    <img src="static/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="{{ url_for('index') }}"                                ><img src="static/img/logo/logo.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -56,19 +56,20 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="index.html">Home</a></li>
-                                            <li><a href="job_listing.html">Find a Jobs </a></li>
-                                            <li><a href="about.html">About</a></li>
+                                            <li><a href="{{ url_for('index') }}">Home</a></li>
+                                            <li><a href="{{ url_for('job_listing') }}">Find a Job</a></li>
+                                            <li><a href="{{ url_for('about') }}">About</a></li>
                                             <li><a href="#">Page</a>
                                                 <ul class="submenu">
-                                                    <li><a href="blog.html">Blog</a></li>
-                                                    <li><a href="single-blog.html">Blog Details</a></li>
-                                                    <li><a href="elements.html">Elements</a></li>
-                                                    <li><a href="job_details.html">job Details</a></li>
+                                                    <li><a href="{{ url_for('blog') }}">Blog</a></li>
+                                                    <li><a href="{{ url_for('single_blog') }}">Blog Details</a></li>
+                                                    <li><a href="{{ url_for('elements') }}">Elements</a></li>
+                                                    <li><a href="{{ url_for('job_details') }}">Job Details</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="contact.html">Contact</a></li>
+                                            <li><a href="{{ url_for('contact') }}">Contact</a></li>
                                         </ul>
+                                        
                                     </nav>
                                 </div>          
                                 <!-- Header-btn -->
@@ -90,7 +91,7 @@
     </header>
 	<!-- Hero Area Start-->
 	<div class="slider-area ">
-		<div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
+		<div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="static/img/hero/about.jpg">
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-12">
@@ -240,7 +241,7 @@
 				<h3 class="mb-30">Left Aligned</h3>
 				<div class="row">
 					<div class="col-md-3">
-						<img src="assets/img/elements/d.jpg" alt="" class="img-fluid">
+						<img src="static/img/elements/d.jpg" alt="" class="img-fluid">
 					</div>
 					<div class="col-md-9 mt-sm-20">
 						<p>Recently, the US Federal government banned online casinos from operating in America by making
@@ -283,7 +284,7 @@
 							talk a little about what symptoms</p>
 					</div>
 					<div class="col-md-3">
-						<img src="assets/img/elements/d.jpg" alt="" class="img-fluid">
+						<img src="static/img/elements/d.jpg" alt="" class="img-fluid">
 					</div>
 				</div>
 			</div>
@@ -358,7 +359,7 @@
 						</div>
 						<div class="table-row">
 							<div class="serial">01</div>
-							<div class="country"> <img src="assets/img/elements/f1.jpg" alt="flag">Canada</div>
+							<div class="country"> <img src="static/img/elements/f1.jpg" alt="flag">Canada</div>
 							<div class="visit">645032</div>
 							<div class="percentage">
 								<div class="progress">
@@ -369,7 +370,7 @@
 						</div>
 						<div class="table-row">
 							<div class="serial">02</div>
-							<div class="country"> <img src="assets/img/elements/f2.jpg" alt="flag">Canada</div>
+							<div class="country"> <img src="static/img/elements/f2.jpg" alt="flag">Canada</div>
 							<div class="visit">645032</div>
 							<div class="percentage">
 								<div class="progress">
@@ -380,7 +381,7 @@
 						</div>
 						<div class="table-row">
 							<div class="serial">03</div>
-							<div class="country"> <img src="assets/img/elements/f3.jpg" alt="flag">Canada</div>
+							<div class="country"> <img src="static/img/elements/f3.jpg" alt="flag">Canada</div>
 							<div class="visit">645032</div>
 							<div class="percentage">
 								<div class="progress">
@@ -391,7 +392,7 @@
 						</div>
 						<div class="table-row">
 							<div class="serial">04</div>
-							<div class="country"> <img src="assets/img/elements/f4.jpg" alt="flag">Canada</div>
+							<div class="country"> <img src="static/img/elements/f4.jpg" alt="flag">Canada</div>
 							<div class="visit">645032</div>
 							<div class="percentage">
 								<div class="progress">
@@ -402,7 +403,7 @@
 						</div>
 						<div class="table-row">
 							<div class="serial">05</div>
-							<div class="country"> <img src="assets/img/elements/f5.jpg" alt="flag">Canada</div>
+							<div class="country"> <img src="static/img/elements/f5.jpg" alt="flag">Canada</div>
 							<div class="visit">645032</div>
 							<div class="percentage">
 								<div class="progress">
@@ -413,7 +414,7 @@
 						</div>
 						<div class="table-row">
 							<div class="serial">06</div>
-							<div class="country"> <img src="assets/img/elements/f6.jpg" alt="flag">Canada</div>
+							<div class="country"> <img src="static/img/elements/f6.jpg" alt="flag">Canada</div>
 							<div class="visit">645032</div>
 							<div class="percentage">
 								<div class="progress">
@@ -424,7 +425,7 @@
 						</div>
 						<div class="table-row">
 							<div class="serial">07</div>
-							<div class="country"> <img src="assets/img/elements/f7.jpg" alt="flag">Canada</div>
+							<div class="country"> <img src="static/img/elements/f7.jpg" alt="flag">Canada</div>
 							<div class="visit">645032</div>
 							<div class="percentage">
 								<div class="progress">
@@ -435,7 +436,7 @@
 						</div>
 						<div class="table-row">
 							<div class="serial">08</div>
-							<div class="country"> <img src="assets/img/elements/f8.jpg" alt="flag">Canada</div>
+							<div class="country"> <img src="static/img/elements/f8.jpg" alt="flag">Canada</div>
 							<div class="visit">645032</div>
 							<div class="percentage">
 								<div class="progress">
@@ -451,43 +452,43 @@
 				<h3>Image Gallery</h3>
 				<div class="row gallery-item">
 					<div class="col-md-4">
-						<a href="assets/img/elements/g1.jpg" class="img-pop-up">
-							<div class="single-gallery-image" style="background: url(assets/img/elements/g1.jpg);"></div>
+						<a href="static/img/elements/g1.jpg" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url(static/img/elements/g1.jpg);"></div>
 						</a>
 					</div>
 					<div class="col-md-4">
-						<a href="assets/img/elements/g2.jpg" class="img-pop-up">
-							<div class="single-gallery-image" style="background: url(assets/img/elements/g2.jpg);"></div>
+						<a href="static/img/elements/g2.jpg" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url(static/img/elements/g2.jpg);"></div>
 						</a>
 					</div>
 					<div class="col-md-4">
-						<a href="assets/img/elements/g3.jpg" class="img-pop-up">
-							<div class="single-gallery-image" style="background: url(assets/img/elements/g3.jpg);"></div>
+						<a href="static/img/elements/g3.jpg" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url(static/img/elements/g3.jpg);"></div>
 						</a>
 					</div>
 					<div class="col-md-6">
-						<a href="assets/img/elements/g4.jpg" class="img-pop-up">
-							<div class="single-gallery-image" style="background: url(assets/img/elements/g4.jpg);"></div>
+						<a href="static/img/elements/g4.jpg" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url(static/img/elements/g4.jpg);"></div>
 						</a>
 					</div>
 					<div class="col-md-6">
-						<a href="assets/img/elements/g5.jpg" class="img-pop-up">
-							<div class="single-gallery-image" style="background: url(assets/img/elements/g5.jpg);"></div>
+						<a href="static/img/elements/g5.jpg" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url(static/img/elements/g5.jpg);"></div>
 						</a>
 					</div>
 					<div class="col-md-4">
-						<a href="assets/img/elements/g6.jpg" class="img-pop-up">
-							<div class="single-gallery-image" style="background: url(assets/img/elements/g6.jpg);"></div>
+						<a href="static/img/elements/g6.jpg" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url(static/img/elements/g6.jpg);"></div>
 						</a>
 					</div>
 					<div class="col-md-4">
-						<a href="assets/img/elements/g7.jpg" class="img-pop-up">
-							<div class="single-gallery-image" style="background: url(assets/img/elements/g7.jpg);"></div>
+						<a href="static/img/elements/g7.jpg" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url(static/img/elements/g7.jpg);"></div>
 						</a>
 					</div>
 					<div class="col-md-4">
-						<a href="assets/img/elements/g8.jpg" class="img-pop-up">
-							<div class="single-gallery-image" style="background: url(assets/img/elements/g8.jpg);"></div>
+						<a href="static/img/elements/g8.jpg" class="img-pop-up">
+							<div class="single-gallery-image" style="background: url(static/img/elements/g8.jpg);"></div>
 						</a>
 					</div>
 				</div>
@@ -816,7 +817,7 @@
 										 onblur="this.placeholder = ' Email Address '">
 										 <div class="form-icon">
 											 <button type="submit" name="submit" id="newsletter-submit"
-											 class="email_icon newsletter-submit button-contactForm"><img src="assets/img/icon/form.png" alt=""></button>
+											 class="email_icon newsletter-submit button-contactForm"><img src="static/img/icon/form.png" alt=""></button>
 										 </div>
 										 <div class="mt-10 info"></div>
 									 </form>
@@ -831,7 +832,7 @@
 					   <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
 						  <!-- logo -->
 						  <div class="footer-logo mb-20">
-							<a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+							<a href="{{ url_for('index') }}"><img src="static/img/logo/logo2_footer.png" alt=""></a>
 						  </div>
 					   </div>
 					   <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
@@ -885,39 +886,39 @@
 	
 <!-- JS here -->
 		<!-- All JS Custom Plugins Link Here here -->
-        <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+        <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
 		<!-- Jquery, Popper, Bootstrap -->
-		<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="./assets/js/popper.min.js"></script>
-        <script src="./assets/js/bootstrap.min.js"></script>
+		<script src="./static/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="./static/js/popper.min.js"></script>
+        <script src="./static/js/bootstrap.min.js"></script>
 	    <!-- Jquery Mobile Menu -->
-        <script src="./assets/js/jquery.slicknav.min.js"></script>
+        <script src="./static/js/jquery.slicknav.min.js"></script>
 
 		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="./assets/js/owl.carousel.min.js"></script>
-		<script src="./assets/js/slick.min.js"></script>
-		<script src="./assets/js/price_rangs.js"></script>
+        <script src="./static/js/owl.carousel.min.js"></script>
+		<script src="./static/js/slick.min.js"></script>
+		<script src="./static/js/price_rangs.js"></script>
 		
 		<!-- One Page, Animated-HeadLin -->
-        <script src="./assets/js/wow.min.js"></script>
-		<script src="./assets/js/animated.headline.js"></script>
-		<script src="./assets/js/jquery.magnific-popup.js"></script>
+        <script src="./static/js/wow.min.js"></script>
+		<script src="./static/js/animated.headline.js"></script>
+		<script src="./static/js/jquery.magnific-popup.js"></script>
 		
 		<!-- Scrollup, nice-select, sticky -->
-        <script src="./assets/js/jquery.scrollUp.min.js"></script>
-        <script src="./assets/js/jquery.nice-select.min.js"></script>
-		<script src="./assets/js/jquery.sticky.js"></script>
+        <script src="./static/js/jquery.scrollUp.min.js"></script>
+        <script src="./static/js/jquery.nice-select.min.js"></script>
+		<script src="./static/js/jquery.sticky.js"></script>
         
         <!-- contact js -->
-        <script src="./assets/js/contact.js"></script>
-        <script src="./assets/js/jquery.form.js"></script>
-        <script src="./assets/js/jquery.validate.min.js"></script>
-        <script src="./assets/js/mail-script.js"></script>
-        <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+        <script src="./static/js/contact.js"></script>
+        <script src="./static/js/jquery.form.js"></script>
+        <script src="./static/js/jquery.validate.min.js"></script>
+        <script src="./static/js/mail-script.js"></script>
+        <script src="./static/js/jquery.ajaxchimp.min.js"></script>
         
 		<!-- Jquery Plugins, main Jquery -->	
-        <script src="./assets/js/plugins.js"></script>
-        <script src="./assets/js/main.js"></script>
+        <script src="./static/js/plugins.js"></script>
+        <script src="./static/js/main.js"></script>
         
 </body>
 </html>
