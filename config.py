@@ -4,4 +4,3 @@ custompass = "ilovecc1234"
 customdb = "internship"
 custombucket = "lankeen-internship"
 customregion = "us-east-1"
-

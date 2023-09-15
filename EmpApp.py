@@ -35,7 +35,7 @@ db_conn.autocommit = False
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('AddEmp.html')
+    return render_template('about.html')
 
 
 @app.route("/about", methods=['POST'])
@@ -101,7 +101,7 @@ def deleteEmp():
     cursor = db_conn.cursor()
     delete_sql = "DELETE FROM student WHERE student_id = %s"
     #TODO: Replace the value with the above form 
-    value = (10,)
+    value = (11,)
 
     try:
         cursor.execute(delete_sql,value)
