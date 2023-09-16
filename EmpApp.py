@@ -139,6 +139,10 @@ def elements():
 def job_details():
     return render_template('job_details.html')
 
+@app.route('/internshipDetails')
+def internship_details():
+    return render_template('internshipDetails.html')
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
