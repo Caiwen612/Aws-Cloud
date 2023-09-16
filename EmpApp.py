@@ -139,9 +139,26 @@ def elements():
 def job_details():
     return render_template('job_details.html')
 
-@app.route('/internshipDetails')
-def internship_details():
-    return render_template('internshipDetails.html')
+@app.route('/studentInternship')
+def studentInternship():
+    return render_template('studentInternship.html')
+
+@app.route('/studentUpload')
+def studentUpload():
+    return render_template('studentUpload.html')
+
+@app.route('/studentApplication')
+def studentApplication():
+    return render_template('studentApplication.html')
+
+@app.route('/studentDetails')
+def studentDetails():
+    return render_template('studentDetails.html')
+
+@app.route('/studentResults')
+def studentResults():
+    return render_template('studentResults.html')
+
 
 @app.route('/contact')
 def contact():
