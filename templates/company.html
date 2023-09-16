@@ -1,0 +1,267 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Job board HTML-5 Template </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/css/flaticon.css">
+    <link rel="stylesheet" href="static/css/price_rangs.css">
+    <link rel="stylesheet" href="static/css/slicknav.css">
+    <link rel="stylesheet" href="static/css/animate.min.css">
+    <link rel="stylesheet" href="static/css/magnific-popup.css">
+    <link rel="stylesheet" href="static/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="static/css/themify-icons.css">
+    <link rel="stylesheet" href="static/css/slick.css">
+    <link rel="stylesheet" href="static/css/nice-select.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="static/img/logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header>
+        <!-- Header Start -->
+        <div class="header-area header-transparrent">
+            <div class="headder-top header-sticky">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-2">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a href="{{ url_for('company') }}"><img src="static/img/logo/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9">
+                            <div class="menu-wrapper">
+                                <!-- Main-menu -->
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li><a href="{{ url_for('company') }}">Postings</a></li>
+                                            <li><a href="{{ url_for('companyProfile') }}">Profile</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+    </header>
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider section-overly slider-height2 d-flex align-items-center"
+                data-background="static/img/hero/about.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Postings</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End -->
+
+
+        <!-- Featured_job_start -->
+        <section class="featured-job-area feature-padding" style="padding-top: 50px;">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row" style="margin-bottom: 0px;">
+                    <div class="col-lg-12">
+                        <div class="section-tittle text-center">
+                            <span>My Postings</span>
+                            <h2>Internship Listings</h2>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Create Post Button -->
+                 <div class="text-center mb-5" style="margin-top: -20px;">
+                    <a href="{{ url_for('company_create_job_listing') }}" class="btn head-btn1">Create Post</a>
+                </div>
+
+                <!-- Single job -->
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                        {% for job in job_postings %}
+                            <div class="single-job-items mb-30" style=" position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                <div class="job-items">
+                                    <div class="company-img">
+                                        <a href="{{ url_for('job_details') }}"><img src="static/img/icon/job-list1.png" alt=""></a>
+                                    </div>
+                                    <div class="job-tittle">
+                                        <a href="{{ url_for('job_details') }}">
+                                            <h4>{{job[1]}}</h4>
+                                        </a>
+                                        <ul>
+                                            <li>Working hours: {{job[4]}}</li>
+                                            <li>Salary: RM{{job[2]}} - RM{{job[3]}}</li>
+                                        </ul>
+                                    </div>
+                                    <div >
+                                        <div class="dropdown" style="position: absolute; bottom: 10px; right: 10px;">                                        
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="actionDropdown">
+                                                <a class="dropdown-item" href="{{ url_for('company_job_listing_details', job_id=job[0]) }}">View Details</a>
+                                                <a class="dropdown-item" href="#">Edit</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Featured_job_end -->
+        <!-- How  Apply Process Start-->
+        <div class="apply-process-area apply-bg pt-150 pb-150" data-background="static/img/gallery/how-applybg.png">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle white-text text-center">
+                            <span>Apply process</span>
+                            <h2> How it works</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Apply Process Caption -->
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-process text-center mb-30">
+                            <div class="process-ion">
+                                <span class="flaticon-search"></span>
+                            </div>
+                            <div class="process-cap">
+                                <h5>1. Search a job</h5>
+                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
+                                    laborea.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-process text-center mb-30">
+                            <div class="process-ion">
+                                <span class="flaticon-curriculum-vitae"></span>
+                            </div>
+                            <div class="process-cap">
+                                <h5>2. Apply for job</h5>
+                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
+                                    laborea.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-process text-center mb-30">
+                            <div class="process-ion">
+                                <span class="flaticon-tour"></span>
+                            </div>
+                            <div class="process-cap">
+                                <h5>3. Get your job</h5>
+                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut
+                                    laborea.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- How  Apply Process End-->
+
+        
+       
+
+    </main>
+    <footer>
+		<!-- Footer Start-->
+		<!-- footer-bottom area -->
+		<div class="footer-bottom-area footer-bg">
+			<div class="container">
+				<div class="footer-border">
+					 <div class="row d-flex justify-content-between align-items-center">
+						 <div class="col-xl-10 col-lg-10 ">
+							 <div class="footer-copy-right">
+								 <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a></p>
+							 </div>
+						 </div>
+					 </div>
+				</div>
+			</div>
+		</div>
+		<!-- Footer End-->
+	</footer>
+	
+
+    <!-- JS here -->
+
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./static/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./static/js/popper.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./static/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./static/js/owl.carousel.min.js"></script>
+    <script src="./static/js/slick.min.js"></script>
+    <script src="./static/js/price_rangs.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./static/js/wow.min.js"></script>
+    <script src="./static/js/animated.headline.js"></script>
+    <script src="./static/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="./static/js/jquery.scrollUp.min.js"></script>
+    <script src="./static/js/jquery.nice-select.min.js"></script>
+    <script src="./static/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="./static/js/contact.js"></script>
+    <script src="./static/js/jquery.form.js"></script>
+    <script src="./static/js/jquery.validate.min.js"></script>
+    <script src="./static/js/mail-script.js"></script>
+    <script src="./static/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="./static/js/plugins.js"></script>
+    <script src="./static/js/main.js"></script>
+
+</body>
+
+</html>

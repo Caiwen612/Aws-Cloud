@@ -152,6 +152,82 @@ def deleteEmp():
     print("The student data had delete successfully")
     return render_template('AddEmpOutput.html',name=emp_name)
 
+#----------------Company CRUD----------------
+
+#Get all company
+@app.route('/company')
+def company():
+    try:
+        cursor = db_conn.cursor()
+        # Fetch job postings from the database
+        query = "SELECT listing_id, position, min_salary, max_salary, working_hours FROM job_listings"
+        cursor.execute(query)
+        job_postings = cursor.fetchall()
+        cursor.close()
+
+        return render_template('company.html', job_postings=job_postings)
+
+    except mariadb.Error as e:
+        print(f"Error fetching job postings: {e}")
+        return "An error occurred while fetching job postings."
+
+#Get company job listing details by job listing id
+# Corrected route definition with matching parameter names
+@app.route('/company/<int:job_id>')
+def company_job_listing_details(job_id):
+    try:
+        cursor = db_conn.cursor()
+        
+        # Create a SQL query to retrieve job listing details by job_id
+        query = "SELECT * FROM job_listings WHERE listing_id = ?"
+        cursor.execute(query, (job_id,))
+        job_data = cursor.fetchone()
+
+        if job_data:
+            company_id = job_data[9]
+            
+            # Fetch company data using company_id
+            query = "SELECT * FROM company WHERE company_id = ?"
+            cursor.execute(query, (company_id,))
+            company_data = cursor.fetchone()
+
+            cursor.close()
+
+            if company_data:
+                return render_template('companyJobDetails.html', companyData=company_data, jobData=job_data)
+            else:
+                return "Company not found."
+        else:
+            return "Job listing not found."
+    
+    except mariadb.Error as e:
+        print(f"Error fetching data: {e}")
+        return "An error occurred while fetching data."
+
+#Create company job listing
+@app.route('/company/create', methods=['GET', 'POST'])
+def company_create_job_listing():
+    return render_template('companyCreateJobListing.html')
+
+#Get company profile details 
+@app.route('/companyProfile')
+def companyProfile():
+    try:
+        cursor = db_conn.cursor()
+
+        # Fetch company details from the database
+        query = "SELECT company_name, company_address, contact_name, contact_email, company_website, industry, company_type, description FROM company WHERE company_id = 1"
+        cursor.execute(query)
+        company_details = cursor.fetchone()
+        cursor.close()
+
+        return render_template('companyProfile.html', company=company_details)
+
+    except mariadb.Error as e:
+        print(f"Error fetching company details: {e}")
+        return "An error occurred while fetching company details."
+
+
 
 #-----------------ROUTING-----------------
 @app.route('/')
