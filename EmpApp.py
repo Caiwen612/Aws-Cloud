@@ -68,6 +68,49 @@ def AddEmp():
     print("The student data had added successfully")
     return render_template('AddEmpOutput.html', name=emp_name)
 
+@app.route("/studentDetails", methods=['GET'])
+def displayStudentData():
+    # Query the database to retrieve student data
+    cursor = db_conn.cursor()
+    select_sql = "SELECT student_name, student_email FROM student WHERE student_id = ?"
+    student_id = "21WMR02952" 
+
+    try:
+        cursor.execute(select_sql, (student_id,))
+        student_data = cursor.fetchone()  # Assuming you want to display data for one student
+    except mariadb.Error as e:
+        print(f"Error fetching student data: {e}")
+    finally:
+        cursor.close()
+
+    # Pass the data to the HTML template
+    return render_template('studentDetails.html', student_name=student_data[0], student_email=student_data[1])
+
+
+@app.route("/studentDetails", methods=['POST'])
+def updateStudentData():
+    if request.method == 'POST':
+        # Retrieve form data
+        student_id = "21WMR02952"
+        Name = request.form.get('Name')
+        Email = request.form.get('Email')
+
+        # Perform the database update
+        cursor = db_conn.cursor()
+        update_sql = "UPDATE student SET student_name = %s, student_email = %s WHERE student_id = %s"
+        values = (Name, Email, student_id)
+        try:
+            cursor.execute(update_sql, values)
+            db_conn.commit()
+        except mariadb.Error as e:
+            print(f"Error updating student data: {e}")
+            db_conn.rollback()
+        finally:
+            cursor.close()
+
+        return redirect(url_for('studentDetails', student_id=student_id))
+
+
 @app.route("/updateemp", methods=['POST'])
 def updateEmp():
     #TODO: READ THE DATA FROM HTML
