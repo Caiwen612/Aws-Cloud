@@ -1,4 +1,8 @@
 from flask import Flask, render_template, request,url_for,redirect
+from datetime import datetime
+from flask import flash
+
+
 # from pymysql import connections
 import os
 import boto3
@@ -7,7 +11,7 @@ import mariadb
 import sys
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'a3c2b5f01d686ffe7ca287ff4e8d9f2d'
 bucket = custombucket
 region = customregion
 
@@ -169,7 +173,7 @@ def upload_document():
     
 #----------------Company CRUD----------------
 
-#Get all company
+#Render company profile page
 @app.route('/company')
 def company():
     try:
@@ -187,7 +191,6 @@ def company():
         return "An error occurred while fetching job postings."
 
 #Get company job listing details by job listing id
-# Corrected route definition with matching parameter names
 @app.route('/company/<int:job_id>')
 def company_job_listing_details(job_id):
     try:
@@ -219,12 +222,64 @@ def company_job_listing_details(job_id):
         print(f"Error fetching data: {e}")
         return "An error occurred while fetching data."
 
-#Create company job listing
-@app.route('/company/create', methods=['GET', 'POST'])
-def company_create_job_listing():
-    return render_template('companyCreateJobListing.html')
+#Render company create job listing page
+@app.route('/company/create', methods=['GET'])
+def render_company_create_job_listing():
+    try:
+        cursor = db_conn.cursor()
 
-#Get company profile details 
+        # Fetch company details from the database
+        query = "SELECT company_name, company_address, contact_name, contact_email, company_website, industry, company_type, description FROM company WHERE company_id = 1"
+        cursor.execute(query)
+        company_details = cursor.fetchone()
+        cursor.close()
+
+        # Check if all company details are filled
+        details_filled = all(company_details)
+
+        return render_template('companyCreateJobListing.html', details_filled=details_filled)
+
+    except mariadb.Error as e:
+        print(f"Error fetching company details: {e}")
+        return "An error occurred while fetching company details."
+    
+#Create company job listing
+@app.route('/company/create', methods=['POST'])
+def company_submit_job_listing():
+    if request.method == 'POST':
+
+        # get data from form
+        position = request.form['position']
+        min_salary = request.form['min_salary']
+        max_salary = request.form['max_salary']
+        working_hours = request.form['working_hours']
+        job_requirements = request.form['job_requirements']
+        job_responsibilities = request.form['job_responsibilities']
+        additional_description = request.form['additional_description']
+
+        posted_date = datetime.now().strftime('%Y-%m-%d')
+        
+        # insert data into database
+        try:
+            cursor = db_conn.cursor()
+            query = """INSERT INTO job_listings(position, min_salary, max_salary, working_hours, requirements, responsibilities, descriptions, postedDate, company_id)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+            cursor.execute(query, (position, min_salary, max_salary, working_hours, job_requirements, job_responsibilities, additional_description, posted_date, 1))
+            db_conn.commit()  # Don't forget to commit to save changes to the database
+            cursor.close()
+
+            flash('Job listing successfully created!', 'success')  # Flash a success message
+            return redirect(url_for('company_submit_job_listing'))
+
+        except mariadb.Error as e:
+            print(f"Error inserting job listing: {e}")
+            flash('An error occurred while creating the job listing. Please try again.', 'error')
+            return redirect(url_for('company_submit_job_listing'))
+    
+
+
+
+#Render company edit job listing page
 @app.route('/companyProfile')
 def companyProfile():
     try:

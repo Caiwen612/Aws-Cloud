@@ -86,6 +86,19 @@
             </div>
         </div>
     </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-4">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    <!-- End of Flash Messages -->
+    
         <!-- Hero Area End -->
     <!-- ================ contact section start ================= -->
     <section class="contact-section">
@@ -98,11 +111,12 @@
                     <!-- Warning section with inline styling -->
                     <div id="companyDetailsWarning" style="background-color: #FF5555; border: 1px solid #FF0000; padding: 10px;  margin-bottom: 20px;">         
                         <p style="color: #FFFFFF; font-weight: bold;">Please complete your company details before posting a job position.</p>
-                        <a href="company_profile.php" class="button button-warning" id="goToCompanyProfile" style="text-decoration: underline;">Go to Company Profile</a>
+                        <a href="{{ url_for('companyProfile') }}" class="button button-warning" id="goToCompanyProfile" style="text-decoration: underline;">Go to Company Profile</a>
                     </div>
                 <!-- End of warning section -->
 
-                    <form class="form-contact contact_form" action="contact_process.php" method="post" id="jobApplicationForm" novalidate="novalidate">
+
+                    <form class="form-contact contact_form" action="/company/create" method="post" id="jobApplicationForm" novalidate="novalidate">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -330,7 +344,7 @@
 
         <script>
             // Variable to track whether company details are filled in
-            let companyDetailsFilled = false;
+            let companyDetailsFilled = {{ details_filled | tojson }};
         
             // Function to enable or disable the form based on companyDetailsFilled
             function toggleFormState() {
@@ -355,18 +369,6 @@
                     warningSection.style.display = "block";
                 }
             }
-        
-            // Event listener for the "Go to Company Profile" button
-            const goToCompanyProfileButton = document.getElementById("goToCompanyProfile");
-            goToCompanyProfileButton.addEventListener("click", function() {
-                // In a real application, you should set companyDetailsFilled to true
-                // when the user completes the company profile.
-                // For this example, we will simulate this by setting it to true after a short delay.
-                setTimeout(function() {
-                    companyDetailsFilled = true;
-                    toggleFormState();
-                }, 2000); // Simulating a 2-second delay for profile completion.
-            });
         
             // Initial call to set form state based on companyDetailsFilled
             toggleFormState();
