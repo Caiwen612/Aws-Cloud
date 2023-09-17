@@ -124,7 +124,7 @@ def deleteEmp():
 def displayStudentData():
     # Query the database to retrieve student data
     cursor = db_conn.cursor()
-    select_sql = "SELECT student_name, student_email FROM student WHERE student_id = ?"
+    select_sql = "SELECT student_name, student_email FROM student WHERE student_id = %s"
     student_id = "21WMR02952" 
 
     try:
@@ -220,7 +220,7 @@ def display_results():
     cursor = db_conn.cursor()
     # Fetch data from your database or any other source
     student_id = "21WMR02952"
-    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = ?"
+    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
     try:
         cursor.execute(select_sql, (student_id,))
         student_data = cursor.fetchone()  # Assuming you want to display data for one student
