@@ -110,7 +110,7 @@
 	<div class="container box_1170 border-top-generic">
 		<h3 class="text-heading">Documents</h3>
 
-		<section class="blog_area single-post-area" id="document-column-1">
+		<section class="blog_area single-post-area">
 			<div class="blog-author">
 				<div class="media align-items-center">
 					<div class="media-body">
@@ -118,7 +118,7 @@
 							<h4>Company Acceptance Letter</h4>
 						</a>
 						<p>To upload the offer letter given by the company as an indication of position placement confirmation</p>
-						<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form">
+						<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-1">
 							<input type="file" name="document_file" accept=".pdf">
 							<button type="submit" class="genric-btn info">Upload PDF</button>
 						</form>
@@ -128,19 +128,25 @@
 			</div>
 		</section>
 		 
-		 <section class="blog_area single-post-area" >
-			<div class="blog-author" >
-			   <div class="media align-items-center">
-				  <div class="media-body">
-					 <a href="#">
-						<h4>Indemnity Letter</h4>
-					 </a>
-					 <p>To upload a legal document that allocate risk and protect one party from potential financial harm</p>
-				  </div>
-			   </div>
+		<section class="blog_area single-post-area" >
+			<div class="blog-author">
+				<div class="media align-items-center">
+					<div class="media-body">
+						<a href="#">
+							<h4>Indemnity Letter</h4>
+						</a>
+						<p>To upload a legal document that allocates risk and protects one party from potential financial harm</p>
+						<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-2">
+							<input type="file" name="document_file" accept=".pdf">
+							<button type="submit" class="genric-btn info">Upload PDF</button>
+						</form>
+						<p id="upload-status-2"></p>
+					</div>
+				</div>
+			</div>
 		</section>
 				
-		<section class="blog_area single-post-area" >
+		<section class="blog_area single-post-area"   
 			<div class="blog-author" >
 			<div class="media align-items-center">
 				<div class="media-body">
@@ -148,6 +154,11 @@
 						<h4>Parent Acknowledgement Form</h4>
 					</a>
 					<p>To upload a document used to obtain writtern consent from a parent or legal guardian</p>
+					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-3">
+						<input type="file" name="document_file" accept=".pdf">
+						<button type="submit" class="genric-btn info">Upload PDF</button>
+					</form>
+					<p id="upload-status-3"></p>
 				</div>
 			</div>
 		</section>
@@ -160,11 +171,16 @@
 						<h4>Company Supervisor Evaluation Form</h4>
 					</a>
 					<p>To upload a from to provide feedback on students supervisor's performance evaluation and leadership skills</p>
+					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-4">
+						<input type="file" name="document_file" accept=".pdf">
+						<button type="submit" class="genric-btn info">Upload PDF</button>
+					</form>
+					<p id="upload-status-4"></p>
 				</div>
 			</div>
 		</section>
 				
-		<section class="blog_area single-post-area" style = "padding-bottom: 50px;">
+		<section class="blog_area single-post-area" style = "padding-bottom: 50px;" >
 			<div class="blog-author" >
 			<div class="media align-items-center">
 				<div class="media-body">
@@ -172,6 +188,11 @@
 						<h4>Student Progress Report</h4>
 					</a>
 					<p>To upload the offer letter given by the company as an indication of position placement confirmation</p>
+					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-5">
+						<input type="file" name="document_file" accept=".pdf">
+						<button type="submit" class="genric-btn info">Upload PDF</button>
+					</form>
+					<p id="upload-status-5"></p>
 				</div>
 			</div>
 		</section>
@@ -201,11 +222,15 @@
 	
 <!-- JS here -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     $(document).ready(function () {
-        // Attach a submit event handler to the form
+        // Attach a submit event handler to all the upload forms
         $(".upload-form").submit(function (e) {
             e.preventDefault(); // Prevent the form from submitting the traditional way
+
+            var formId = $(this).attr("id"); // Get the ID of the current form
+            var statusId = "#upload-status-" + formId.split("-")[2]; // Generate the corresponding status ID
 
             // Use AJAX to submit the form data
             $.ajax({
@@ -217,7 +242,7 @@
                 success: function (response) {
                     // Assuming the response indicates a successful upload
                     // Update the column to indicate the file is uploaded
-                    $("#upload-status-1").text("File Uploaded");
+                    $(statusId).text("File Uploaded");
                 },
                 error: function () {
                     // Handle errors if the upload fails
