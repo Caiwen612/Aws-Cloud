@@ -556,9 +556,107 @@ def contact():
 def login():
     return render_template('login.html')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    error_messages = {}  # Dictionary to store error message
+
+    if request.method == 'GET':
+        # Render the registration page
+        return render_template('register.html')
+    
+    if request.method == 'POST':
+        role = request.form.get('role')
+
+        print(f"Role: {role}")
+
+        print(f"Form data: {request.form}")
+
+        try:
+            cursor = db_conn.cursor()
+
+            if role == "student":
+                # Fetch Student data
+                educationLevel = request.form.get('educationLevel')
+                cohort = request.form.get('cohort')
+                programme = request.form.get('programme')
+                tutorialGroup = request.form.get('tutorialGroup')
+                studentID = request.form.get('studentID')
+                studentEmail = request.form.get('studentEmail')
+                supervisorName = request.form.get('supervisorName')
+                supervisorEmail = request.form.get('supervisorEmail')
+                programmingKnowledge = request.form.get('programmingKnowledge')
+                databaseKnowledge = request.form.get('databaseKnowledge')
+                networkingKnowledge = request.form.get('networkingKnowledge')
+                studentPassword = request.form.get('studentPassword')
+                studentConfirmedPassword = request.form.get('studentConfirmedPassword')
+
+                supervisor_id = 1  # This is just a placeholder for now. We will change this later.
+
+                user_id = 1  # This is just a placeholder for now. We will change this later.
+
+                #Check if all fields are filled
+                if not all([educationLevel, cohort, programme, tutorialGroup, studentID, studentEmail, supervisorName, supervisorEmail, programmingKnowledge, databaseKnowledge, networkingKnowledge, studentPassword, studentConfirmedPassword]):
+                    error_messages['all_fields'] = 'Error! Please fill in all fields.'
+
+                # Check if password and confirmed password match
+                if studentPassword != studentConfirmedPassword:
+                    error_messages['studentPassword'] = 'Password and confirmed password do not match.'
+
+                # Check for other validation rules and add error messages as needed
+
+                if error_messages:
+                    return render_template('register.html', error_messages=error_messages, form_data=request.form)
+
+                
+                # Insert into student table
+                query = """INSERT INTO student 
+                        (student_name, student_email, student_cohort, student_programme, student_level, student_tutgrp, student_pk, student_dk, student_nk, supervisor_id, student_password,user_id) 
+                        VALUES
+                        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, SHA2(%s, 256), %s)"""
+                cursor.execute(query, (studentID, studentEmail, cohort, programme, educationLevel, tutorialGroup, programmingKnowledge, databaseKnowledge, networkingKnowledge, supervisor_id, studentPassword, user_id))
+                db_conn.commit()
+
+            elif role == "company":
+                # Fetch Company data
+                companyName = request.form.get('companyName')
+                industry = request.form.get('industry')
+                contactName = request.form.get('contactName')
+                contactEmail = request.form.get('contactEmail')
+                userEmail = request.form.get('userEmail')
+                userPassword = request.form.get('userPassword')
+                companyConfirmedPassword = request.form.get('companyConfirmedPassword')
+
+                user_id = 1  # This is just a placeholder for now. We will change this later.
+                
+                #Check if all fields are filled
+                if not all([companyName, industry, contactName, contactEmail, userEmail, userPassword, companyConfirmedPassword]):
+                    error_messages['all_fields'] = 'Error! Please fill in all fields.'
+
+                # Check if password and confirmed password match
+                if userPassword != companyConfirmedPassword:
+                    error_messages['companyPassword'] = 'Password and confirmed password do not match.'
+
+                # Check for other validation rules and add error messages as needed
+
+                if error_messages:
+                    return render_template('register.html', error_messages=error_messages, form_data=request.form)
+                
+                # Insert into company table
+                query = """INSERT INTO company 
+                        (company_name, industry, contact_name, contact_email, user_id) 
+                        VALUES (%s, %s, %s, %s, %s)"""
+                cursor.execute(query, (companyName, industry, contactName, contactEmail, user_id))
+                db_conn.commit()
+
+            cursor.close()
+            flash('Registration successful!', 'success')
+            return redirect(url_for('login'))  # Redirect to the login page
+
+        except Exception as e:
+            print(f"Error during registration: {e}")
+            flash('An error occurred during registration. Please try again.', 'error')
+            return redirect(url_for('register'))  # Redirect to the registration page
+
 
 
 

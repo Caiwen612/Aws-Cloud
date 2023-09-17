@@ -64,35 +64,106 @@
     <link rel="stylesheet" href="/static/css/nice-select.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/responsive.css">
+
+    <script>
+        function determineFieldsVisibility() {
+            let selectedRole = "{{ form_Data and form_data.get('role', '') }}"; // Get the role from form_data
+
+            if (selectedRole === "student") {
+                $("#studentFields").show();
+                $("#companyFields").hide();
+            } else if (selectedRole === "company") {
+                $("#studentFields").hide();
+                $("#companyFields").show();
+            } else {
+                $("#studentFields").show();
+                $("#companyFields").hide();
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Function to set the selected radio button based on the hidden input field
+            function setSelectedRole() {
+                let selectedRole = $("input[name='selectedRole']").val();
+                if (selectedRole === "student") {
+                    $("#studentFields").show();
+                    $("#companyFields").hide();
+                } else {
+                    $("#studentFields").hide();
+                    $("#companyFields").show();
+                }
+            }
+
+            // Initially set the selected role based on the hidden input field
+            setSelectedRole();
+
+            $("input[name='role']").change(function () {
+                // Update the hidden input field's value
+                $("input[name='selectedRole']").val($(this).val());
+                setSelectedRole();
+            });
+        });
+
+    </script>
+
+
 </head>
 
-<body>
-
+<body onload="determineFieldsVisibility();">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
+
+                <!-- Flash Messages -->
+                <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                <div class="container mt-4">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% endwith %} -->
+                <!-- End of Flash Messages -->
+
                 <div class="card p-4">
                     <img src="/static/img/logo/logo.png" alt="Website Logo" class="logo">
                     <h4 class="text-center">Register</h4>
                     <hr>
-                    <form>
+                    <!-- Display error message here -->
+                    {% if error_messages and error_messages.get('all_fields') %}
+                    <span class="text-danger"
+                        style="display: block; text-align: center; border: 1px solid #f00; padding: 10px; margin-bottom: 20px;">
+                        {{ error_messages.get('all_fields') }}
+                    </span>
+                    {% endif %}
+
+
+
+                    <form action="{{ url_for('register') }}" method="POST" id="roleForm">
                         <div class="form-group row">
                             <label class="col-12">Register as:</label>
                             <div class="col-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="role" id="student"
-                                        value="student" checked>
+                                        value="student" {% if not form_data or (form_data and
+                                        form_data.get('role')=='student' ) %}checked{% endif %}>
                                     <label class="form-check-label" for="student">Student</label>
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="role" id="company"
-                                        value="company">
+                                        value="company" {% if form_data and form_data.get('role')=='company' %}checked{%
+                                        endif %}>
                                     <label class="form-check-label" for="company">Company</label>
                                 </div>
                             </div>
+
                         </div>
+
+                        {% if not form_data or (form_data and form_data.get('role')=='student' ) %}
 
 
                         <!-- Fields for Student -->
@@ -106,18 +177,29 @@
                                 <div class="form-group col-md-6">
                                     <div class="form-select" id="default-select">
                                         <select name="educationLevel" id="educationLevel">
-                                            <option value="default">Level</option>
-                                            <option value="degree">Bachelor Degree</option>
-                                            <option value="diploma">Diploma</option>
+                                            <option value="default" {% if form_data and
+                                                form_data.get('educationLevel')=='default' %}selected{% endif %}>Level
+                                            </option>
+                                            <option value="degree" {% if form_data and
+                                                form_data.get('educationLevel')=='degree' %}selected{% endif %}>Bachelor
+                                                Degree</option>
+                                            <option value="diploma" {% if form_data and
+                                                form_data.get('educationLevel')=='diploma' %}selected{% endif %}>Diploma
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="form-select" id="default-select">
                                         <select name="cohort" id="cohort">
-                                            <option value="default">Cohort</option>
-                                            <option value="2023/09">2023/09</option>
-                                            <option value="2023/05">2023/05</option>
+                                            <option value="default" {% if form_data and
+                                                form_data.get('cohort')=='default' %}selected{% endif %}>Cohort</option>
+                                            <option value="2023/09" {% if form_data and
+                                                form_data.get('cohort')=='2023/09' %}selected{% endif %}>2023/09
+                                            </option>
+                                            <option value="2023/05" {% if form_data and
+                                                form_data.get('cohort')=='2023/05' %}selected{% endif %}>2023/05
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -129,42 +211,46 @@
                                         placeholder="Programme (e.g. Bachelor of Software Engineering)"
                                         onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = 'Programme (e.g. Bachelor of Software Engineering)'"
-                                        required class="single-input">
+                                        class="single-input"
+                                        value="{{ form_data.get('programme', '') if form_data }}" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <input type="text" name="tutorialGroup" placeholder="Tutorial Group (e.g. 1-6)"
                                         onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Tutorial Group (e.g. 1-6)'" required
-                                        class="single-input">
+                                        onblur="this.placeholder = 'Tutorial Group (e.g. 1-6)'" class="single-input"
+                                        value="{{ form_data.get('tutorialGroup', '') if form_data }}" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <input type="text" name="studentID" placeholder="Student ID (e.g. 99WMR9999)"
                                         onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Student ID (e.g. 99WMR9999)'" required
-                                        class="single-input">
+                                        onblur="this.placeholder = 'Student ID (e.g. 99WMR9999)'" class="single-input"
+                                        value="{{ form_data.get('studentID', '') if form_data }}" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <input type="email" name="studentEmail"
                                         placeholder="Student Email (e.g. xxx-xx99@student.tarc.edu.my"
                                         onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = 'Student Email (e.g. xxx-xx99@student.tarc.edu.my'"
-                                        required class="single-input">
+                                        class="single-input"
+                                        value="{{ form_data.get('studentEmail', '') if form_data }}" />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <input type="text" name="supervisorName" placeholder="UC Supervisor Name"
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'UC Supervisor Name'"
-                                        required class="single-input">
+                                        class="single-input"
+                                        value="{{ form_data.get('supervisorName', '') if form_data }}" />
                                 </div>
                                 <div class="form-group col-md-6">
                                     <input type="email" name="supervisorEmail"
                                         placeholder="UC Supervisor Email (e.g. xxxxx@tarc.edu.my"
                                         onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = 'UC Supervisor Email (e.g. xxxxx@tarc.edu.my'"
-                                        required class="single-input">
+                                        class="single-input"
+                                        value="{{ form_data.get('supervisorEmail', '') if form_data }}" />
                                 </div>
                             </div>
 
@@ -175,20 +261,20 @@
                             <div class="form-group" style="margin-top: 20px;">
                                 <label for="programmingKnowledge">Programming Knowledge:</label>
                                 <textarea class="single-textarea" placeholder="Java, C##, Python, ..."
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Java, C##, Python, ...'"
-                                    required></textarea>
+                                    name="programmingKnowledge" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Java, C##, Python, ...'">{{ form_data.get('programmingKnowledge', '') if form_data }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="databaseKnowledge">Database Knowledge:</label>
                                 <textarea class="single-textarea" placeholder="MySQL, MongoDB, ..."
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'MySQL, MongoDB, ...'"
-                                    required></textarea>
+                                    name="databaseKnowledge" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'MySQL, MongoDB, ...'">{{ form_data.get('databaseKnowledge', '') if form_data }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="networkingKnowledge">Networking Knowledge:</label>
-                                <textarea class="single-textarea" placeholder="Cisco, ..."
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Cisco, ...'"
-                                    required></textarea>
+                                <textarea class="single-textarea" placeholder="Cisco, ..." name="networkingKnowledge"
+                                    onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Cisco, ...'">{{ form_data.get('networkingKnowledge', '') if form_data }}</textarea>
                             </div>
 
                             <!-- Password Details -->
@@ -197,17 +283,29 @@
                             </div>
                             <div class="form-group" style="margin-top: 20px;">
                                 <input type="password" name="studentPassword" placeholder="Password"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
-                                    class="single-input">
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"
+                                    class="single-input"
+                                    value="{{ form_data.get('studentPassword', '') if form_data }}" />
                             </div>
                             <!-- Confirmed Password -->
                             <div class="form-group">
                                 <input type="password" name="studentConfirmedPassword" placeholder="Confirm Password"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'"
-                                    required class="single-input">
+                                    class="single-input"
+                                    value="{{ form_data.get('studentConfirmedPassword', '') if form_data }}" />
                             </div>
 
+                            <!-- Display error message here -->
+                            {% if error_messages and error_messages.get('studentPassword') %}
+                            <span class="text-danger">
+                                {{ error_messages.get('studentPassword') }}
+                            </span>
+                            {% endif %}
+
+
                         </div>
+
+                        {% else %}
 
                         <!-- Fields for Company -->
                         <div id="companyFields" class="hidden">
@@ -219,24 +317,28 @@
                                 <div class="form-group col-md-6">
                                     <input type="text" name="companyName" placeholder="Company Name"
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Company Name'"
-                                        required class="single-input">
+                                        class="single-input"
+                                        value="{{ form_data.get('companyName', '') if form_data }}">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <input type="text" name="industry" placeholder="Industry (e.g. IT, Finance, ...)"
-                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Industry (e.g. IT, Finance, ...)'" required
-                                        class="single-input">
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Industry (e.g. IT, Finance, ...)'"
+                                        class="single-input" value="{{ form_data.get('industry', '')if form_data }}">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <input type="text" name="contactName" placeholder="Contact Name"
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Contact Name'"
-                                        required class="single-input">
+                                        class="single-input"
+                                        value="{{ form_data.get('contactName', '') if form_data }}">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <input type="email" name="contactEmail" placeholder="Contact Email"
                                         onfocus="this.placeholder = ''" onblur="this.placeholder = 'Contact Email'"
-                                        required class="single-input">
+                                        class="single-input"
+                                        value="{{ form_data.get('contactEmail', '') if form_data }}">
                                 </div>
                             </div>
 
@@ -246,28 +348,34 @@
                             </div>
                             <div class="form-group" style="margin-top: 20px;">
                                 <input type="email" name="userEmail" placeholder="User Email"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'User Email'" required
-                                    class="single-input">
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'User Email'"
+                                    class="single-input" value="{{ form_data.get('userEmail', '') if form_data }}">
                             </div>
 
                             <!-- Password Details -->
                             <div class="form-group" style="margin-top: 20px;">
                                 <input type="password" name="userPassword" placeholder="Password"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
-                                    class="single-input">
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"
+                                    class="single-input" value="{{ form_data.get('userPassword', '') if form_data }}">
                             </div>
                             <!-- Confirmed Password -->
                             <div class="form-group">
                                 <input type="password" name="companyConfirmedPassword" placeholder="Confirm Password"
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'"
-                                    required class="single-input">
+                                    class="single-input"
+                                    value="{{ form_data.get('companyConfirmedPassword', '') if form_data }}">
                             </div>
+
+                            <!-- Display error message here -->
+                            {% if error_messages and error_messages.get('companyPassword') %}
+                            <span class="text-danger">
+                                {{ error_messages.get('companyPassword') }}
+                            </span>
+                            {% endif %}
 
                         </div>
 
-
-
-
+                        {% endif %}
 
                         <!-- Declaration Section -->
                         <div class="section-heading">
@@ -275,7 +383,7 @@
                         </div>
                         <div class="form-group" style="margin-top: 20px;">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="declaration" required>
+                                <input class="form-check-input" type="checkbox" id="declaration">
                                 <label class="form-check-label" for="declaration">
                                     I hereby declare that the details furnished above are true and correct to the
                                     best of my knowledge.
@@ -297,9 +405,15 @@
     </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
     <script>
         $(document).ready(function () {
             $("input[name='role']").change(function () {
