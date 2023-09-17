@@ -282,7 +282,7 @@ def company_job_listing_details(job_id):
         cursor = db_conn.cursor()
         
         # Create a SQL query to retrieve job listing details by job_id
-        query = "SELECT * FROM job_listings WHERE listing_id = ?"
+        query = "SELECT * FROM job_listings WHERE listing_id = %s"
         cursor.execute(query, (job_id,))
         job_data = cursor.fetchone()
 
@@ -290,7 +290,7 @@ def company_job_listing_details(job_id):
             company_id = job_data[9]
             
             # Fetch company data using company_id
-            query = "SELECT * FROM company WHERE company_id = ?"
+            query = "SELECT * FROM company WHERE company_id = %s"
             cursor.execute(query, (company_id,))
             company_data = cursor.fetchone()
 
@@ -348,7 +348,7 @@ def handle_create_job_listing():
             query = """INSERT INTO job_listings(position, min_salary, max_salary, working_hours, requirements, responsibilities, descriptions, postedDate, company_id)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
             cursor.execute(query, (position, min_salary, max_salary, working_hours, job_requirements, job_responsibilities, additional_description, posted_date, 1))
-            db_conn.commit()  # Don't forget to commit to save changes to the database
+            db_conn.commit()
             cursor.close()
 
             flash('Job listing successfully created!', 'success')  # Flash a success message
@@ -381,10 +381,9 @@ def handle_edit_job_listing(job_id):
             
             query = """
             UPDATE job_listings
-            SET position=?, min_salary=?, max_salary=?, working_hours=?, requirements=?, responsibilities=?, descriptions=?
-            WHERE listing_id = ?
+            SET position=%s, min_salary=%s, max_salary=%s, working_hours=%s, requirements=%s, responsibilities=%s, descriptions=%s
+            WHERE listing_id = %s
             """
-            
             cursor.execute(query, (position, min_salary, max_salary, working_hours, job_requirements, job_responsibilities, additional_description, job_id))
             db_conn.commit()
             cursor.close()
@@ -402,7 +401,7 @@ def handle_edit_job_listing(job_id):
             cursor = db_conn.cursor()
 
             # Fetch job details from the database
-            query = "SELECT listing_id, position, min_salary, max_salary, working_hours, requirements, responsibilities, descriptions FROM job_listings WHERE listing_id = ?"
+            query = "SELECT listing_id, position, min_salary, max_salary, working_hours, requirements, responsibilities, descriptions FROM job_listings WHERE listing_id = %s"
             cursor.execute(query, (job_id,))
             job = cursor.fetchone()
             cursor.close()
@@ -420,7 +419,7 @@ def handle_delete_job_listing(job_id):
         cursor = db_conn.cursor()
 
         # Delete the job listing from the database
-        query = "DELETE FROM job_listings WHERE listing_id = ?"
+        query = "DELETE FROM job_listings WHERE listing_id = %s"
         cursor.execute(query, (job_id,))
         db_conn.commit()
 
@@ -467,10 +466,9 @@ def handle_company_profile():
             
             query = """
             UPDATE company
-            SET company_name=?, street_address=?, city=?, postcode=?, state=?, contact_name=?, contact_email=?, company_website=?, industry=?, company_type=?, description=?
-            WHERE company_id = ?
+            SET company_name=%s, street_address=%s, city=%s, postcode=%s, state=%s, contact_name=%s, contact_email=%s, company_website=%s, industry=%s, company_type=%s, description=%s
+            WHERE company_id = %s
             """
-            
             cursor.execute(query, (company_name, company_street_address, company_city, company_postcode, company_state, contact_name, contact_email, company_website, industry, company_type, description, company_id))
             db_conn.commit()
             cursor.close()
@@ -487,7 +485,7 @@ def handle_company_profile():
             cursor = db_conn.cursor()
 
             # Fetch company details from the database
-            query = "SELECT * FROM company WHERE company_id = ?"
+            query = "SELECT * FROM company WHERE company_id = %s"
             cursor.execute(query, (company_id,))
             company_details = cursor.fetchone()
             cursor.close()
