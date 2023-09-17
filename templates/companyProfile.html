@@ -109,23 +109,47 @@
                                     <div class="form-group">
                                         <label for="company_name">Company Name</label>
                                         <input class="form-control valid" name="company_name" id="company_name"
-                                            type="text" value="{{ company[0] or '' }}" placeholder="Enter Company Name">
+                                            type="text" value="{{ company[1] or '' }}" placeholder="Enter Company Name">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="company_website">Company Website</label>
                                         <input class="form-control valid" name="company_website" id="company_website"
-                                            type="url" value="{{ company[4] or '' }}"
+                                            type="url" value="{{ company[8] or '' }}"
                                             placeholder="Enter Company Website">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="company_address">Company Address</label>
-                                        <input class="form-control valid" name="company_address" id="company_address"
-                                            type="text" value="{{ company[1] or '' }}"
-                                            placeholder="Enter Company Address">
+                                        <label for="company_street_address">Street Address</label>
+                                        <input class="form-control valid" name="company_street_address" id="company_street_address"
+                                            type="text" value="{{ company[2] or '' }}"
+                                            placeholder="Enter Street Address">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="company_city">City</label>
+                                        <input class="form-control valid" name="company_city" id="company_city"
+                                            type="text" value="{{ company[3] or '' }}"
+                                            placeholder="Enter City">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="company_postcode">Postcode</label>
+                                        <input class="form-control valid" name="company_postcode" id="company_postcode"
+                                            type="text" value="{{ company[4] or '' }}"
+                                            placeholder="Enter Postcode">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label for="company_state">State</label>
+                                        <input class="form-control valid" name="company_state" id="company_state"
+                                            type="text" value="{{ company[5] or '' }}"
+                                            placeholder="Enter State">
                                     </div>
                                 </div>
 
@@ -134,14 +158,14 @@
                                     <div class="form-group">
                                         <label for="contact_name">Contact Name</label>
                                         <input class="form-control valid" name="contact_name" id="contact_name"
-                                            type="text" value="{{ company[2] or '' }}" placeholder="Enter Contact Name">
+                                            type="text" value="{{ company[6] or '' }}" placeholder="Enter Contact Name">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="contact_email">Contact Email</label>
                                         <input class="form-control valid" name="contact_email" id="contact_email"
-                                            type="email" value="{{ company[3] or '' }}"
+                                            type="email" value="{{ company[7] or '' }}"
                                             placeholder="Enter Contact Email">
                                     </div>
                                 </div>
@@ -151,14 +175,14 @@
                                     <div class="form-group">
                                         <label for="industry">Industry</label>
                                         <input class="form-control valid" name="industry" id="industry" type="text"
-                                            value="{{ company[5] or '' }}" placeholder="Enter Industry">
+                                            value="{{ company[9] or '' }}" placeholder="Enter Industry">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="company_type">Company Type</label>
                                         <input class="form-control valid" name="company_type" id="company_type"
-                                            type="text" value="{{ company[6] or '' }}" placeholder="Enter Company Type">
+                                            type="text" value="{{ company[10] or '' }}" placeholder="Enter Company Type">
                                     </div>
                                 </div>
 
@@ -168,7 +192,7 @@
                                         <label for="description">Description</label>
                                         <textarea class="form-control w-100" name="description" id="description"
                                             cols="30" rows="5"
-                                            placeholder="Enter Description">{{ company[7] or '' }}</textarea>
+                                            placeholder="Enter Description">{{ company[11] or '' }}</textarea>
                                     </div>
                                 </div>
 
@@ -181,7 +205,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>

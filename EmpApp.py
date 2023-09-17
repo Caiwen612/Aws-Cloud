@@ -229,7 +229,7 @@ def handle_create_job_listing():
             cursor = db_conn.cursor()
 
             # Fetch company details from the database
-            query = "SELECT company_name, company_address, contact_name, contact_email, company_website, industry, company_type, description FROM company WHERE company_id = 1"
+            query = "SELECT * FROM company WHERE company_id = 1"
             cursor.execute(query)
             company_details = cursor.fetchone()
             cursor.close()
@@ -358,7 +358,7 @@ def companyProfile():
         cursor = db_conn.cursor()
 
         # Fetch company details from the database
-        query = "SELECT company_name, company_address, contact_name, contact_email, company_website, industry, company_type, description FROM company WHERE company_id = 1"
+        query = "SELECT * FROM company WHERE company_id = 1"
         cursor.execute(query)
         company_details = cursor.fetchone()
         cursor.close()
