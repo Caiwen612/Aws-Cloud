@@ -5,12 +5,12 @@ from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import io
 
+from pymysql import connections
 
 # from pymysql import connections
 import os
 import boto3
 from config import *
-import mariadb
 import sys
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ region = customregion
 
 # Connect to Maria DB
 try:
-    db_conn = mariadb.Connection(
+    db_conn = connections.Connection(
         host=customhost,
         port=3306,
         user=customuser,
@@ -28,7 +28,7 @@ try:
         db=customdb
     )
     print("Success connect the MariaDB Platform/")
-except mariadb.Error as e:
+except Exception as e:
     print(f"Error connecting to MariaDB Platform: {e}")
     sys.exit(1)
 
@@ -64,7 +64,7 @@ def AddEmp():
         cursor.execute(insert_sql, value)
         db_conn.commit()
         
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"Error insert student data: {e}")
 
     finally:
@@ -88,7 +88,7 @@ def updateEmp():
     try:
         cursor.execute(update_sql, value)
         db_conn.commit()
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"Error update student data: {e}")
 
     finally:
@@ -110,7 +110,7 @@ def deleteEmp():
     try:
         cursor.execute(delete_sql,value)
         db_conn.commit()
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"Error delete student data: {e}")
 
     emp_name = str("test delete")
@@ -130,7 +130,7 @@ def displayStudentData():
     try:
         cursor.execute(select_sql, (student_id,))
         student_data = cursor.fetchone()  # Assuming you want to display data for one student
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"Error fetching student data: {e}")
     finally:
         cursor.close()
@@ -154,7 +154,7 @@ def updateStudentData():
         try:
             cursor.execute(update_sql, values)
             db_conn.commit()
-        except mariadb.Error as e:
+        except Exception as e:
             print(f"Error updating student data: {e}")
             db_conn.rollback()
         finally:
@@ -200,7 +200,7 @@ def upload_document():
                 cursor.execute(update_sql,value)
                 db_conn.commit()
                 print("Success insert data to mariadb")
-            except mariadb.Error as e:
+            except Exception as e:
                 print(f"Error update student Image: {e}")
             finally: 
                 cursor.close()
@@ -224,7 +224,7 @@ def display_results():
     try:
         cursor.execute(select_sql, (student_id,))
         student_data = cursor.fetchone()  # Assuming you want to display data for one student
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"Error fetching student data: {e}")
     finally:
         cursor.close()
@@ -271,7 +271,7 @@ def company():
 
         return render_template('company.html', job_postings=job_postings)
 
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"Error fetching job postings: {e}")
         return "An error occurred while fetching job postings."
 
@@ -303,7 +303,7 @@ def company_job_listing_details(job_id):
         else:
             return "Job listing not found."
     
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"Error fetching data: {e}")
         return "An error occurred while fetching data."
 
@@ -324,7 +324,7 @@ def handle_create_job_listing():
 
             return render_template('companyJobListingForm.html', details_filled=details_filled)
 
-        except mariadb.Error as e:
+        except Exception as e:
             print(f"Error fetching company details: {e}")
             return "An error occurred while fetching company details."
 
@@ -354,7 +354,7 @@ def handle_create_job_listing():
             flash('Job listing successfully created!', 'success')  # Flash a success message
             return redirect(url_for('handle_create_job_listing'))
 
-        except mariadb.Error as e:
+        except Exception as e:
             print(f"Error inserting job listing: {e}")
             flash('An error occurred while creating the job listing. Please try again.', 'error')
             return redirect(url_for('handle_create_job_listing'))
@@ -392,7 +392,7 @@ def handle_edit_job_listing(job_id):
             flash('Job listing successfully updated!', 'success')  # Flash a success message
             return redirect(url_for('handle_edit_job_listing', job_id=job_id))
         
-        except mariadb.Error as e:
+        except Exception as e:
             print(f"Error inserting job listing: {e}")
             flash('An error occurred while creating the job listing. Please try again.', 'error')
             return redirect(url_for('handle_edit_job_listing', job_id=job_id))
@@ -409,7 +409,7 @@ def handle_edit_job_listing(job_id):
 
             return render_template('companyJobListingForm.html', job=job)
 
-        except mariadb.Error as e:
+        except Exception as e:
             print(f"Error fetching position details: {e}")
             return "An error occurred while fetching position details."
 
@@ -429,7 +429,7 @@ def handle_delete_job_listing(job_id):
         flash('Job listing successfully deleted!', 'success')  # Flash a success message
         return redirect(url_for('company'))  # Redirect to your job listing page
 
-    except mariadb.Error as e:
+    except Exception as e:
         print(f"Error deleting job listing: {e}")
         flash('An error occurred while deleting the job listing. Please try again.', 'error')
         return redirect(url_for('company'))  # Redirect to your job listing page
@@ -478,7 +478,7 @@ def handle_company_profile():
             flash('Company profile successfully updated!', 'success')  # Flash a success message
             return redirect(url_for('handle_company_profile'))
         
-        except mariadb.Error as e:
+        except Exception as e:
             print(f"Error updating company profile: {e}")
             flash('An error occurred while updating the company profile. Please try again.', 'error')
             return redirect(url_for('handle_company_profile'))
@@ -494,7 +494,7 @@ def handle_company_profile():
 
             return render_template('companyProfile.html', company=company_details)
 
-        except mariadb.Error as e:
+        except Exception as e:
             print(f"Error fetching company details: {e}")
             return "An error occurred while fetching company details."
 
