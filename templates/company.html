@@ -89,6 +89,18 @@
         </div>
         <!-- Hero Area End -->
 
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container mt-4">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <!-- End of Flash Messages -->
+
 
         <!-- Featured_job_start -->
         <section class="featured-job-area feature-padding" style="padding-top: 50px;">
@@ -103,8 +115,8 @@
                     </div>
                 </div>
 
-                 <!-- Create Post Button -->
-                 <div class="text-center mb-5" style="margin-top: -20px;">
+                <!-- Create Post Button -->
+                <div class="text-center mb-5" style="margin-top: -20px;">
                     <a href="{{ url_for('render_company_create_job_listing') }}" class="btn head-btn1">Create Post</a>
                 </div>
 
@@ -112,34 +124,42 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-10">
                         {% for job in job_postings %}
-                            <div class="single-job-items mb-30" style=" position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                                <div class="job-items">
-                                    <div class="company-img">
-                                        <a href="{{ url_for('job_details') }}"><img src="static/img/icon/job-list1.png" alt=""></a>
-                                    </div>
-                                    <div class="job-tittle">
-                                        <a href="{{ url_for('job_details') }}">
-                                            <h4>{{job[1]}}</h4>
-                                        </a>
-                                        <ul>
-                                            <li>Working hours: {{job[4]}}</li>
-                                            <li>Salary: RM{{job[2]}} - RM{{job[3]}}</li>
-                                        </ul>
-                                    </div>
-                                    <div >
-                                        <div class="dropdown" style="position: absolute; bottom: 10px; right: 10px;">                                        
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu" aria-labelledby="actionDropdown">
-                                                <a class="dropdown-item" href="{{ url_for('company_job_listing_details', job_id=job[0]) }}">View Details</a>
-                                                <a class="dropdown-item" href="#">Edit</a>
-                                                <a class="dropdown-item" href="#">Delete</a>
-                                            </div>
+                        <div class="single-job-items mb-30"
+                            style=" position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="{{ url_for('company_job_listing_details', job_id=job[0]) }}"><img
+                                            src="static/img/icon/job-list1.png" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="{{ url_for('company_job_listing_details', job_id=job[0]) }}">
+                                        <h4>{{job[1]}}</h4>
+                                    </a>
+                                    <ul>
+                                        <li>Working hours: {{job[4]}}</li>
+                                        <li>Salary: RM{{job[2]}} - RM{{job[3]}}</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="dropdown" style="position: absolute; bottom: 10px; right: 10px;">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="actionDropdown" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="actionDropdown">
+                                            <a class="dropdown-item"
+                                                href="{{ url_for('company_job_listing_details', job_id=job[0]) }}">View
+                                                Details</a>
+                                            <a class="dropdown-item"
+                                                href="{{ url_for('handle_edit_job_listing', job_id=job[0]) }}">Edit</a>
+                                            <a class="dropdown-item"
+                                                href="{{ url_for('handle_delete_job_listing', job_id=job[0]) }}">Delete</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         {% endfor %}
                     </div>
                 </div>
@@ -201,29 +221,31 @@
         </div>
         <!-- How  Apply Process End-->
 
-        
-       
+
+
 
     </main>
     <footer>
-		<!-- Footer Start-->
-		<!-- footer-bottom area -->
-		<div class="footer-bottom-area footer-bg">
-			<div class="container">
-				<div class="footer-border">
-					 <div class="row d-flex justify-content-between align-items-center">
-						 <div class="col-xl-10 col-lg-10 ">
-							 <div class="footer-copy-right">
-								 <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a></p>
-							 </div>
-						 </div>
-					 </div>
-				</div>
-			</div>
-		</div>
-		<!-- Footer End-->
-	</footer>
-	
+        <!-- Footer Start-->
+        <!-- footer-bottom area -->
+        <div class="footer-bottom-area footer-bg">
+            <div class="container">
+                <div class="footer-border">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-xl-10 col-lg-10 ">
+                            <div class="footer-copy-right">
+                                <p>Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+
 
     <!-- JS here -->
 

@@ -101,73 +101,87 @@
                         <h2 class="contact-title">Company Profile</h2>
                     </div>
                     <div class="col-lg-10">
-                        <form class="form-contact contact_form" action="path_to_process_form" method="post" id="companyProfileForm" novalidate="novalidate">
+                        <form class="form-contact contact_form" action="path_to_process_form" method="post"
+                            id="companyProfileForm" novalidate="novalidate">
                             <div class="row">
                                 <!-- Company Info -->
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="company_name">Company Name</label>
-                                        <input class="form-control valid" name="company_name" id="company_name" type="text" value="{{ company[0] or '' }}" placeholder="Enter Company Name">
+                                        <input class="form-control valid" name="company_name" id="company_name"
+                                            type="text" value="{{ company[0] or '' }}" placeholder="Enter Company Name">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="company_website">Company Website</label>
-                                        <input class="form-control valid" name="company_website" id="company_website" type="url" value="{{ company[4] or '' }}" placeholder="Enter Company Website">
+                                        <input class="form-control valid" name="company_website" id="company_website"
+                                            type="url" value="{{ company[4] or '' }}"
+                                            placeholder="Enter Company Website">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="company_address">Company Address</label>
-                                        <input class="form-control valid" name="company_address" id="company_address" type="text" value="{{ company[1] or '' }}" placeholder="Enter Company Address">
+                                        <input class="form-control valid" name="company_address" id="company_address"
+                                            type="text" value="{{ company[1] or '' }}"
+                                            placeholder="Enter Company Address">
                                     </div>
                                 </div>
-                        
+
                                 <!-- Contact Info -->
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="contact_name">Contact Name</label>
-                                        <input class="form-control valid" name="contact_name" id="contact_name" type="text" value="{{ company[2] or '' }}" placeholder="Enter Contact Name">
+                                        <input class="form-control valid" name="contact_name" id="contact_name"
+                                            type="text" value="{{ company[2] or '' }}" placeholder="Enter Contact Name">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="contact_email">Contact Email</label>
-                                        <input class="form-control valid" name="contact_email" id="contact_email" type="email" value="{{ company[3] or '' }}" placeholder="Enter Contact Email">
+                                        <input class="form-control valid" name="contact_email" id="contact_email"
+                                            type="email" value="{{ company[3] or '' }}"
+                                            placeholder="Enter Contact Email">
                                     </div>
                                 </div>
-                        
+
                                 <!-- Industry and Type -->
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="industry">Industry</label>
-                                        <input class="form-control valid" name="industry" id="industry" type="text" value="{{ company[5] or '' }}" placeholder="Enter Industry">
+                                        <input class="form-control valid" name="industry" id="industry" type="text"
+                                            value="{{ company[5] or '' }}" placeholder="Enter Industry">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="company_type">Company Type</label>
-                                        <input class="form-control valid" name="company_type" id="company_type" type="text" value="{{ company[6] or '' }}" placeholder="Enter Company Type">
+                                        <input class="form-control valid" name="company_type" id="company_type"
+                                            type="text" value="{{ company[6] or '' }}" placeholder="Enter Company Type">
                                     </div>
                                 </div>
-                        
+
                                 <!-- Description -->
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="description">Description</label>
-                                        <textarea class="form-control w-100" name="description" id="description" cols="30" rows="5" placeholder="Enter Description">{{ company[7] or '' }}</textarea>
+                                        <textarea class="form-control w-100" name="description" id="description"
+                                            cols="30" rows="5"
+                                            placeholder="Enter Description">{{ company[7] or '' }}</textarea>
                                     </div>
                                 </div>
-                        
+
                                 <!-- Save Button -->
                                 <div class="col-12 mt-3">
                                     <div class="form-group">
-                                        <button type="submit" class="button button-contactForm boxed-btn">Save Changes</button>
+                                        <button type="submit" class="button button-contactForm boxed-btn">Save
+                                            Changes</button>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
@@ -175,144 +189,23 @@
 
     </main>
     <footer>
-        <!-- Footer Start-->
-        <div class="footer-area footer-bg footer-padding">
-            <div class="container">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="single-footer-caption mb-30">
-                                <div class="footer-tittle">
-                                    <h4>About Us</h4>
-                                    <div class="footer-pera">
-                                        <p>Heaven frucvitful doesn't cover lesser dvsays appear creeping seasons so
-                                            behold.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Contact Info</h4>
-                                <ul>
-                                    <li>
-                                        <p>Address :Your address goes
-                                            here, your demo address.</p>
-                                    </li>
-                                    <li><a href="#">Phone : +8880 44338899</a></li>
-                                    <li><a href="#">Email : info@colorlib.com</a></li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Important Link</h4>
-                                <ul>
-                                    <li><a href="#"> View Project</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Testimonial</a></li>
-                                    <li><a href="#">Proparties</a></li>
-                                    <li><a href="#">Support</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Newsletter</h4>
-                                <div class="footer-pera footer-pera2">
-                                    <p>Heaven fruitful doesn't over lesser in days. Appear creeping.</p>
-                                </div>
-                                <!-- Form -->
-                                <div class="footer-form">
-                                    <div id="mc_embed_signup">
-                                        <form target="_blank"
-                                            action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                            method="get" class="subscribe_form relative mail_part">
-                                            <input type="email" name="email" id="newsletter-form-email"
-                                                placeholder="Email Address" class="placeholder hide-on-focus"
-                                                onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = ' Email Address '">
-                                            <div class="form-icon">
-                                                <button type="submit" name="submit" id="newsletter-submit"
-                                                    class="email_icon newsletter-submit button-contactForm"><img
-                                                        src="static/img/icon/form.png" alt=""></button>
-                                            </div>
-                                            <div class="mt-10 info"></div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--  -->
-                <div class="row footer-wejed justify-content-between">
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <!-- logo -->
-                        <div class="footer-logo mb-20">
-                            <a href="{{ url_for('index') }}"><img src="static/img/logo/logo2_footer.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="footer-tittle-bottom">
-                            <span>5000+</span>
-                            <p>Talented Hunter</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="footer-tittle-bottom">
-                            <span>451</span>
-                            <p>Talented Hunter</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <!-- Footer Bottom Tittle -->
-                        <div class="footer-tittle-bottom">
-                            <span>568</span>
-                            <p>Talented Hunter</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- footer-bottom area -->
-        <div class="footer-bottom-area footer-bg">
-            <div class="container">
-                <div class="footer-border">
-                    <div class="row d-flex justify-content-between align-items-center">
-                        <div class="col-xl-10 col-lg-10 ">
-                            <div class="footer-copy-right">
-                                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;
-                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
-                                    This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
-                                        href="https://colorlib.com" target="_blank">Colorlib</a>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-xl-2 col-lg-2">
-                            <div class="footer-social f-right">
-                                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="#"><i class="fas fa-globe"></i></a>
-                                <a href="#"><i class="fab fa-behance"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End-->
-    </footer>
+		<!-- Footer Start-->
+		<!-- footer-bottom area -->
+		<div class="footer-bottom-area footer-bg">
+			<div class="container">
+				<div class="footer-border">
+					 <div class="row d-flex justify-content-between align-items-center">
+						 <div class="col-xl-10 col-lg-10 ">
+							 <div class="footer-copy-right">
+								 <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a></p>
+							 </div>
+						 </div>
+					 </div>
+				</div>
+			</div>
+		</div>
+		<!-- Footer End-->
+	</footer>
 
     <!-- JS here -->
 

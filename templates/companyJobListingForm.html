@@ -1,0 +1,299 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Job board HTML-5 Template </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href=" {{ url_for('static', filename='img/favicon.ico') }}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/price_rangs.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/themify-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{{ url_for('static', filename='img/logo/logo.png') }}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header>
+        <!-- Header Start -->
+        <div class="header-area header-transparrent">
+            <div class="headder-top header-sticky">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-2">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a href="{{ url_for('company') }}"><img
+                                        src="{{ url_for('static', filename='img/logo/logo.png') }}" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9">
+                            <div class="menu-wrapper">
+                                <!-- Main-menu -->
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li><a href="{{ url_for('company') }}">Postings</a></li>
+                                            <li><a href="{{ url_for('companyProfile') }}">Profile</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+    </header>
+    <!-- Hero Area Start-->
+    <div class="slider-area ">
+        <div class="single-slider section-overly slider-height2 d-flex align-items-center"
+            data-background="{{ url_for('static', filename='img/hero/about.jpg') }}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            {% if job %}
+                            <h2>Edit Job Listing</h2>
+                            {% else %}
+                            <h2>Create Job Listing</h2>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="container mt-4">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <!-- End of Flash Messages -->
+
+    <!-- Hero Area End -->
+    <!-- ================ contact section start ================= -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="contact-title">Position Details</h2>
+                </div>
+                <div class="col-lg-10">
+                    <!-- Warning section with inline styling -->
+                    <div id="companyDetailsWarning"
+                        style="background-color: #FF5555; border: 1px solid #FF0000; padding: 10px;  margin-bottom: 20px;">
+                        <p style="color: #FFFFFF; font-weight: bold;">Please complete your company details before
+                            posting a job position.</p>
+                        <a href="{{ url_for('companyProfile') }}" class="button button-warning" id="goToCompanyProfile"
+                            style="text-decoration: underline;">Go to Company Profile</a>
+                    </div>
+                    <!-- End of warning section -->
+
+
+                    <form class="form-contact contact_form" action="{{ url_for('company_submit_job_listing') if not job else url_for('handle_edit_job_listing', job_id=job[0]) }}" method="post" id="jobApplicationForm" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="position">Position</label>
+                                    <input class="form-control valid" name="position" id="position" type="text"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Position'"
+                                        placeholder="Enter Position" value="{{ job[1] if job }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="min_salary">Minimum Salary (RM)</label>
+                                    <input class="form-control valid" name="min_salary" id="min_salary" type="number"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Minimum Salary'"
+                                        placeholder="Minimum Salary" value="{{ job[2] if job }}">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="max_salary">Maximum Salary (RM)</label>
+                                    <input class="form-control valid" name="max_salary" id="max_salary" type="number"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Maximum Salary'"
+                                        placeholder="Maximum Salary" value="{{ job[3] if job }}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="working_hours">Working Hours</label>
+                                    <input class="form-control valid" name="working_hours" id="working_hours"
+                                        type="text" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Working Hours (e.g., 8am to 9pm)'"
+                                        placeholder="Working Hours (e.g., 8am to 9pm)" value="{{ job[4] if job }}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="job_requirements">Job Requirements</label>
+                                    <textarea class="form-control w-100" name="job_requirements" id="job_requirements"
+                                        cols="30" rows="5" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter Job Requirements'"
+                                        placeholder="Enter Job Requirements">{{ job[5] if job }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="job_responsibilities">Job Responsibilities</label>
+                                    <textarea class="form-control w-100" name="job_responsibilities"
+                                        id="job_responsibilities" cols="30" rows="5" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter Job Responsibilities'"
+                                        placeholder="Enter Job Responsibilities">{{ job[6] if job }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="additional_description">Additional Description</label>
+                                    <textarea class="form-control w-100" name="additional_description"
+                                        id="additional_description" cols="30" rows="5" onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Enter Additional Description'"
+                                        placeholder="Enter Additional Description">{{ job[7] if job }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="submit" class="button button-contactForm boxed-btn">
+                                {% if job %}
+                                Edit Listing
+                                {% else %}
+                                Submit Application
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ================ contact section end ================= -->
+    <footer>
+        <!-- Footer Start-->
+        <!-- footer-bottom area -->
+        <div class="footer-bottom-area footer-bg">
+            <div class="container">
+                <div class="footer-border">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-xl-10 col-lg-10 ">
+                            <div class="footer-copy-right">
+                                <p>Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+
+    <!-- JS here -->
+
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="{{ url_for('static', filename='js/vendor/modernizr-3.5.0.min.js') }}"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="{{ url_for('static', filename='js/vendor/jquery-1.12.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="{{ url_for('static', filename='js/jquery.slicknav.min.js') }}"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/price_rangs.js') }}"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animated.headline.js') }}"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.magnific-popup.js') }}"></script>
+
+    <!-- contact js -->
+    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.form.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/mail-script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.ajaxchimp.min.js') }}"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+        // Variable to track whether company details are filled in
+        let companyDetailsFilled = {{ details_filled|default (true) | tojson }};
+
+        // Function to enable or disable the form based on companyDetailsFilled
+        function toggleFormState() {
+            const form = document.getElementById("jobApplicationForm");
+            const warningSection = document.getElementById("companyDetailsWarning");
+
+            if (companyDetailsFilled) {
+                // Company details are filled, enable the form
+                form.querySelectorAll("input, textarea, button").forEach(function (element) {
+                    element.disabled = false;
+                });
+
+                // Hide the warning section
+                warningSection.style.display = "none";
+            } else {
+                // Company details are not filled, disable the form
+                form.querySelectorAll("input, textarea, button").forEach(function (element) {
+                    element.disabled = true;
+                });
+
+                // Show the warning section
+                warningSection.style.display = "block";
+            }
+        }
+
+        // Initial call to set form state based on companyDetailsFilled
+        toggleFormState();
+    </script>
+
+</body>
+
+</html>

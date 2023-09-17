@@ -173,7 +173,7 @@ def upload_document():
     
 #----------------Company CRUD----------------
 
-#Render company profile page
+#Render company job listing page and display job postings
 @app.route('/company')
 def company():
     try:
@@ -237,7 +237,7 @@ def render_company_create_job_listing():
         # Check if all company details are filled
         details_filled = all(company_details)
 
-        return render_template('companyCreateJobListing.html', details_filled=details_filled)
+        return render_template('companyJobListingForm.html', details_filled=details_filled)
 
     except mariadb.Error as e:
         print(f"Error fetching company details: {e}")
@@ -275,11 +275,84 @@ def company_submit_job_listing():
             print(f"Error inserting job listing: {e}")
             flash('An error occurred while creating the job listing. Please try again.', 'error')
             return redirect(url_for('company_submit_job_listing'))
-    
+        
+#Render company edit job listing page or handle edit job listing form submission
+@app.route('/company/edit_job/<int:job_id>', methods=['GET', 'POST'])
+def handle_edit_job_listing(job_id):
+    if request.method == 'POST':
+        # Handle the form submission
+        
+        # Extract data from the form
+        position = request.form['position']
+        min_salary = request.form['min_salary']
+        max_salary = request.form['max_salary']
+        working_hours = request.form['working_hours']
+        job_requirements = request.form['job_requirements']
+        job_responsibilities = request.form['job_responsibilities']
+        additional_description = request.form['additional_description']
+        
+        # Update the database with the new data
+        try:
+            cursor = db_conn.cursor()
+            
+            query = """
+            UPDATE job_listings
+            SET position=?, min_salary=?, max_salary=?, working_hours=?, requirements=?, responsibilities=?, descriptions=?
+            WHERE listing_id = ?
+            """
+            
+            cursor.execute(query, (position, min_salary, max_salary, working_hours, job_requirements, job_responsibilities, additional_description, job_id))
+            db_conn.commit()
+            cursor.close()
+            
+            flash('Job listing successfully updated!', 'success')  # Flash a success message
+            return redirect(url_for('handle_edit_job_listing', job_id=job_id))
+        
+        except mariadb.Error as e:
+            print(f"Error inserting job listing: {e}")
+            flash('An error occurred while creating the job listing. Please try again.', 'error')
+            return redirect(url_for('handle_edit_job_listing', job_id=job_id))
+
+    else:  # This is for the GET method
+        try:
+            cursor = db_conn.cursor()
+
+            # Fetch job details from the database
+            query = "SELECT listing_id, position, min_salary, max_salary, working_hours, requirements, responsibilities, descriptions FROM job_listings WHERE listing_id = ?"
+            cursor.execute(query, (job_id,))
+            job = cursor.fetchone()
+            cursor.close()
+
+            return render_template('companyJobListingForm.html', job=job)
+
+        except mariadb.Error as e:
+            print(f"Error fetching position details: {e}")
+            return "An error occurred while fetching position details."
+
+#Handle delete job listing
+@app.route('/company/delete_job/<int:job_id>', methods=['GET'])
+def handle_delete_job_listing(job_id):
+    try:
+        cursor = db_conn.cursor()
+
+        # Delete the job listing from the database
+        query = "DELETE FROM job_listings WHERE listing_id = ?"
+        cursor.execute(query, (job_id,))
+        db_conn.commit()
+
+        cursor.close()
+
+        flash('Job listing successfully deleted!', 'success')  # Flash a success message
+        return redirect(url_for('company'))  # Redirect to your job listing page
+
+    except mariadb.Error as e:
+        print(f"Error deleting job listing: {e}")
+        flash('An error occurred while deleting the job listing. Please try again.', 'error')
+        return redirect(url_for('company'))  # Redirect to your job listing page
 
 
 
-#Render company edit job listing page
+#Render company profile page
 @app.route('/companyProfile')
 def companyProfile():
     try:
