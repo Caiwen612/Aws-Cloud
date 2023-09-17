@@ -104,12 +104,14 @@
                 <div class="col-lg-10 col-md-8">
                     <h3 class="mb-30">Resgitered details</h3>
                     <form action="{{ url_for('studentDetails') }}" method="POST">
-                        <div class="mt-10">
+                        <div class="mt-10" style="padding-bottom: 30px;">
+                            <label for="firstName">Name:</label>
                             <input type="text" name="Name" placeholder="First Name"
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required
                                 class="single-input" value="{{ student_name }}">
                         </div>
                         <div class="mt-10">
+                            <label for="emailAddress">Email Address:</label>
                             <input type="email" name="Email" placeholder="Email address"
                                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required
                                 class="single-input" value="{{ student_email }}">
@@ -117,7 +119,7 @@
                         <!-- Other form fields with values from student_data -->
                         
                         <!-- Submit button -->
-                        <div style="position: relative; left: 80%;">
+                        <div style="position: relative; left: 110%; padding-top: 30px;">
                             <button type="submit" class="genric-btn success-border">Save</button>
                         </div>
                     </form>

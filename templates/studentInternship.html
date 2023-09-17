@@ -82,6 +82,7 @@
        </div>
         <!-- Header End -->
     </header>
+
 	<!-- Hero Area Start-->
 	<div class="slider-area ">
 		<div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="static/img/hero/ok.jpeg">
@@ -105,8 +106,7 @@
 			</p>
 		</div>
 	</section>
-	<!-- End Sample Area -->
-	<!-- Start Button -->
+
 	<div class="container box_1170 border-top-generic">
 		<h3 class="text-heading" style = "padding-bottom:30px">Internships</h3>
 	</div>
@@ -136,10 +136,29 @@
 						<!-- single one -->
 						<div class="single-listing">
 						   <div class="small-section-tittle2">
-								 <h4>Job Category</h4>
+								 <h4>Company Name</h4>
 						   </div>
-							<!-- Select job items start -->
-							<div class="select-job-items2">
+						   <aside class="single_sidebar_widget search_widget" style="padding-bottom: 30px;">
+                            <form action="#">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder='Search Keyword'
+                                            onfocus="this.placeholder = ''"
+                                            onblur="this.placeholder = 'Search Keyword'">
+                                        <div class="input-group-append">
+                                            <button class="" type="button" style ="background-color:#fb246a ; border: #fb246a;"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                             </form>
+                        	</aside>
+						</div>
+						<div class="single-listing">
+							<div class="small-section-tittle2">
+								<h4>Job Position</h4>
+							</div>
+
+							<div class="select-job-items2"  style="padding-bottom: 30px;">
 								<select name="select">
 									<option value="">All Category</option>
 									<option value="">Category 1</option>
@@ -148,38 +167,15 @@
 									<option value="">Category 4</option>
 								</select>
 							</div>
-							<!--  Select job items End-->
-							<!-- select-Categories start -->
-							<div class="select-Categories pt-80 pb-50">
-								<div class="small-section-tittle2">
-									<h4>Job Type</h4>
-								</div>
-								<label class="container">Full Time
-									<input type="checkbox" >
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">Part Time
-									<input type="checkbox" checked="checked active">
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">Remote
-									<input type="checkbox">
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">Freelance
-									<input type="checkbox">
-									<span class="checkmark"></span>
-								</label>
-							</div>
-							<!-- select-Categories End -->
 						</div>
+			
 						<!-- single two -->
-						<div class="single-listing">
-						   <div class="small-section-tittle2">
-								 <h4>Job Location</h4>
+						<div class="single-listing" style="padding-top: 60px;">
+						   <div class="small-section-tittle2"  >
+								 <h4>State</h4>
 						   </div>
 							<!-- Select job items start -->
-							<div class="select-job-items2">
+							<div class="select-job-items2" "">
 								<select name="select">
 									<option value="">Anywhere</option>
 									<option value="">Category 1</option>
@@ -188,33 +184,27 @@
 									<option value="">Category 4</option>
 								</select>
 							</div>
-							<!--  Select job items End-->
-							<!-- select-Categories start -->
-							<div class="select-Categories pt-80 pb-50">
-								<div class="small-section-tittle2">
-									<h4>Experience</h4>
-								</div>
-								<label class="container">1-2 Years
-									<input type="checkbox" >
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">2-3 Years
-									<input type="checkbox" checked="checked active">
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">3-6 Years
-									<input type="checkbox">
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">6-more..
-									<input type="checkbox">
-									<span class="checkmark"></span>
-								</label>
-							</div>
-							<!-- select-Categories End -->
 						</div>
+						
+						<div class="single-listing" style="padding-top: 90px;">
+							<div class="small-section-tittle2"  >
+								<h4>Area</h4>
+						  </div>
+						   <!-- Select job items start -->
+						   <div class="select-job-items2">
+							   <select name="select">
+								   <option value="">Anywhere</option>
+								   <option value="">Category 1</option>
+								   <option value="">Category 2</option>
+								   <option value="">Category 3</option>
+								   <option value="">Category 4</option>
+							   </select>
+						   </div>
+						</div>
+						
+			
 						<!-- single three -->
-						<div class="single-listing">
+						<div class="single-listing"  style="padding-top: 100px;">
 							<!-- select-Categories start -->
 							<div class="select-Categories pb-50">
 								<div class="small-section-tittle2">
@@ -251,11 +241,10 @@
 							<!-- Range Slider Start -->
 							<aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
 								<div class="small-section-tittle2">
-									<h4>Filter Jobs</h4>
+									<h4>Salary Range</h4>
 								</div>
-								<div class="widgets_inner">
+								<div>
 									<div class="range_item">
-										<!-- <div id="slider-range"></div> -->
 										<input type="text" class="js-range-slider" value="" />
 										<div class="d-flex align-items-center">
 											<div class="price_text">
@@ -273,7 +262,7 @@
 						  <!-- Range Slider End -->
 						</div>
 					</div>
-					<!-- Job Category Listing End -->
+
 				</div>
 				<!-- Right content -->
 				<div class="col-xl-9 col-lg-9 col-md-8">
@@ -461,8 +450,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Job List Area End -->
-	<!--Pagination Start  -->
+
 	<div class="pagination-area pb-115 text-center">
 		<div class="container">
 			<div class="row">
@@ -481,6 +469,7 @@
 			</div>
 		</div>
 	</div>
+
 	<footer>
 		<!-- Footer Start-->
 		<!-- footer-bottom area -->

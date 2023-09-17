@@ -171,6 +171,26 @@ def upload_document():
     else:
         return 'No file selected.'
     
+
+@app.route('/studentResults', methods=['GET'])
+def display_results():
+    cursor = db_conn.cursor()
+    # Fetch data from your database or any other source
+    student_id = "21WMR02952"
+    select_sql = "SELECT internship_results, internship_comments FROM student WHERE student_id = ?"
+    try:
+        cursor.execute(select_sql, (student_id,))
+        student_data = cursor.fetchone()  # Assuming you want to display data for one student
+    except mariadb.Error as e:
+        print(f"Error fetching student data: {e}")
+    finally:
+        cursor.close()
+
+    # Pass the data to the HTML template
+    return render_template('studentResults.html',  result_title =student_data[0], result_description =student_data[1])
+
+
+    
 #----------------Company CRUD----------------
 
 #Render company job listing page and display job postings
