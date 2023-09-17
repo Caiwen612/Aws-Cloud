@@ -161,15 +161,55 @@ def updateStudentData():
 
 app.config['UPLOAD_FOLDER'] = "C:\\Users\\User\\Desktop"
 
+
 @app.route('/studentUpload', methods=['POST'])
 def upload_document():
-    uploaded_file = request.files['document_file']
+    try:
+        # Retrieve form data
+        student_id = "21WMR02952"
 
-    if uploaded_file.filename != '':
-        # Save the uploaded file to a designated folder
-        return 'File uploaded successfully.'
-    else:
-        return 'No file selected.'
+        # Retrieve the uploaded file
+        uploaded_file = request.files['document_file']
+        file_extension = os.path.splitext(uploaded_file.filename)[1]
+        student_file_name_in_s3 = "student_Test" + file_extension
+        # print("FILE=" ,str(uploaded_file.filename))
+
+        #SQL
+        cursor = db_conn.cursor()
+        
+        #Make connection with S3
+        s3 = boto3.resource('s3',region_name=customregion)
+        print("uploading files to S3...")
+
+        try:
+            # Upload the file to S3
+            s3.Bucket(custombucket).put_object(Key=student_file_name_in_s3, Body=uploaded_file)
+
+            # Generate the object URL
+            object_url = "https://{0}.s3.amazonaws.com/{1}".format(custombucket,student_file_name_in_s3)
+            print("object url:", str(object_url))
+
+            #Insert url to mariadb
+            try:
+                update_sql = "UPDATE student SET acceptance_letter = %s WHERE student_id = %s"
+                value = (str(object_url),student_id)
+                # value = ("TESSTTTTTT",student_id)
+                cursor.execute(update_sql,value)
+                db_conn.commit()
+                print("Success insert data to mariadb")
+            except mariadb.Error as e:
+                print(f"Error update student Image: {e}")
+            finally: 
+                cursor.close()
+                
+            return "File uploaded successfully."
+        except Exception as e:
+            print("Error during file upload: ", str(e))
+            return str(e)
+        
+    except Exception as e:
+        print("Error occurred: ", str(e))
+        return str(e)
     
 
 @app.route('/studentResults', methods=['GET'])
