@@ -222,31 +222,29 @@ def company_job_listing_details(job_id):
         print(f"Error fetching data: {e}")
         return "An error occurred while fetching data."
 
-#Render company create job listing page
-@app.route('/company/create', methods=['GET'])
-def render_company_create_job_listing():
-    try:
-        cursor = db_conn.cursor()
+@app.route('/company/create', methods=['GET', 'POST'])
+def handle_create_job_listing():
+    if request.method == 'GET':
+        try:
+            cursor = db_conn.cursor()
 
-        # Fetch company details from the database
-        query = "SELECT company_name, company_address, contact_name, contact_email, company_website, industry, company_type, description FROM company WHERE company_id = 1"
-        cursor.execute(query)
-        company_details = cursor.fetchone()
-        cursor.close()
+            # Fetch company details from the database
+            query = "SELECT company_name, company_address, contact_name, contact_email, company_website, industry, company_type, description FROM company WHERE company_id = 1"
+            cursor.execute(query)
+            company_details = cursor.fetchone()
+            cursor.close()
 
-        # Check if all company details are filled
-        details_filled = all(company_details)
+            # Check if all company details are filled
+            details_filled = all(company_details)
 
-        return render_template('companyJobListingForm.html', details_filled=details_filled)
+            return render_template('companyJobListingForm.html', details_filled=details_filled)
 
-    except mariadb.Error as e:
-        print(f"Error fetching company details: {e}")
-        return "An error occurred while fetching company details."
-    
-#Create company job listing
-@app.route('/company/create', methods=['POST'])
-def company_submit_job_listing():
-    if request.method == 'POST':
+        except mariadb.Error as e:
+            print(f"Error fetching company details: {e}")
+            return "An error occurred while fetching company details."
+
+    elif request.method == 'POST':
+        # This section handles the submission of the job listing form
 
         # get data from form
         position = request.form['position']
@@ -258,7 +256,7 @@ def company_submit_job_listing():
         additional_description = request.form['additional_description']
 
         posted_date = datetime.now().strftime('%Y-%m-%d')
-        
+
         # insert data into database
         try:
             cursor = db_conn.cursor()
@@ -269,12 +267,13 @@ def company_submit_job_listing():
             cursor.close()
 
             flash('Job listing successfully created!', 'success')  # Flash a success message
-            return redirect(url_for('company_submit_job_listing'))
+            return redirect(url_for('handle_create_job_listing'))
 
         except mariadb.Error as e:
             print(f"Error inserting job listing: {e}")
             flash('An error occurred while creating the job listing. Please try again.', 'error')
-            return redirect(url_for('company_submit_job_listing'))
+            return redirect(url_for('handle_create_job_listing'))
+
         
 #Render company edit job listing page or handle edit job listing form submission
 @app.route('/company/edit_job/<int:job_id>', methods=['GET', 'POST'])

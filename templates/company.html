@@ -117,7 +117,7 @@
 
                 <!-- Create Post Button -->
                 <div class="text-center mb-5" style="margin-top: -20px;">
-                    <a href="{{ url_for('render_company_create_job_listing') }}" class="btn head-btn1">Create Post</a>
+                    <a href="{{ url_for('handle_create_job_listing') }}" class="btn head-btn1">Create Post</a>
                 </div>
 
                 <!-- Single job -->
@@ -153,8 +153,8 @@
                                                 Details</a>
                                             <a class="dropdown-item"
                                                 href="{{ url_for('handle_edit_job_listing', job_id=job[0]) }}">Edit</a>
-                                            <a class="dropdown-item"
-                                                href="{{ url_for('handle_delete_job_listing', job_id=job[0]) }}">Delete</a>
+                                            <a class="dropdown-item" href="#"
+                                                onclick="confirmDelete('{{ job[0] }}')">Delete Post</a>
                                         </div>
                                     </div>
                                 </div>
@@ -283,6 +283,18 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="./static/js/plugins.js"></script>
     <script src="./static/js/main.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        function confirmDelete(jobId) {
+            if (confirm("Are you sure you want to delete this job listing?")) {
+                // If the user confirms, redirect to your delete route
+                window.location.href = "/company/delete_job/" + jobId; // Update the URL as needed
+            } else {
+                // If the user cancels, do nothing
+            }
+        }
+    </script>
 
 </body>
 

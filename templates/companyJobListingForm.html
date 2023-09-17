@@ -126,7 +126,7 @@
                     <!-- End of warning section -->
 
 
-                    <form class="form-contact contact_form" action="{{ url_for('company_submit_job_listing') if not job else url_for('handle_edit_job_listing', job_id=job[0]) }}" method="post" id="jobApplicationForm" novalidate="novalidate">
+                    <form class="form-contact contact_form" action="{{ url_for('handle_create_job_listing') if not job else url_for('handle_edit_job_listing', job_id=job[0]) }}" method="post" id="jobApplicationForm" novalidate="novalidate">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -197,13 +197,16 @@
                                 Submit Application
                                 {% endif %}
                             </button>
+                    
+                            <!-- Add Cancel button here -->
+                            <a href="{{ url_for('company') }}" class="button button-contactForm boxed-btn cancel-btn mx-3">Cancel</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ================ contact section end ================= -->
+
     <footer>
         <!-- Footer Start-->
         <!-- footer-bottom area -->
