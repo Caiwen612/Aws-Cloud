@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request,url_for,redirect
+from flask import Flask, render_template, request,url_for,redirect, request, make_response
 from datetime import datetime
 from flask import flash
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import io
 
 
 # from pymysql import connections
@@ -217,7 +220,7 @@ def display_results():
     cursor = db_conn.cursor()
     # Fetch data from your database or any other source
     student_id = "21WMR02952"
-    select_sql = "SELECT internship_results, internship_comments FROM student WHERE student_id = ?"
+    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = ?"
     try:
         cursor.execute(select_sql, (student_id,))
         student_data = cursor.fetchone()  # Assuming you want to display data for one student
@@ -227,9 +230,31 @@ def display_results():
         cursor.close()
 
     # Pass the data to the HTML template
-    return render_template('studentResults.html',  result_title =student_data[0], result_description =student_data[1])
+    return render_template('studentResults.html',  result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_position  = student_data[6], internship_duration  = student_data[7])
 
+@app.route('/download_pdf', methods=['GET'])
+def download_pdf():
+    # Create a PDF buffer
+    buffer = io.BytesIO()
 
+    # Create the PDF object, using the buffer as its "file"
+    p = canvas.Canvas(buffer, pagesize=letter)
+
+    # Your code to add content to the PDF goes here
+    # You can use p.drawString(), p.drawImage(), etc. to add text and images
+
+    # Save the PDF to the buffer
+    p.save()
+
+    # Move the buffer position to the beginning
+    buffer.seek(0)
+
+    # Create a response to send the PDF
+    response = make_response(buffer.read())
+    response.mimetype = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename=student_results.pdf'
+
+    return response
     
 #----------------Company CRUD----------------
 

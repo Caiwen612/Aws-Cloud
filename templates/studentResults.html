@@ -107,21 +107,54 @@
 	</section>
 	<!-- End Sample Area -->
 	<!-- Start Button -->
-	<div class="container box_1170 border-top-generic" ">
-		<h3 class="text-heading">Student Details:</h3>
-		<h3 class="text-heading">Results:</h3>
-		<div class="blog_details" style="width: 70%; margin: 0 auto; text-align: center;">
-			<div class="d-inline-block" >
-				<h2>{{ result_title }}</h2>
-			</div>
-			<p>{{ result_description }}</p>
+	<div class="container">
+			<div class="row">
+				<!-- Student Details Section -->
+				<div class="col-lg-6">
+					<div class="student-details" style="padding-bottom: 20px;">
+						<div class="section-title mb-30">
+							<h3 class="text-heading">Students Details:</h3>
+							<p>Name: {{ student_name }}</p>
+							<p>Email: {{ student_email }}</p>
+							<p>Cohort: {{ student_cohort }}</p>
+							<p>Programme: {{ student_programme }}</p>
+						</div>
+					</div>
+				</div>
+		
+				<!-- Internship Details Section -->
+				<div class="col-lg-6">
+					<div class="results-section" style="padding-bottom: 20px;">
+						<div class="section-title mb-30">
+							<h3 class="text-heading">Internship Details:</h3>
+							<p>Position: {{ internship_position }}</p>
+							<p>Duration: {{ internship_duration }} months</p>
+						</div>
+					</div>
+				</div>
 		</div>
 		
+	
+		<!-- Result Details -->
+
+			<div class="col-lg-12">
+				<h3 class="text-heading">Results:</h3>
+				<div class="blog_details" style="width: 70%; margin: 0 auto; text-align: center;">
+					<div class="d-inline-block">
+						<h2>{{ result_title }}</h2>
+					</div>
+					<p>{{ result_description }}</p>
+				</div>
+			</div>
+
+	</div>
+	
 	</div>
 
 	<div style="position: relative; left: 80%; padding: 30px;">
-		<button type="submit" class="genric-btn primary-border">Download PDF</button>
+		<a href="{{ url_for('download_pdf') }}" class="genric-btn primary-border">Download PDF</a>
 	</div>
+	
 
 
 
