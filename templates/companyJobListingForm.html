@@ -58,7 +58,7 @@
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a href="{{ url_for('company') }}">Postings</a></li>
-                                            <li><a href="{{ url_for('companyProfile') }}">Profile</a></li>
+                                            <li><a href="{{ url_for('handle_company_profile') }}">Profile</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -120,7 +120,7 @@
                         style="background-color: #FF5555; border: 1px solid #FF0000; padding: 10px;  margin-bottom: 20px;">
                         <p style="color: #FFFFFF; font-weight: bold;">Please complete your company details before
                             posting a job position.</p>
-                        <a href="{{ url_for('companyProfile') }}" class="button button-warning" id="goToCompanyProfile"
+                        <a href="{{ url_for('handle_company_profile') }}" class="button button-warning" id="goToCompanyProfile"
                             style="text-decoration: underline;">Go to Company Profile</a>
                     </div>
                     <!-- End of warning section -->

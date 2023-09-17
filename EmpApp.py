@@ -351,23 +351,67 @@ def handle_delete_job_listing(job_id):
 
 
 
-#Render company profile page
-@app.route('/companyProfile')
-def companyProfile():
-    try:
-        cursor = db_conn.cursor()
+#Render company profile page or handle company profile form submission
+# @app.route('/companyProfile/<int:company_id>', methods=['POST', 'GET'])
+@app.route('/companyProfile', methods=['POST', 'GET'])
+def handle_company_profile():
 
-        # Fetch company details from the database
-        query = "SELECT * FROM company WHERE company_id = 1"
-        cursor.execute(query)
-        company_details = cursor.fetchone()
-        cursor.close()
+    company_id = 1  # This is just a placeholder for now. We will change this later.
 
-        return render_template('companyProfile.html', company=company_details)
+    if request.method == 'POST':
+        # Handle the form submission
+        
+        # Extract data from the form
+        company_name = request.form['company_name']
+        company_street_address = request.form['company_street_address']
+        company_city = request.form['company_city']
+        company_postcode = request.form['company_postcode']
+        company_state = request.form['company_state']
+        contact_name = request.form['contact_name']
+        contact_email = request.form['contact_email']
+        company_website = request.form['company_website']
+        industry = request.form['industry']
+        company_type = request.form['company_type']
+        description = request.form['description']
 
-    except mariadb.Error as e:
-        print(f"Error fetching company details: {e}")
-        return "An error occurred while fetching company details."
+
+
+        # Update the database with the new data
+        try:
+            cursor = db_conn.cursor()
+            
+            query = """
+            UPDATE company
+            SET company_name=?, street_address=?, city=?, postcode=?, state=?, contact_name=?, contact_email=?, company_website=?, industry=?, company_type=?, description=?
+            WHERE company_id = ?
+            """
+            
+            cursor.execute(query, (company_name, company_street_address, company_city, company_postcode, company_state, contact_name, contact_email, company_website, industry, company_type, description, company_id))
+            db_conn.commit()
+            cursor.close()
+            
+            flash('Company profile successfully updated!', 'success')  # Flash a success message
+            return redirect(url_for('handle_company_profile'))
+        
+        except mariadb.Error as e:
+            print(f"Error updating company profile: {e}")
+            flash('An error occurred while updating the company profile. Please try again.', 'error')
+            return redirect(url_for('handle_company_profile'))
+    else:
+        try:
+            cursor = db_conn.cursor()
+
+            # Fetch company details from the database
+            query = "SELECT * FROM company WHERE company_id = ?"
+            cursor.execute(query, (company_id,))
+            company_details = cursor.fetchone()
+            cursor.close()
+
+            return render_template('companyProfile.html', company=company_details)
+
+        except mariadb.Error as e:
+            print(f"Error fetching company details: {e}")
+            return "An error occurred while fetching company details."
 
 
 

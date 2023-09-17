@@ -55,7 +55,7 @@
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a href="{{ url_for('company') }}">Postings</a></li>
-                                            <li><a href="{{ url_for('companyProfile') }}">Profile</a></li>
+                                            <li><a href="{{ url_for('handle_company_profile') }}">Profile</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -93,15 +93,31 @@
             </div>
         </div>
         <!-- Hero Area End -->
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container mt-4 mb-0">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <!-- End of Flash Messages -->
+
+
         <!-- ================ contact section start ================= -->
-        <section class="contact-section">
+        <section class="contact-section" style="padding-top: 50px;">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <h2 class="contact-title">Company Profile</h2>
                     </div>
                     <div class="col-lg-10">
-                        <form class="form-contact contact_form" action="path_to_process_form" method="post"
+            
+                        <form class="form-contact contact_form" action="{{ url_for('handle_company_profile') }}"
+                        method="post"
                             id="companyProfileForm" novalidate="novalidate">
                             <div class="row">
                                 <!-- Company Info -->
