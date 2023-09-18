@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
+    <title>Register As Student Page</title>
     <!-- <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap" rel="stylesheet"> -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <style>
@@ -65,49 +65,6 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/responsive.css">
 
-    <script>
-        function determineFieldsVisibility() {
-            let selectedRole = "{{ form_Data and form_data.get('role', '') }}"; // Get the role from form_data
-
-            if (selectedRole === "student") {
-                $("#studentFields").show();
-                $("#companyFields").hide();
-            } else if (selectedRole === "company") {
-                $("#studentFields").hide();
-                $("#companyFields").show();
-            } else {
-                $("#studentFields").show();
-                $("#companyFields").hide();
-            }
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-            // Function to set the selected radio button based on the hidden input field
-            function setSelectedRole() {
-                let selectedRole = $("input[name='selectedRole']").val();
-                if (selectedRole === "student") {
-                    $("#studentFields").show();
-                    $("#companyFields").hide();
-                } else {
-                    $("#studentFields").hide();
-                    $("#companyFields").show();
-                }
-            }
-
-            // Initially set the selected role based on the hidden input field
-            setSelectedRole();
-
-            $("input[name='role']").change(function () {
-                // Update the hidden input field's value
-                $("input[name='selectedRole']").val($(this).val());
-                setSelectedRole();
-            });
-        });
-
-    </script>
-
-
 </head>
 
 <body onload="determineFieldsVisibility();">
@@ -115,59 +72,38 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
 
-                <!-- Flash Messages -->
-                <!-- {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                <div class="container mt-4">
-                    {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-                {% endif %}
-                {% endwith %} -->
-                <!-- End of Flash Messages -->
 
                 <div class="card p-4">
                     <img src="/static/img/logo/logo.png" alt="Website Logo" class="logo">
                     <h4 class="text-center">Register</h4>
                     <hr>
                     <!-- Display error message here -->
-                    {% if error_messages and error_messages.get('all_fields') %}
+                    {% if error_messages and (error_messages.get('all_fields') or error_messages.get('studentEmail') or error_messages.get('studentID') or error_messages.get('supervisorEmail')) %}
                     <span class="text-danger"
                         style="display: block; text-align: center; border: 1px solid #f00; padding: 10px; margin-bottom: 20px;">
-                        {{ error_messages.get('all_fields') }}
+                        {{ error_messages.get('all_fields') if error_messages.get('all_fields') else
+                        error_messages.get('studentEmail') if error_messages.get('studentEmail') else
+                        error_messages.get('studentID') if error_messages.get('studentID') else
+                        error_messages.get('supervisorEmail') if error_messages.get('supervisorEmail') }}
                     </span>
                     {% endif %}
 
-
-
-                    <form action="{{ url_for('register') }}" method="POST" id="roleForm">
+                    <form action="{{ url_for('register_student') }}" method="POST" id="roleForm">
                         <div class="form-group row">
-                            <label class="col-12">Register as:</label>
-                            <div class="col-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="role" id="student"
-                                        value="student" {% if not form_data or (form_data and
-                                        form_data.get('role')=='student' ) %}checked{% endif %}>
-                                    <label class="form-check-label" for="student">Student</label>
+                            <h5 class="col-12 text-center mb-3">Register as:</h5>
+                            <div class="row justify-content-center align-items-center" style="margin: auto;">
+                                <div class="col-6 text-center">
+                                    <a href="{{ url_for('register_student') }}" class="btn head-btn1">Student</a>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <a href="{{ url_for('register_company') }}" class="btn head-btn2">Company</a>
                                 </div>
                             </div>
-                            <div class="col-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="role" id="company"
-                                        value="company" {% if form_data and form_data.get('role')=='company' %}checked{%
-                                        endif %}>
-                                    <label class="form-check-label" for="company">Company</label>
-                                </div>
-                            </div>
-
                         </div>
 
-                        {% if not form_data or (form_data and form_data.get('role')=='student' ) %}
-
-
                         <!-- Fields for Student -->
-                        <div id="studentFields">
+                        <div id="studentFields" {% if selected_role=='company' %}style="display: none;" {% endif %}>
+
                             <!-- Academic Details -->
                             <div class="section-heading">
                                 <h5>Academic Details</h5>
@@ -220,6 +156,19 @@
                                         onblur="this.placeholder = 'Tutorial Group (e.g. 1-6)'" class="single-input"
                                         value="{{ form_data.get('tutorialGroup', '') if form_data }}" />
                                 </div>
+                            </div>
+
+                            <!-- Personal Details -->
+                            <div class="section-heading">
+                                <h5>Personal Details</h5>
+                            </div>
+
+                            <!-- student name -->
+                            <div class="form-group" style="margin-top: 20px;">
+                                <input type="text" name="studentName" placeholder="Student Full Name"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Student Full Name'"
+                                    class="single-input" value="{{ form_data.get('studentName', '') if form_data }}" />
+
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
@@ -305,85 +254,13 @@
 
                         </div>
 
-                        {% else %}
-
-                        <!-- Fields for Company -->
-                        <div id="companyFields" class="hidden">
-                            <!-- Company Details -->
-                            <div class="section-heading">
-                                <h5>Company Details</h5>
-                            </div>
-                            <div class="row" style="margin-top: 20px;">
-                                <div class="form-group col-md-6">
-                                    <input type="text" name="companyName" placeholder="Company Name"
-                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Company Name'"
-                                        class="single-input"
-                                        value="{{ form_data.get('companyName', '') if form_data }}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <input type="text" name="industry" placeholder="Industry (e.g. IT, Finance, ...)"
-                                        onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = 'Industry (e.g. IT, Finance, ...)'"
-                                        class="single-input" value="{{ form_data.get('industry', '')if form_data }}">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <input type="text" name="contactName" placeholder="Contact Name"
-                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Contact Name'"
-                                        class="single-input"
-                                        value="{{ form_data.get('contactName', '') if form_data }}">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <input type="email" name="contactEmail" placeholder="Contact Email"
-                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Contact Email'"
-                                        class="single-input"
-                                        value="{{ form_data.get('contactEmail', '') if form_data }}">
-                                </div>
-                            </div>
-
-                            <!-- User Details -->
-                            <div class="section-heading">
-                                <h5>User Details</h5>
-                            </div>
-                            <div class="form-group" style="margin-top: 20px;">
-                                <input type="email" name="userEmail" placeholder="User Email"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'User Email'"
-                                    class="single-input" value="{{ form_data.get('userEmail', '') if form_data }}">
-                            </div>
-
-                            <!-- Password Details -->
-                            <div class="form-group" style="margin-top: 20px;">
-                                <input type="password" name="userPassword" placeholder="Password"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'"
-                                    class="single-input" value="{{ form_data.get('userPassword', '') if form_data }}">
-                            </div>
-                            <!-- Confirmed Password -->
-                            <div class="form-group">
-                                <input type="password" name="companyConfirmedPassword" placeholder="Confirm Password"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'"
-                                    class="single-input"
-                                    value="{{ form_data.get('companyConfirmedPassword', '') if form_data }}">
-                            </div>
-
-                            <!-- Display error message here -->
-                            {% if error_messages and error_messages.get('companyPassword') %}
-                            <span class="text-danger">
-                                {{ error_messages.get('companyPassword') }}
-                            </span>
-                            {% endif %}
-
-                        </div>
-
-                        {% endif %}
-
                         <!-- Declaration Section -->
                         <div class="section-heading">
                             <h5>Declaration</h5>
                         </div>
                         <div class="form-group" style="margin-top: 20px;">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="declaration">
+                                <input class="form-check-input" type="checkbox" id="declaration" required>
                                 <label class="form-check-label" for="declaration">
                                     I hereby declare that the details furnished above are true and correct to the
                                     best of my knowledge.
@@ -391,8 +268,8 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn head-btn1"
-                            style="width: 100%; margin-top: 5%;">Register</button>
+                        <button type="submit" class="btn head-btn1" style="width: 100%; margin-top: 5%;">Register as
+                            Student</button>
                         <div class="mt-3 text-center">
                             <p>Already have an account? <a href="{{ url_for('login') }}"
                                     style="color: #fb246a; text-decoration: none;">Login here</a>.</p>
@@ -411,24 +288,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
-    <script>
-        $(document).ready(function () {
-            $("input[name='role']").change(function () {
-                let selectedRole = $(this).val();
-
-                if (selectedRole === "student") {
-                    $("#studentFields").show();
-                    $("#companyFields").hide();
-                } else {
-                    $("#studentFields").hide();
-                    $("#companyFields").show();
-                }
-            });
-        });
-    </script>
 
     <!-- JS here -->
     <!-- All JS Custom Plugins Link Here here -->
