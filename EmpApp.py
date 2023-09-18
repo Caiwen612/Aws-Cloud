@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request,url_for,redirect, request, make_response
 from datetime import datetime
 from flask import flash
+from flask import session
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 import io
@@ -42,7 +43,7 @@ db_conn.autocommit = False
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('register.html')
+    return render_template('register_student.html')
 
 
 @app.route("/addemp", methods=['POST'])
@@ -263,9 +264,12 @@ def download_pdf():
 def company():
     try:
         cursor = db_conn.cursor()
+
+        user_id = session.get('user_id')
+
         # Fetch job postings from the database
-        query = "SELECT listing_id, position, min_salary, max_salary, working_hours FROM job_listings"
-        cursor.execute(query)
+        query = "SELECT listing_id, position, min_salary, max_salary, working_hours FROM job_listings WHERE company_id = %s"
+        cursor.execute(query, (user_id,))
         job_postings = cursor.fetchall()
         cursor.close()
 
@@ -313,9 +317,11 @@ def handle_create_job_listing():
         try:
             cursor = db_conn.cursor()
 
+            user_id = session.get('user_id')
+
             # Fetch company details from the database
-            query = "SELECT * FROM company WHERE company_id = 1"
-            cursor.execute(query)
+            query = "SELECT * FROM company WHERE company_id = %s"
+            cursor.execute(query, (user_id,))
             company_details = cursor.fetchone()
             cursor.close()
 
@@ -347,7 +353,7 @@ def handle_create_job_listing():
             cursor = db_conn.cursor()
             query = """INSERT INTO job_listings(position, min_salary, max_salary, working_hours, requirements, responsibilities, descriptions, postedDate, company_id)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-            cursor.execute(query, (position, min_salary, max_salary, working_hours, job_requirements, job_responsibilities, additional_description, posted_date, 1))
+            cursor.execute(query, (position, min_salary, max_salary, working_hours, job_requirements, job_responsibilities, additional_description, posted_date, session.get('user_id')))
             db_conn.commit()
             cursor.close()
 
@@ -440,7 +446,7 @@ def handle_delete_job_listing(job_id):
 @app.route('/companyProfile', methods=['POST', 'GET'])
 def handle_company_profile():
 
-    company_id = 1  # This is just a placeholder for now. We will change this later.
+    company_id = session.get('user_id')
 
     if request.method == 'POST':
         # Handle the form submission
@@ -552,113 +558,302 @@ def studentResults():
 def contact():
     return render_template('contact.html')
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
+@app.route('/supervisorStudentDetails')
+def supervisorStudentDetails():
+    return render_template('supervisorStudentDetails.html')
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    error_messages = {}  # Dictionary to store error message
+@app.route('/login' , methods=['GET', 'POST'])
+def login():
 
     if request.method == 'GET':
-        # Render the registration page
-        return render_template('register.html')
+        return render_template('login.html')
     
     if request.method == 'POST':
-        role = request.form.get('role')
+        try:
+            cursor = db_conn.cursor()
 
-        print(f"Role: {role}")
+            # Get the form data
+            email = request.form.get('email')
+            password = request.form.get('password')
+
+            # Check if email exists
+            query = "SELECT * FROM user WHERE email = %s"
+            cursor.execute(query, (email,))
+            user_data = cursor.fetchone()
+            if not user_data:
+                flash('Email does not exist.', 'error')
+                return render_template('login.html', form_data=request.form)
+            
+            # Check if password is correct
+            query = "SELECT * FROM user WHERE email = %s AND password = %s"
+            cursor.execute(query, (email, password))
+            user_data = cursor.fetchone()
+            if not user_data:
+                flash('Incorrect password.', 'error')
+                return render_template('login.html', form_data=request.form)
+            
+
+            # Check if user is a student
+            query = "SELECT * FROM user WHERE email = %s AND role = 'student'"
+            cursor.execute(query, (email,))
+            user_data = cursor.fetchone()
+            if user_data:
+
+                # Get the student_id
+                query = "SELECT student_id FROM student WHERE student_email = %s"
+                cursor.execute(query, (email,))
+                student_id = cursor.fetchone()[0]
+
+                # Store the student_id in the session
+                session['user_id'] = student_id
+                session['role'] = 'student' # Store the role in the session
+
+                cursor.close()
+                return redirect(url_for('studentDetails', student_id=student_id)) # Redirect to the student details page
+            
+            # Check if user is a company
+            query = "SELECT * FROM user WHERE email = %s AND role = 'company'"
+            cursor.execute(query, (email,))
+            user_data = cursor.fetchone()
+            if user_data:
+                    
+                    # Get the company_id
+                    query = "SELECT company_id FROM company WHERE user_id = %s"
+                    cursor.execute(query, (user_data[0],))
+                    company_id = cursor.fetchone()[0]
+
+                    # Store the company_id in the session
+                    session['user_id'] = company_id
+                    session['role'] = 'company' # Store the role in the session
+    
+                    cursor.close()
+                    return redirect(url_for('company', company_id=company_id)) # Redirect to the company page
+            
+            # Check if user is a supervisor
+            query = "SELECT * FROM user WHERE email = %s AND role = 'supervisor'"
+            cursor.execute(query, (email,))
+            user_data = cursor.fetchone()
+            if user_data:
+
+                    # Get the supervisor_id
+                    query = "SELECT supervisor_id FROM supervisor WHERE supervisor_email = %s"
+                    cursor.execute(query, (email,))
+                    supervisor_id = cursor.fetchone()[0]
+
+                    # Store the supervisor_id in the session
+                    session['user_id'] = supervisor_id
+                    session['role'] = 'supervisor' # Store the role in the session
+
+                    cursor.close()
+                    return redirect(url_for('supervisorStudentDetails', supervisor_id=supervisor_id)) # Redirect to the supervisor page
+            
+            # Check if user is an admin
+            query = "SELECT * FROM user WHERE email = %s AND role = 'admin'"
+            cursor.execute(query, (email,))
+            user_data = cursor.fetchone()
+            if user_data:
+
+                # Get the admin_id
+                # TODO: Add admin_id to the database
+
+
+                cursor.close()
+                return redirect(url_for('admin'))
+            
+            # If user is not a student, company, supervisor or admin, then something is wrong
+            flash('An error occurred. Please try again.', 'error')
+            return render_template('login.html', form_data=request.form)
+        
+        except Exception as e:
+            print(f"Error during login: {e}")
+            flash('An error occurred. Please try again.', 'error')
+            return render_template('login.html', form_data=request.form)
+        
+        finally:
+            cursor.close()    
+
+@app.route('/register_company', methods=['GET', 'POST'])
+def register_company():
+    error_messages = {}
+
+    if request.method == 'GET':
+        return render_template('register_company.html')
+    
+    if request.method == 'POST':
 
         print(f"Form data: {request.form}")
 
         try:
             cursor = db_conn.cursor()
+            # Fetch Company data
+            companyName = request.form.get('companyName')
+            industry = request.form.get('industry')
+            contactName = request.form.get('contactName')
+            contactEmail = request.form.get('contactEmail')
+            userEmail = request.form.get('userEmail')
+            userPassword = request.form.get('userPassword')
+            companyConfirmedPassword = request.form.get('companyConfirmedPassword')
 
-            if role == "student":
-                # Fetch Student data
-                educationLevel = request.form.get('educationLevel')
-                cohort = request.form.get('cohort')
-                programme = request.form.get('programme')
-                tutorialGroup = request.form.get('tutorialGroup')
-                studentID = request.form.get('studentID')
-                studentEmail = request.form.get('studentEmail')
-                supervisorName = request.form.get('supervisorName')
-                supervisorEmail = request.form.get('supervisorEmail')
-                programmingKnowledge = request.form.get('programmingKnowledge')
-                databaseKnowledge = request.form.get('databaseKnowledge')
-                networkingKnowledge = request.form.get('networkingKnowledge')
-                studentPassword = request.form.get('studentPassword')
-                studentConfirmedPassword = request.form.get('studentConfirmedPassword')
+            
+            #Check if all fields are filled
+            if not all([companyName, industry, contactName, contactEmail, userEmail, userPassword, companyConfirmedPassword]):
+                error_messages['all_fields'] = 'Error! Please fill in all fields.'
 
-                supervisor_id = 1  # This is just a placeholder for now. We will change this later.
+            # Check if password and confirmed password match
+            if userPassword != companyConfirmedPassword:
+                error_messages['companyPassword'] = 'Password and confirmed password do not match.'
 
-                user_id = 1  # This is just a placeholder for now. We will change this later.
+            # Check if email already exists
+            query = "SELECT * FROM user WHERE email = %s"
+            cursor.execute(query, (userEmail,))
+            user_data = cursor.fetchone()
+            if user_data:
+                error_messages['userEmail'] = 'Email already exists.'
 
-                #Check if all fields are filled
-                if not all([educationLevel, cohort, programme, tutorialGroup, studentID, studentEmail, supervisorName, supervisorEmail, programmingKnowledge, databaseKnowledge, networkingKnowledge, studentPassword, studentConfirmedPassword]):
-                    error_messages['all_fields'] = 'Error! Please fill in all fields.'
 
-                # Check if password and confirmed password match
-                if studentPassword != studentConfirmedPassword:
-                    error_messages['studentPassword'] = 'Password and confirmed password do not match.'
+            if error_messages:
+                return render_template('register_company.html', error_messages=error_messages, form_data=request.form)
+            
+            # Insert into user table
+            query = """INSERT INTO user
+                    (email, password, role)
+                    VALUES (%s, %s, 'company')"""
+            cursor.execute(query, (userEmail, userPassword))
+            db_conn.commit()
 
-                # Check for other validation rules and add error messages as needed
+            # Get the user_id of the newly inserted user
+            query = "SELECT id FROM user WHERE email = %s"
+            cursor.execute(query, (userEmail,))
+            user_id = cursor.fetchone()[0]
 
-                if error_messages:
-                    return render_template('register.html', error_messages=error_messages, form_data=request.form)
 
-                
-                # Insert into student table
-                query = """INSERT INTO student 
-                        (student_name, student_email, student_cohort, student_programme, student_level, student_tutgrp, student_pk, student_dk, student_nk, supervisor_id, student_password,user_id) 
-                        VALUES
-                        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, SHA2(%s, 256), %s)"""
-                cursor.execute(query, (studentID, studentEmail, cohort, programme, educationLevel, tutorialGroup, programmingKnowledge, databaseKnowledge, networkingKnowledge, supervisor_id, studentPassword, user_id))
-                db_conn.commit()
+            # Insert into company table
+            query = """INSERT INTO company 
+                    (company_name, industry, contact_name, contact_email, user_id) 
+                    VALUES (%s, %s, %s, %s, %s)"""
+            cursor.execute(query, (companyName, industry, contactName, contactEmail, user_id))
+            db_conn.commit()
 
-            elif role == "company":
-                # Fetch Company data
-                companyName = request.form.get('companyName')
-                industry = request.form.get('industry')
-                contactName = request.form.get('contactName')
-                contactEmail = request.form.get('contactEmail')
-                userEmail = request.form.get('userEmail')
-                userPassword = request.form.get('userPassword')
-                companyConfirmedPassword = request.form.get('companyConfirmedPassword')
-
-                user_id = 1  # This is just a placeholder for now. We will change this later.
-                
-                #Check if all fields are filled
-                if not all([companyName, industry, contactName, contactEmail, userEmail, userPassword, companyConfirmedPassword]):
-                    error_messages['all_fields'] = 'Error! Please fill in all fields.'
-
-                # Check if password and confirmed password match
-                if userPassword != companyConfirmedPassword:
-                    error_messages['companyPassword'] = 'Password and confirmed password do not match.'
-
-                # Check for other validation rules and add error messages as needed
-
-                if error_messages:
-                    return render_template('register.html', error_messages=error_messages, form_data=request.form)
-                
-                # Insert into company table
-                query = """INSERT INTO company 
-                        (company_name, industry, contact_name, contact_email, user_id) 
-                        VALUES (%s, %s, %s, %s, %s)"""
-                cursor.execute(query, (companyName, industry, contactName, contactEmail, user_id))
-                db_conn.commit()
+            
 
             cursor.close()
+
+
             flash('Registration successful!', 'success')
             return redirect(url_for('login'))  # Redirect to the login page
 
         except Exception as e:
             print(f"Error during registration: {e}")
             flash('An error occurred during registration. Please try again.', 'error')
-            return redirect(url_for('register'))  # Redirect to the registration page
+            return redirect(url_for('register_company'))  # Redirect to the registration page
 
 
 
+@app.route('/register_student', methods=['GET', 'POST'])
+def register_student():
+    error_messages = {}  # Dictionary to store error message
+
+    if request.method == 'GET':
+        return render_template('register_student.html')  # default to student form
+
+    if request.method == 'POST':
+        print(f"Form data: {request.form}")
+
+        try:
+            cursor = db_conn.cursor()
+
+            # Fetch Student data
+            educationLevel = request.form.get('educationLevel')
+            cohort = request.form.get('cohort')
+            programme = request.form.get('programme')
+            tutorialGroup = request.form.get('tutorialGroup')
+            studentName = request.form.get('studentName')
+            studentID = request.form.get('studentID')
+            studentEmail = request.form.get('studentEmail')
+            supervisorName = request.form.get('supervisorName')
+            supervisorEmail = request.form.get('supervisorEmail')
+            programmingKnowledge = request.form.get('programmingKnowledge')
+            databaseKnowledge = request.form.get('databaseKnowledge')
+            networkingKnowledge = request.form.get('networkingKnowledge')
+            studentPassword = request.form.get('studentPassword')
+            studentConfirmedPassword = request.form.get('studentConfirmedPassword')
+
+            supervisor_id = 1
+
+            #Check if all fields are filled
+            if not all([educationLevel, cohort, programme, tutorialGroup, studentID, studentEmail, supervisorName, supervisorEmail, programmingKnowledge, databaseKnowledge, networkingKnowledge, studentPassword, studentConfirmedPassword]):
+                error_messages['all_fields'] = 'Error! Please fill in all fields.'
+
+            # Check if password and confirmed password match
+            if studentPassword != studentConfirmedPassword:
+                error_messages['studentPassword'] = 'Password and confirmed password do not match.'
+
+            # Check if email already exists
+            query = "SELECT * FROM student WHERE student_email = %s"
+            cursor.execute(query, (studentEmail,))
+            student_data = cursor.fetchone()
+
+            query = "SELECT * FROM user WHERE email = %s"
+            cursor.execute(query, (studentEmail,))
+            user_data = cursor.fetchone()
+
+            if student_data or user_data:
+                error_messages['studentEmail'] = 'Email already exists.'
+
+            # Check if student ID already exists
+            query = "SELECT * FROM student WHERE student_id = %s"
+            cursor.execute(query, (studentID,))
+            student_data = cursor.fetchone()
+            if student_data:
+                error_messages['studentID'] = 'Student ID already exists.'
+
+            # Check if supervisor email not found
+            query = "SELECT * FROM supervisor WHERE supervisor_email = %s"
+            cursor.execute(query, (supervisorEmail,))
+            supervisor_data = cursor.fetchone()
+            if not supervisor_data:
+                error_messages['supervisorEmail'] = 'Supervisor email not found.'
+            else:
+                supervisor_id = supervisor_data[0]
+                
+            if error_messages:
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+
+            # Insert into user table
+            query = """INSERT INTO user
+                    (email, password, role)
+                    VALUES (%s, %s, 'student')"""
+            cursor.execute(query, (studentEmail, studentPassword))
+            db_conn.commit()
+
+            # Get the user_id of the newly inserted user
+            query = "SELECT id FROM user WHERE email = %s"
+            cursor.execute(query, (studentEmail,))
+            user_id = cursor.fetchone()[0]
+
+            # Insert into student table
+            query = """INSERT INTO student 
+                    (student_id, student_name, student_email, student_cohort, student_programme, student_level, student_tutgrp, student_pk, student_dk, student_nk, supervisor_id, student_password,user_id) 
+                    VALUES
+                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, SHA2(%s, 256), %s)"""
+            cursor.execute(query, (studentID, studentName, studentEmail, cohort, programme, educationLevel, tutorialGroup, programmingKnowledge, databaseKnowledge, networkingKnowledge, supervisor_id, studentPassword, user_id))
+            db_conn.commit()
+            cursor.close()
+
+
+            flash('Registration successful!', 'success')
+            return redirect(url_for('login'))  # Redirect to the login page
+
+        except Exception as e:
+            print(f"Error during registration: {e}")
+            flash('An error occurred during registration. Please try again.', 'error')
+            return redirect(url_for('register_student'))  # Redirect to the registration page
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':
