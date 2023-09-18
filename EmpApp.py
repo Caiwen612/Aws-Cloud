@@ -502,7 +502,42 @@ def handle_company_profile():
             print(f"Error fetching company details: {e}")
             return "An error occurred while fetching company details."
 
+#---------------- Eugene ----------------
+@app.route('/supervisorStudentDetails')
+def supervisorStudentDetails():
+    try:
+        cursor = db_conn.cursor()
 
+        user_id = session.get('user_id')
+
+        # Fetch student list from the database with the supervisor id
+        query = "SELECT * FROM student WHERE supervisor_id = %s"
+        cursor.execute(query, (user_id,))
+        student_list = cursor.fetchall()
+        cursor.close()
+
+        return render_template('supervisorStudentDetails.html', student_list=student_list)
+
+    except Exception as e:
+        print(f"Error fetching job postings: {e}")
+        return "An error occurred while fetching student list."
+    
+@app.route('/supervisorStudentDetails/<student_id>')
+def supervisorStudentDetails_student(student_id):
+    try:
+        cursor = db_conn.cursor()
+
+        # Fetch student details from the database
+        query = "SELECT * FROM student WHERE student_id = %s"
+        cursor.execute(query, (student_id,))
+        student_details = cursor.fetchone()
+        cursor.close()
+
+        return render_template('supervisorStudentDetails_student.html', student_details=student_details)
+
+    except Exception as e:
+        print(f"Error fetching student details: {e}")
+        return "An error occurred while fetching student details."
 
 #-----------------ROUTING-----------------
 @app.route('/')
@@ -557,10 +592,6 @@ def studentResults():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-
-@app.route('/supervisorStudentDetails')
-def supervisorStudentDetails():
-    return render_template('supervisorStudentDetails.html')
 
 @app.route('/login' , methods=['GET', 'POST'])
 def login():

@@ -100,22 +100,40 @@
                     </div>
                 </div>
 
-                <!-- Single job -->
+                <!-- Single student -->
                 <div class="row justify-content-center">
                     <div class="col-xl-10">
                         {% for student in student_list %}
-                        <div class="single-job-items mb-30"
-                            style=" position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                            <div class="job-items">
-                                
+                        <div class="single-job-items mb-30" style="position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                            <div class="job-items d-flex">
+                                <img class="img-rounded" style="width: auto; height: 100px; margin-right: 2rem;" src="static/img/icon/studentIcon.png" alt="Student Icon">
                                 <div class="job-tittle">
-                                   
-                                    <ul>
-                                        <li>Working hours: {{student[4]}}</li>
-                                        <li>Salary: RM{{student[2]}} - RM{{student[3]}}</li>
-                                    </ul>
+                                    <h4>{{student[1]}} ({{student[0]}})</h4>
+                                    <table class="table table-borderless">
+                                        <tbody>
+                                          <tr>
+                                            <td style="padding-left: 0; width: 40px;"><strong>Level</strong></td>
+                                            <td style="width: 120px;">{{student[5]}}</td>
+                                            <td style="padding-left: 0; width: 105px;"><strong>Programme</strong></td>
+                                            <td style="width: 100px;">{{student[4]}}</td>
+                                            <td style="padding-left: 0; width: 40px;"><strong>Cohort</strong></td>
+                                            <td style="width: 120px;">{{student[3]}}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <table class="table table-borderless">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding-left: 0; width: 70px;"><strong>E-mail</strong></td>
+                                                <td>{{student[2]}}</td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
                                 </div>
-                               
+                                <div style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%);">
+                                    <a href="{{ url_for('supervisorStudentDetails_student', student_id=student[0]) }}" class="btn btn-secondary">Show Details</a>
+                                </div>
+                                
                             </div>
                         </div>
                         {% endfor %}
