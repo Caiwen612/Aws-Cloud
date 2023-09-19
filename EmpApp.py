@@ -3,8 +3,11 @@ from datetime import datetime
 from flask import flash
 from flask import session
 from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-import io
+from reportlab.lib import colors
+from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
+
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from io import BytesIO
 
 from pymysql import connections
 
@@ -76,7 +79,6 @@ def AddEmp():
     print("The student data had added successfully")
     return render_template('AddEmpOutput.html', name=emp_name)
 
-
 @app.route("/updateemp", methods=['POST'])
 def updateEmp():
     #TODO: READ THE DATA FROM HTML
@@ -118,7 +120,6 @@ def deleteEmp():
     print("The student data had delete successfully")
     return render_template('AddEmpOutput.html',name=emp_name)
 
-
 #----------------Student CRUD----------------
 
 @app.route("/studentDetails", methods=['GET'])
@@ -138,7 +139,6 @@ def displayStudentData():
 
     # Pass the data to the HTML template
     return render_template('studentDetails.html', student_name=student_data[0], student_email=student_data[1])
-
 
 @app.route("/studentDetails", methods=['POST'])
 def updateStudentData():
@@ -164,8 +164,6 @@ def updateStudentData():
         return redirect(url_for('studentDetails', student_id=student_id))
 
 app.config['UPLOAD_FOLDER'] = "C:\\Users\\User\\Desktop"
-
-
 @app.route('/studentUpload', methods=['POST'])
 def upload_document():
     try:
@@ -215,7 +213,6 @@ def upload_document():
         print("Error occurred: ", str(e))
         return str(e)
     
-
 @app.route('/studentResults', methods=['GET'])
 def display_results():
     cursor = db_conn.cursor()
@@ -233,19 +230,83 @@ def display_results():
     # Pass the data to the HTML template
     return render_template('studentResults.html',  result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_position  = student_data[6], internship_duration  = student_data[7])
 
-@app.route('/download_pdf', methods=['GET'])
-def download_pdf():
+@app.route('/generate_pdf', methods=['GET'])
+def generate_pdf():
+ # Fetch student data from the database
+    student_id = "21WMR02952"
+    cursor = db_conn.cursor()
+    select_sql =  "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
+    
+    try:
+        cursor.execute(select_sql, (student_id,))
+        student_data = cursor.fetchone()
+    except Exception as e:
+        print(f"Error fetching student data: {e}")
+    finally:
+        cursor.close()
+
+    # # Fetch company data from the database (assuming you have a table for company details)
+    # company_id = "XYZ123"
+    # cursor = db_conn.cursor()
+    # select_company_sql = "SELECT company_name, company_location FROM company WHERE company_id = %s"
+    
+    # try:
+    #     cursor.execute(select_company_sql, (company_id,))
+    #     company_data = cursor.fetchone()
+    # except Exception as e:
+    #     print(f"Error fetching company data: {e}")
+    # finally:
+    #     cursor.close()
+
     # Create a PDF buffer
-    buffer = io.BytesIO()
+    buffer = BytesIO()
 
-    # Create the PDF object, using the buffer as its "file"
-    p = canvas.Canvas(buffer, pagesize=letter)
+    # Create the PDF object using the buffer
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
 
-    # Your code to add content to the PDF goes here
-    # You can use p.drawString(), p.drawImage(), etc. to add text and images
+    # Create a list of elements to add to the PDF
+    elements = []
 
-    # Save the PDF to the buffer
-    p.save()
+    # Define a title style using ReportLab's styles
+    styles = getSampleStyleSheet()
+    title_style = styles['Title']
+
+    # Add a title to the PDF
+    elements.append(Paragraph("Student's Internship Results", title_style))
+
+    # Create a table to display student and company data
+    data = [
+        ["Student Name", student_data[2]],
+        ["Student Email", student_data[3]],
+        ["Student Cohort", student_data[4]],
+        ["Student Programme", student_data[5]],
+        ["Internship Position", student_data[6]],
+        ["Internship Duration", student_data[7]],
+        ["Internship Results", student_data[0]],
+        ["Supervisor's Comments", student_data[1]],
+        # ["Company Name", company_data[0]],
+        # ["Company Location", company_data[1]],
+    ]
+
+    # Define table styles
+    table_style = TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), (0.8, 0.8, 0.8)),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), (0.92, 0.92, 0.92)),
+        ('GRID', (0, 0), (-1, -1), 1, (0.7, 0.7, 0.7)),
+    ])
+
+    # Create the table and apply styles
+    table = Table(data)
+    table.setStyle(table_style)
+
+    # Add the table to the PDF
+    elements.append(table)
+
+    # Build the PDF document
+    doc.build(elements)
 
     # Move the buffer position to the beginning
     buffer.seek(0)
@@ -253,10 +314,26 @@ def download_pdf():
     # Create a response to send the PDF
     response = make_response(buffer.read())
     response.mimetype = 'application/pdf'
-    response.headers['Content-Disposition'] = 'attachment; filename=student_results.pdf'
+    filename = f"{student_data[2]}_Internship_Results.pdf"
+    response.headers['Content-Disposition'] = f'attachment; filename={filename}'
 
     return response
-    
+
+@app.route('/show_internship',  methods=['GET'])
+def show_internship():
+    try:
+        cursor = db_conn.cursor()
+        query = "SELECT * FROM job_listings"
+        cursor.execute(query)
+        job_postings = cursor.fetchall()
+        cursor.close()
+        
+        return render_template('studentInternship.html', job_postings=job_postings)
+
+    except Exception as e:
+        print(f"Error fetching job postings: {e}")
+        return "An error occurred while fetching job postings."
+
 #----------------Company CRUD----------------
 
 #Render company job listing page and display job postings
