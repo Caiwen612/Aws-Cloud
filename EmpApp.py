@@ -1071,12 +1071,14 @@ def register_student():
             cursor.execute(query, (studentEmail,))
             user_id = cursor.fetchone()[0]
 
-            # Insert into student table
-            query = """INSERT INTO student 
-                    (student_id, student_name, student_email, student_cohort, student_programme, student_level, student_tutgrp, student_pk, student_dk, student_nk, supervisor_id, student_password,user_id) 
-                    VALUES
-                    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, SHA2(%s, 256), %s)"""
-            cursor.execute(query, (studentID, studentName, studentEmail, cohort, programme, educationLevel, tutorialGroup, programmingKnowledge, databaseKnowledge, networkingKnowledge, supervisor_id, studentPassword, user_id))
+            # Update the student table
+            query = """UPDATE student 
+                    SET 
+                        user_id = %s
+                    WHERE student_id = %s"""
+
+            # Provide the values for the update
+            cursor.execute(query, (user_id, studentID ))
             db_conn.commit()
             cursor.close()
 
