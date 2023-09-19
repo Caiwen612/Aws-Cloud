@@ -56,8 +56,10 @@ def handle_webhook():
         abort(400)  # Request is not from GitHub. Abort!
     
     # If request is authenticated, pull latest changes and restart Flask
+    #Sudo test 
     subprocess.call(['sudo','git', 'pull'], cwd=GITHUB_REPO_PATH)
     subprocess.call(['sudo', 'systemctl', 'restart', 'myflaskapp'])
+    
     
     return 'OK', 200
 
