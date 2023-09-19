@@ -1092,8 +1092,10 @@ def logout():
 
 if __name__ == '__main__':
     if os.environ.get('FLASK_ENV') == 'production':
+        print("PRODUCTION ENVIRONMENT")
         app.run(host='0.0.0.0', port=80)
     else:
+        print("DEVELOPMENT ENVIRONMENT")
         app.run(debug=True)
 
     
