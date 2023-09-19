@@ -22,7 +22,7 @@ app.config['SECRET_KEY'] = 'a3c2b5f01d686ffe7ca287ff4e8d9f2d'
 bucket = custombucket
 region = customregion
 # Add a WebHook
-WEBHOOK_SECRET = 'your_secret_key'
+WEBHOOK_SECRET = 'WebHockServiceSecret'
 GITHUB_REPO_PATH = '/home/ec2-user/Aws-Cloud'
 
 # Connect to Maria DB
