@@ -78,13 +78,14 @@
                     <h4 class="text-center">Register</h4>
                     <hr>
                     <!-- Display error message here -->
-                    {% if error_messages and (error_messages.get('all_fields') or error_messages.get('studentEmail') or error_messages.get('studentID') or error_messages.get('supervisorEmail')) %}
+                    {% if error_messages and (error_messages.get('all_fields') or error_messages.get('studentEmail') or error_messages.get('studentID') or error_messages.get('supervisorEmail') or error_messages.get('supervisorName')) %}
                     <span class="text-danger"
                         style="display: block; text-align: center; border: 1px solid #f00; padding: 10px; margin-bottom: 20px;">
                         {{ error_messages.get('all_fields') if error_messages.get('all_fields') else
                         error_messages.get('studentEmail') if error_messages.get('studentEmail') else
                         error_messages.get('studentID') if error_messages.get('studentID') else
-                        error_messages.get('supervisorEmail') if error_messages.get('supervisorEmail') }}
+                        error_messages.get('supervisorEmail') if error_messages.get('supervisorEmail') else
+                        error_messages.get('supervisorName') if error_messages.get('supervisorName') }}
                     </span>
                     {% endif %}
 
