@@ -533,11 +533,62 @@ def supervisorStudentDetails_student(student_id):
         student_details = cursor.fetchone()
         cursor.close()
 
-        return render_template('supervisorStudentDetails_student.html', student_details=student_details)
+        return render_template('supervisorStudentDetails_student.html', studentDetails=student_details)
 
     except Exception as e:
         print(f"Error fetching student details: {e}")
         return "An error occurred while fetching student details."
+    
+@app.route('/supervisorStudentDetails/evaluate/<student_id>', methods=['GET', 'POST'])
+def supervisorStudentDetails_student_evaluate(student_id):
+    if request.method == 'POST':
+        # Handle the form submission
+
+        # Extract data from the form
+        programming_knowledge = request.form['programming_knowledge']
+        database_knowledge = request.form['database_knowledge']
+        debugging_knowledge = request.form['debugging_knowledge']
+        teamwork_skills = request.form['teamwork_skills']
+        evaluation_date = request.form['evaluation_date']
+        evaluation_comment = request.form['evaluation_comment']
+
+        # You can now use these variables to update your database or perform any other actions as needed.
+        # Update the database with the new data
+        try:
+            cursor = db_conn.cursor()
+            
+            query = """
+            UPDATE student
+            SET ev_pk=%s, ev_db=%s, ev_dek=%s, ev_tk=%s, ev_date=%s, ev_comment=%s
+            WHERE student_id = %s
+            """
+            cursor.execute(query, (programming_knowledge, database_knowledge, debugging_knowledge, teamwork_skills, evaluation_date, evaluation_comment, student_id))
+            db_conn.commit()
+            cursor.close()
+            
+            flash('Evaluation submitted successfully!', 'success')  # Flash a success message
+            return redirect(url_for('supervisorStudentDetails_student_evaluate', student_id=student_id))
+        
+        except Exception as e:
+            print(f"Error inserting job listing: {e}")
+            flash('An error occurred while submitting the evaluation. Please try again.', 'error')
+            return redirect(url_for('supervisorStudentDetails_student_evaluate', student_id=student_id))
+
+    else:  # This is for the GET method
+        try:
+            cursor = db_conn.cursor()
+
+            # Fetch student details from the database
+            query = "SELECT * FROM student WHERE student_id = %s"
+            cursor.execute(query, (student_id,))
+            student_details = cursor.fetchone()
+            cursor.close()
+
+            return render_template('supervisorEvaluationForm.html', studentDetails=student_details)
+
+        except Exception as e:
+            print(f"Error fetching student details: {e}")
+            return "An error occurred while fetching student details."
 
 #-----------------ROUTING-----------------
 @app.route('/')
