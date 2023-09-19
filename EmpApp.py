@@ -319,20 +319,76 @@ def generate_pdf():
 
     return response
 
-@app.route('/show_internship',  methods=['GET'])
-def show_internship():
+@app.route('/studentInternship')
+def show_all_jobs():
     try:
         cursor = db_conn.cursor()
-        query = "SELECT * FROM job_listings"
+        query = """
+            SELECT job_listings.*, company.company_name AS company_name
+            FROM job_listings
+            JOIN company ON job_listings.company_id = company.company_id
+        """
         cursor.execute(query)
-        job_postings = cursor.fetchall()
+        job_posting = cursor.fetchall()
         cursor.close()
-        
-        return render_template('studentInternship.html', job_postings=job_postings)
+
+        return render_template('studentInternship.html', job_posting=job_posting)
 
     except Exception as e:
         print(f"Error fetching job postings: {e}")
         return "An error occurred while fetching job postings."
+
+#Get company job listing details by job listing id
+@app.route('/studentInternship/<int:listing_id>')
+def intern_job_details(listing_id):
+    try:
+        cursor = db_conn.cursor()
+        
+        # Create a SQL query to retrieve job listing details by job_id
+        query = "SELECT * FROM job_listings WHERE listing_id = %s"
+        cursor.execute(query, (listing_id,))
+        job_data = cursor.fetchone()
+
+        if job_data:
+            company_id = job_data[9]
+            
+            # Fetch company data using company_id
+            query = "SELECT * FROM company WHERE company_id = %s"
+            cursor.execute(query, (company_id,))
+            company_data = cursor.fetchone()
+
+            cursor.close()
+
+            if company_data:
+                return render_template('studentInternDetails.html', companyData=company_data, jobData=job_data)
+            else:
+                return "Company not found."
+        else:
+            return "Job listing not found."
+    
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+        return "An error occurred while fetching data."
+
+# Assuming you have a function to connect to the database called 'get_db_connection'
+def get_unique_job_positions():
+    cursor = db_conn.cursor()
+    select_sql = "SELECT DISTINCT position FROM job_listings"
+    cursor.execute(select_sql)
+    job_positions = [row[0] for row in cursor.fetchall()]  # Extract unique positions from the result
+    cursor.close()
+    print(job_positions)  # Add this line for debugging
+    return job_positions
+
+
+
+from flask import render_template
+
+@app.route('/studentInternship')
+def internship_position():
+    job_positions = get_unique_job_positions()
+    return render_template('studentInternship.html', job_positions=job_positions)
+
 
 #----------------Company CRUD----------------
 

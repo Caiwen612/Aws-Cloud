@@ -22,12 +22,14 @@
 		<link rel="stylesheet" href="static/css/nice-select.css">
 		<link rel="stylesheet" href="static/css/style.css">
 		<link rel="stylesheet" href="static/css/responsive.css">
+
+		
+		
 </head>
 
 <body>
 	
-    <!-- Preloader Start -->
-    <div id="preloader-active">
+    <!-- Preloader Start -->    <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
@@ -37,7 +39,7 @@
             </div>
         </div>
     </div>
-    <!-- Preloader Start -->
+
 	<header>
         <!-- Header Start -->
        <div class="header-area header-transparrent">
@@ -83,7 +85,7 @@
         <!-- Header End -->
     </header>
 
-	<!-- Hero Area Start-->
+
 	<div class="slider-area ">
 		<div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="static/img/hero/ok.jpeg">
 			<div class="container">
@@ -97,8 +99,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- Hero Area End -->
-	<!-- Start Sample Area -->
+
 	<section class="sample-text-area">
 		<div class="container box_1170">
 			<p class="sample-text">
@@ -111,6 +112,7 @@
 		<h3 class="text-heading" style = "padding-bottom:30px">Internships</h3>
 	</div>
 
+	
 	<div class="job-listing-area pb-120">
 		<div class="container">
 			<div class="row">
@@ -135,39 +137,40 @@
 					<div class="job-category-listing mb-50">
 						<!-- single one -->
 						<div class="single-listing">
-						   <div class="small-section-tittle2">
-								 <h4>Company Name</h4>
-						   </div>
-						   <aside class="single_sidebar_widget search_widget" style="padding-bottom: 30px;">
-                            <form action="#">
-                                <div class="form-group">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder='Search Keyword'
-                                            onfocus="this.placeholder = ''"
-                                            onblur="this.placeholder = 'Search Keyword'">
-                                        <div class="input-group-append">
-                                            <button class="" type="button" style ="background-color:#fb246a ; border: #fb246a;"><i class="ti-search"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                             </form>
-                        	</aside>
+							<div class="small-section-tittle2">
+								<h4>Company Name</h4>
+							</div>
+							<aside class="single_sidebar_widget search_widget" style="padding-bottom: 30px;">
+								<div class="form-group">
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" id="company-name-input" placeholder="Search Name">
+										<div class="input-group-append">
+											<button id="search-button" type="button" style="background-color:#fb246a; border: #fb246a;" onclick="filterJobListings()">
+
+												<i class="ti-search"></i> 
+												</button>
+										</div>
+									</div>
+								</div>
+							</aside>
 						</div>
+						
+						
 						<div class="single-listing">
 							<div class="small-section-tittle2">
 								<h4>Job Position</h4>
+								{{job_positions}}
 							</div>
-
-							<div class="select-job-items2"  style="padding-bottom: 30px;">
-								<select name="select">
+							<div class="select-job-items2" style="padding-bottom: 30px;">
+								<select name="select" id="job-position-select">
 									<option value="">All Category</option>
-									<option value="">Category 1</option>
-									<option value="">Category 2</option>
-									<option value="">Category 3</option>
-									<option value="">Category 4</option>
+									{% for position in job_positions %}
+										<option value="{{ position }}">{{ position }}</option>
+									{% endfor %}
 								</select>
 							</div>
 						</div>
+						
 			
 						<!-- single two -->
 						<div class="single-listing" style="padding-top: 60px;">
@@ -203,41 +206,8 @@
 						</div>
 						
 			
-						<!-- single three -->
-						<div class="single-listing"  style="padding-top: 100px;">
-							<!-- select-Categories start -->
-							<div class="select-Categories pb-50">
-								<div class="small-section-tittle2">
-									<h4>Posted Within</h4>
-								</div>
-								<label class="container">Any
-									<input type="checkbox" >
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">Today
-									<input type="checkbox" checked="checked active">
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">Last 2 days
-									<input type="checkbox">
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">Last 3 days
-									<input type="checkbox">
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">Last 5 days
-									<input type="checkbox">
-									<span class="checkmark"></span>
-								</label>
-								<label class="container">Last 10 days
-									<input type="checkbox">
-									<span class="checkmark"></span>
-								</label>
-							</div>
-							<!-- select-Categories End -->
-						</div>
-						<div class="single-listing">
+
+						<div class="single-listing" style="padding-top: 90px;">
 							<!-- Range Slider Start -->
 							<aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
 								<div class="small-section-tittle2">
@@ -265,87 +235,85 @@
 
 				</div>
 				<!-- Right content -->
-<div class="col-xl-9 col-lg-9 col-md-8">
-    <!-- Featured_job_start -->
-    <section class="featured-job-area">
-        <div class="container">
-            <!-- Count of Job list Start -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="count-job mb-35">
-                        <!-- Display the count of job postings -->
-                        <span>{{ show_internship|length }} Jobs found</span>
-                        <!-- Select job items start -->
-                        <div class="select-job-items">
-                            <span>Sort by</span>
-                            <select name="select">
-                                <option value="">None</option>
-                                <option value="">job list</option>
-                                <option value="">job list</option>
-                                <option value="">job list</option>
-                            </select>
-                        </div>
-                        <!-- Select job items End -->
-                    </div>
-                </div>
-            </div>
-            <!-- Count of Job list End -->
+				<div class="col-xl-9 col-lg-9 col-md-8">
+					<!-- Featured_job_start -->
+					<section class="featured-job-area">
+						<div class="container">
+							<!-- Count of Job list Start -->
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="count-job mb-35">
+										<!-- Display the count of job postings -->
+										<span>{{ job_posting|length }} Jobs found</span>
+										<!-- Select job items start -->
+										<div class="select-job-items">
+											<span>Sort by</span>
+											<select id="sort-select" onchange="sortJobPostings()">
+												<option value="none">None</option>
+												<option value="latest">Latest Post</option>
+											</select>
+										</div>
+										<!-- Select job items End -->
+									</div>
+								</div>
+							</div>
+							<!-- Count of Job list End -->
 
-            <!-- Loop through job_postings and generate table rows -->
-            <div class="job-listings">
-                {% for posting in show_internship %}
-                <div class="single-job-items mb-30">
-                    <div class="job-items">
-                        <div class="company-img">
-                            <!-- You can replace 'posting.company_logo_url' with your actual logo data -->
-                            <a href="#"><img src="{{ posting.company_logo_url }}" alt="{{ posting.company }}"></a>
-                        </div>
-                        <div class="job-tittle job-tittle2">
-                            <a href="#">
-                                <h4>{{ posting.position }}</h4>
-                            </a>
-                            <ul>
-                                <li>{{ posting.company }}</li>
-                                <li><i class="fas fa-map-marker-alt"></i>{{ posting.location }}</li>
-                                <li>${{ posting.min_salary }} - ${{ posting.max_salary }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="items-link items-link2 f-right">
-                        <a href="{{ url_for('job_details', listing_id=posting.listing_id) }}">Full Time</a>
-                        <span>Posted {{ posting.posted_date }} ago</span>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            <!-- Loop through job_postings End -->
-        </div>
-    </section>
-    <!-- Featured_job_end -->
-	
-</div>
-			</div>
-		</div>
-	</div>
+							<!-- Loop through job_postings and generate table rows -->
+							<div class="job-listings"  id="job-listings">
+								{% for posting in job_posting %}
 
-	<div class="pagination-area pb-115 text-center">
-		<div class="container">
-			<div class="row">
-				<div class="col-xl-12">
-					<div class="single-wrap d-flex justify-content-center">
-						<nav aria-label="Page navigation example">
-							<ul class="pagination justify-content-start">
-								<li class="page-item active"><a class="page-link" href="#">01</a></li>
-								<li class="page-item"><a class="page-link" href="#">02</a></li>
-								<li class="page-item"><a class="page-link" href="#">03</a></li>
-							<li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
-							</ul>
-						</nav>
-					</div>
+								<div class="single-job-items" data-original-order="{{ loop.index }}">
+									<div class="job-items">
+										<div class="company-img">
+											<!-- You can replace 'posting.company_logo_url' with your actual logo data -->
+											<a href="#"><img src="{{ posting.company_logo_url }}" alt="{{ posting.company_id }}"></a>
+										</div>
+										<div class="job-tittle job-tittle2">
+											<a href="#">
+												<h4>{{ posting[1] }}</h4>
+											</a>
+											<ul>
+												<li>{{ posting[10]}}</li>
+												<li><i class="fas fa-map-marker-alt"></i>{{ posting.location }}</li>
+												<li>${{ posting[2]}} - ${{ posting[3] }}</li>
+											</ul>
+										</div>
+									</div>
+									<div class="items-link items-link2 f-right">
+										<a href="{{ url_for('intern_job_details', listing_id=posting[0]) }}">Find Out More</a>
+										<span>Posted on {{ posting[8]}} </span>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+							<!-- Loop through job_postings End -->
+						</div>
+					</section>
+					<!-- Featured_job_end -->
+					
 				</div>
 			</div>
 		</div>
 	</div>
+
+<!-- Pagination area -->
+<div class="pagination-area pb-115 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="single-wrap d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-start" id="pagination">
+                            <!-- Pagination links will be dynamically added here -->
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 	<footer>
 		<!-- Footer Start-->
@@ -368,6 +336,82 @@
 	
 <!-- JS here -->
 		<!-- All JS Custom Plugins Link Here here -->
+		<script>
+   // Function to handle pagination
+   function paginateJobListings(jobItems, itemsPerPage) {
+        const paginationContainer = document.getElementById("pagination");
+        const jobListingsContainer = document.querySelector(".job-listings");
+
+        const pageCount = Math.ceil(jobItems.length / itemsPerPage);
+
+        // Create pagination links
+        for (let i = 1; i <= pageCount; i++) {
+            const pageLink = document.createElement("li");
+            pageLink.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+            paginationContainer.appendChild(pageLink);
+        }
+
+        // Function to change the current page
+        function changePage(pageNumber) {
+            const startIndex = (pageNumber - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            // Hide all job listings
+            jobItems.forEach((jobItem) => {
+				jobItem.style.visibility = "hidden"; 	
+            });
+
+            // Show job listings for the current page
+            for (let i = startIndex; i < endIndex; i++) {
+                if (jobItems[i]) {
+					jobItems[i].style.visibility = "visible";
+                }
+            }
+        }
+
+        // Show the first page by default
+        changePage(1);
+    }
+
+    // Call the pagination function with your job items and items per page
+    const jobItems = document.querySelectorAll(".single-job-items");
+    const itemsPerPage = 6; // Number of job listings per page
+    paginateJobListings(jobItems, itemsPerPage);
+
+// Function to filter job listings by company name
+function filterJobListings() {
+    const input = document.querySelector("#company-name-input");
+    const filterValue = input.value.toLowerCase();
+    const jobListingsContainer = document.querySelector("#job-listings");
+    const jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+
+    jobItems.forEach((jobItem) => {
+        const companyNameElement = jobItem.querySelector(".job-tittle2 h4");
+        if (companyNameElement) {
+            const companyName = companyNameElement.textContent.toLowerCase();
+            if (companyName.includes(filterValue)) {
+				jobItem.style.visibility = "visible";
+            } else {
+				jobItem.style.visibility = "hidden"; 	
+            }
+        }
+    });
+}
+
+// Add an event listener to the search button
+const searchButton = document.querySelector("#search-button");
+searchButton.addEventListener("click", filterJobListings);
+
+// Optionally, you can also add an event listener for the Enter key
+const companyNameInput = document.querySelector("#company-name-input");
+companyNameInput.addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+        filterJobListings();
+    }
+});
+
+		</script>
+		
         <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
 		<!-- Jquery, Popper, Bootstrap -->
 		<script src="./static/js/vendor/jquery-1.12.4.min.js"></script>
@@ -402,47 +446,5 @@
         <script src="./static/js/plugins.js"></script>
         <script src="./static/js/main.js"></script>
 
-		<!-- <script>
-			// Assuming you have a JavaScript function to fetch data from heididb
-			function fetchDataFromHeididb() {
-				// Replace this with your actual data retrieval logic
-				return [
-					{ company: "Company A", position: "Intern", location: "City A" },
-					{ company: "Company B", position: "Intern", location: "City B" },
-					// Add more data as needed
-				];
-			}
-		
-			// Function to generate the table
-			function generateTable() {
-				const data = fetchDataFromHeididb();
-				const tableContainer = document.getElementById("table-container");
-		
-				const table = document.createElement("table");
-				table.classList.add("table"); // Add Bootstrap table class if needed
-		
-				// Create the table header
-				const thead = document.createElement("thead");
-				const headerRow = document.createElement("tr");
-				headerRow.innerHTML = "<th>Company</th><th>Position</th><th>Location</th><th>Apply</th>";
-				thead.appendChild(headerRow);
-				table.appendChild(thead);
-		
-				// Create the table body
-				const tbody = document.createElement("tbody");
-				data.forEach((item) => {
-					const row = document.createElement("tr");
-					row.innerHTML = `<td>${item.company}</td><td>${item.position}</td><td>${item.location}</td><td><button class="apply-button">APPLY</button></td>`;
-					tbody.appendChild(row);
-				});
-				table.appendChild(tbody);
-		
-				tableContainer.appendChild(table);
-			}
-		
-			// Call the function to generate the table
-			generateTable();
-		</script>
-         -->
 </body>
 </html>
