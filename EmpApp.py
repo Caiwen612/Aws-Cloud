@@ -126,11 +126,10 @@ def deleteEmp():
 def displayStudentData():
     # Query the database to retrieve student data
     cursor = db_conn.cursor()
+    user_id = session.get('user_id')
     select_sql = "SELECT student_name, student_email FROM student WHERE student_id = %s"
-    student_id = "21WMR02952" 
-
     try:
-        cursor.execute(select_sql, (student_id,))
+        cursor.execute(select_sql, ( user_id,))
         student_data = cursor.fetchone()  # Assuming you want to display data for one student
     except Exception as e:
         print(f"Error fetching student data: {e}")
@@ -144,14 +143,14 @@ def displayStudentData():
 def updateStudentData():
     if request.method == 'POST':
         # Retrieve form data
-        student_id = "21WMR02952"
+        user_id = session.get('user_id')
         Name = request.form.get('Name')
         Email = request.form.get('Email')
 
         # Perform the database update
         cursor = db_conn.cursor()
         update_sql = "UPDATE student SET student_name = %s, student_email = %s WHERE student_id = %s"
-        values = (Name, Email, student_id)
+        values = (Name, Email,  user_id)
         try:
             cursor.execute(update_sql, values)
             db_conn.commit()
@@ -161,14 +160,14 @@ def updateStudentData():
         finally:
             cursor.close()
 
-        return redirect(url_for('studentDetails', student_id=student_id))
+        return redirect(url_for('studentDetails', student_id=user_id ))
 
 app.config['UPLOAD_FOLDER'] = "C:\\Users\\User\\Desktop"
 @app.route('/studentUpload', methods=['POST'])
 def upload_document():
     try:
         # Retrieve form data
-        student_id = "21WMR02952"
+        user_id = session.get('user_id')
 
         # Retrieve the uploaded file
         uploaded_file = request.files['document_file']
@@ -194,7 +193,7 @@ def upload_document():
             #Insert url to mariadb
             try:
                 update_sql = "UPDATE student SET acceptance_letter = %s WHERE student_id = %s"
-                value = (str(object_url),student_id)
+                value = (str(object_url),user_id )
                 # value = ("TESSTTTTTT",student_id)
                 cursor.execute(update_sql,value)
                 db_conn.commit()
@@ -217,10 +216,10 @@ def upload_document():
 def display_results():
     cursor = db_conn.cursor()
     # Fetch data from your database or any other source
-    student_id = "21WMR02952"
+    user_id = session.get('user_id')
     select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
     try:
-        cursor.execute(select_sql, (student_id,))
+        cursor.execute(select_sql, (user_id ,))
         student_data = cursor.fetchone()  # Assuming you want to display data for one student
     except Exception as e:
         print(f"Error fetching student data: {e}")
@@ -233,12 +232,12 @@ def display_results():
 @app.route('/generate_pdf', methods=['GET'])
 def generate_pdf():
  # Fetch student data from the database
-    student_id = "21WMR02952"
+    user_id = session.get('user_id')
     cursor = db_conn.cursor()
     select_sql =  "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
     
     try:
-        cursor.execute(select_sql, (student_id,))
+        cursor.execute(select_sql, (  user_id,))
         student_data = cursor.fetchone()
     except Exception as e:
         print(f"Error fetching student data: {e}")
@@ -375,20 +374,15 @@ def get_unique_job_positions():
     cursor = db_conn.cursor()
     select_sql = "SELECT DISTINCT position FROM job_listings"
     cursor.execute(select_sql)
-    job_positions = [row[0] for row in cursor.fetchall()]  # Extract unique positions from the result
+    job_positions = cursor.fetchall()
     cursor.close()
     print(job_positions)  # Add this line for debugging
     return job_positions
-
-
-
-from flask import render_template
 
 @app.route('/studentInternship')
 def internship_position():
     job_positions = get_unique_job_positions()
     return render_template('studentInternship.html', job_positions=job_positions)
-
 
 #----------------Company CRUD----------------
 
@@ -1004,23 +998,30 @@ def register_student():
                 error_messages['studentPassword'] = 'Password and confirmed password do not match.'
 
             # Check if email already exists
-            query = "SELECT * FROM student WHERE student_email = %s"
+            query = "SELECT * FROM user WHERE email = %s"
             cursor.execute(query, (studentEmail,))
             student_data = cursor.fetchone()
 
-            query = "SELECT * FROM user WHERE email = %s"
-            cursor.execute(query, (studentEmail,))
-            user_data = cursor.fetchone()
-
-            if student_data or user_data:
+            if student_data :
                 error_messages['studentEmail'] = 'Email already exists.'
 
             # Check if student ID already exists
-            query = "SELECT * FROM student WHERE student_id = %s"
+            query = "SELECT * FROM user WHERE studentId = %s"
             cursor.execute(query, (studentID,))
             student_data = cursor.fetchone()
             if student_data:
                 error_messages['studentID'] = 'Student ID already exists.'
+
+            
+
+
+       # Check if the supervisor name not found
+            query = "SELECT * FROM supervisor WHERE supervisor_name = %s"
+            cursor.execute(query, (supervisorName,))
+            supervisor_name= cursor.fetchone()
+             # Check if supervisor name matches
+            if not  supervisor_name:  # Assuming supervisor name is in the second column
+                error_messages['supervisorName'] = 'Supervisor name does not match the database.'
 
             # Check if supervisor email not found
             query = "SELECT * FROM supervisor WHERE supervisor_email = %s"
