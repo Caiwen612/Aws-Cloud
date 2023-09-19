@@ -27,6 +27,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
 
 		
@@ -425,35 +428,29 @@ function sortJobPostings() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Function to filter job listings by job position
-    function filterByJobPosition() {
-        const select = document.querySelector("#job-position-select");
-        const selectedPosition = select.value.toLowerCase();
-        const jobListingsContainer = document.querySelector("#job-listings");
-        const jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+$(document).ready(function () {
+            // Initialize Select2
+            $(".select2").select2();
 
-        jobItems.forEach((jobItem) => {
-            const jobPositionElement = jobItem.querySelector(".job-tittle2 h4");
-            if (jobPositionElement) {
-                const jobPosition = jobPositionElement.textContent.toLowerCase();
-                if (selectedPosition === "" || jobPosition.includes(selectedPosition)) {
-                    jobItem.style.display = ""; // Show the element
-                } else {
-                    jobItem.style.display = "none"; // Hide the element
-                }
-            }
+            // Handle the change event when an option is selected
+            $(".select2").on("change", function () {
+                const selectedPosition = $(this).val();
+
+                // Send an AJAX request to the server for filtering
+                $.ajax({
+                    url: "/filter_job_listings",
+                    type: "POST",
+                    data: { selected_position: selectedPosition },
+                    success: function (response) {
+                        // Handle the filtered job listings returned from the server
+                        // You can update the job listings on the page based on the response
+                    },
+                    error: function (error) {
+                        console.error("Error:", error);
+                    },
+                });
+            });
         });
-    }
-
-    // Add an event listener to the job position dropdown
-    const jobPositionSelect = document.querySelector("#job-position-select");
-    jobPositionSelect.addEventListener("change", filterByJobPosition);
-
-    // Call the filter function to initialize the filtering
-    filterByJobPosition();
-});
-
 
 		 
 				 </script>
