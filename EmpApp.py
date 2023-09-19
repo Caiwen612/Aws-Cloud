@@ -8,7 +8,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
 
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from io import BytesIO
-
+import subprocess
 from pymysql import connections
 
 # from pymysql import connections
@@ -21,6 +21,9 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'a3c2b5f01d686ffe7ca287ff4e8d9f2d'
 bucket = custombucket
 region = customregion
+# Add a WebHook
+WEBHOOK_SECRET = 'your_secret_key'
+GITHUB_REPO_PATH = '/home/ec2-user/Aws-Cloud'
 
 # Connect to Maria DB
 try:
@@ -43,6 +46,20 @@ db_conn.autocommit = False
 # output = {}
 # table = 'employee'
 
+@app.route('/webhook', methods=['POST'])
+def handle_webhook():
+    # Verify GitHub's request
+    payload = request.data
+    signature = 'sha1=' + hmac.new(WEBHOOK_SECRET.encode(), payload, digestmod='sha1').hexdigest()
+    
+    if request.headers.get('X-Hub-Signature') != signature:
+        abort(400)  # Request is not from GitHub. Abort!
+    
+    # If request is authenticated, pull latest changes and restart Flask
+    subprocess.call(['git', 'pull'], cwd=GITHUB_REPO_PATH)
+    subprocess.call(['sudo', 'systemctl', 'restart', 'myflaskapp'])
+    
+    return 'OK', 200
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
