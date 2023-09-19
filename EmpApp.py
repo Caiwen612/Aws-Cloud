@@ -219,7 +219,7 @@ def display_results():
     user_id = session.get('user_id')
     select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
     try:
-        cursor.execute(select_sql, (user_id ,))
+        cursor.execute(select_sql, (user_id, ))
         student_data = cursor.fetchone()  # Assuming you want to display data for one student
     except Exception as e:
         print(f"Error fetching student data: {e}")
@@ -318,24 +318,6 @@ def generate_pdf():
 
     return response
 
-@app.route('/studentInternship')
-def show_all_jobs():
-    try:
-        cursor = db_conn.cursor()
-        query = """
-            SELECT job_listings.*, company.company_name AS company_name
-            FROM job_listings
-            JOIN company ON job_listings.company_id = company.company_id
-        """
-        cursor.execute(query)
-        job_posting = cursor.fetchall()
-        cursor.close()
-
-        return render_template('studentInternship.html', job_posting=job_posting)
-
-    except Exception as e:
-        print(f"Error fetching job postings: {e}")
-        return "An error occurred while fetching job postings."
 
 #Get company job listing details by job listing id
 @app.route('/studentInternship/<int:listing_id>')
@@ -374,15 +356,30 @@ def get_unique_job_positions():
     cursor = db_conn.cursor()
     select_sql = "SELECT DISTINCT position FROM job_listings"
     cursor.execute(select_sql)
-    job_positions = cursor.fetchall()
+    job_positions = [row[0] for row in cursor.fetchall()]  # Extract the first column (position)
     cursor.close()
-    print(job_positions)  # Add this line for debugging
     return job_positions
 
 @app.route('/studentInternship')
-def internship_position():
-    job_positions = get_unique_job_positions()
-    return render_template('studentInternship.html', job_positions=job_positions)
+def show_all_jobs():
+    try:
+        cursor = db_conn.cursor()
+        query = """
+            SELECT job_listings.*, company.company_name AS company_name
+            FROM job_listings
+            JOIN company ON job_listings.company_id = company.company_id
+        """
+        cursor.execute(query)
+        job_posting = cursor.fetchall()
+        job_positions = get_unique_job_positions()
+        cursor.close()
+
+        return render_template('studentInternship.html', job_posting=job_posting, job_positions=job_positions)
+
+    except Exception as e:
+        print(f"Error fetching job postings: {e}")
+        return "An error occurred while fetching job postings."
+
 
 #----------------Company CRUD----------------
 
