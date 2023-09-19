@@ -51,6 +51,7 @@ def handle_webhook():
     try:
         subprocess.call(['sudo','git', 'pull'], cwd=GITHUB_REPO_PATH)
         subprocess.call(['sudo', 'systemctl', 'restart', 'myflaskapp'])
+        print("Trying to fetch and pull new request from webhooks")
         # # Verify GitHub's request
         # payload = request.data
         # signature = 'sha1=' + hmac.new(WEBHOOK_SECRET.encode(), payload, digestmod='sha1').hexdigest()
@@ -59,8 +60,6 @@ def handle_webhook():
         #     abort(400)  # Request is not from GitHub. Abort!
         # If request is authenticated, pull latest changes and restart Flask
         #Sudo test 
-        subprocess.call(['sudo','git', 'pull'], cwd=GITHUB_REPO_PATH)
-        subprocess.call(['sudo', 'systemctl', 'restart', 'myflaskapp'])
     except Exception as e:
         # Log the exception
         app.logger.error('An exception occurred: %s', str(e))
