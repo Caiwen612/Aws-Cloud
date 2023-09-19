@@ -992,54 +992,36 @@ def register_student():
             #Check if all fields are filled
             if not all([educationLevel, cohort, programme, tutorialGroup, studentID, studentEmail, supervisorName, supervisorEmail, programmingKnowledge, databaseKnowledge, networkingKnowledge, studentPassword, studentConfirmedPassword]):
                 error_messages['all_fields'] = 'Error! Please fill in all fields.'
-                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
 
             # Check if password and confirmed password match
             if studentPassword != studentConfirmedPassword:
                 error_messages['studentPassword'] = 'Password and confirmed password do not match.'
-                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
 
             # Check if email already exists
-            query = "SELECT * FROM user WHERE email = %s AND role = 'student'"
+            query = "SELECT * FROM user WHERE email = %s"
             cursor.execute(query, (studentEmail,))
             student_data = cursor.fetchone()
 
             if student_data :
-                error_messages['studentEmail'] = 'Student email already registered.'
-                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+                error_messages['studentEmail'] = 'Email already exists.'
 
-            # Check if student ID already registered
-            query = "SELECT * FROM student WHERE student_id = %s"
+            # Check if student ID already exists
+            query = "SELECT * FROM user WHERE studentId = %s"
             cursor.execute(query, (studentID,))
             student_data = cursor.fetchone()
-            print(student_data)
-            #Check if the user_id column is empty
-            # Check if a student with the given ID was found in the database
-            if student_data is not None:
-                # Check if the user_id column is empty
-                if student_data[22] is not None:
-                    error_messages['studentID'] = 'Student ID already registered.'
-                    return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
-            else:
-                error_messages['studentID'] = 'Student ID not found.'
-                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+            if student_data:
+                error_messages['studentID'] = 'Student ID already exists.'
 
-            # Check if the student ID matches the student email
-            query = "SELECT * FROM student WHERE student_id = %s AND student_email = %s"
-            cursor.execute(query, (studentID, studentEmail))
-            student_data = cursor.fetchone()
-            if not student_data:
-                error_messages['studentID'] = 'Student ID does not match the student email.'
-                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+            
 
-            # Check if the supervisor name not found
+
+       # Check if the supervisor name not found
             query = "SELECT * FROM supervisor WHERE supervisor_name = %s"
             cursor.execute(query, (supervisorName,))
             supervisor_name= cursor.fetchone()
              # Check if supervisor name matches
-            if not supervisor_name:  # Assuming supervisor name is in the second column
+            if not  supervisor_name:  # Assuming supervisor name is in the second column
                 error_messages['supervisorName'] = 'Supervisor name does not match the database.'
-                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
 
             # Check if supervisor email not found
             query = "SELECT * FROM supervisor WHERE supervisor_email = %s"
@@ -1047,16 +1029,10 @@ def register_student():
             supervisor_data = cursor.fetchone()
             if not supervisor_data:
                 error_messages['supervisorEmail'] = 'Supervisor email not found.'
-                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
             else:
                 supervisor_id = supervisor_data[0]
-
-            # Check if supervisor email matches
-            query = "SELECT * FROM supervisor WHERE supervisor_email = %s AND supervisor_name = %s"
-            cursor.execute(query, (supervisorEmail, supervisorName))
-            supervisor_data = cursor.fetchone()
-            if not supervisor_data:
-                error_messages['supervisorEmail'] = 'Supervisor email does not match the supervisor name.'
+                
+            if error_messages:
                 return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
 
             # Insert into user table
@@ -1099,7 +1075,9 @@ def logout():
 
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', port=80, debug=True) //Deployment
-    app.run(debug=True)
+    if os.environ.get('FLASK_ENV') == 'production':
+        app.run(host='0.0.0.0', port=80)
+    else:
+        app.run(debug=True)
 
     
