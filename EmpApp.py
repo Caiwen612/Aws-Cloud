@@ -48,18 +48,24 @@ db_conn.autocommit = False
 
 @app.route('/webhook', methods=['POST'])
 def handle_webhook():
-    # Verify GitHub's request
-    payload = request.data
-    signature = 'sha1=' + hmac.new(WEBHOOK_SECRET.encode(), payload, digestmod='sha1').hexdigest()
-    
-    if request.headers.get('X-Hub-Signature') != signature:
-        abort(400)  # Request is not from GitHub. Abort!
-    
-    # If request is authenticated, pull latest changes and restart Flask
-    #Sudo test 
-    subprocess.call(['sudo','git', 'pull'], cwd=GITHUB_REPO_PATH)
-    subprocess.call(['sudo', 'systemctl', 'restart', 'myflaskapp'])
-    
+    try:
+        subprocess.call(['sudo','git', 'pull'], cwd=GITHUB_REPO_PATH)
+        subprocess.call(['sudo', 'systemctl', 'restart', 'myflaskapp'])
+        # # Verify GitHub's request
+        # payload = request.data
+        # signature = 'sha1=' + hmac.new(WEBHOOK_SECRET.encode(), payload, digestmod='sha1').hexdigest()
+        
+        # if request.headers.get('X-Hub-Signature') != signature:
+        #     abort(400)  # Request is not from GitHub. Abort!
+        # If request is authenticated, pull latest changes and restart Flask
+        #Sudo test 
+        subprocess.call(['sudo','git', 'pull'], cwd=GITHUB_REPO_PATH)
+        subprocess.call(['sudo', 'systemctl', 'restart', 'myflaskapp'])
+    except Exception as e:
+        # Log the exception
+        app.logger.error('An exception occurred: %s', str(e))
+        traceback.print_exc()
+        abort(500)  # Return a 500 Internal Server Error
     
     return 'OK', 200
 
