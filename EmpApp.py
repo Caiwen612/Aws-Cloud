@@ -18,6 +18,7 @@ from config import *
 import sys
 
 app = Flask(__name__)
+app.debug = True
 app.config['SECRET_KEY'] = 'a3c2b5f01d686ffe7ca287ff4e8d9f2d'
 bucket = custombucket
 region = customregion
