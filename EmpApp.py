@@ -775,6 +775,12 @@ def supervisorStudentDetails_student_evaluate(student_id):
         teamwork_skills = request.form['teamwork_skills']
         evaluation_date = request.form['evaluation_date']
         evaluation_comment = request.form['evaluation_comment']
+        # print(programming_knowledge)
+        # print(database_knowledge)
+        # print(debugging_knowledge)
+        # print(teamwork_skills)
+        # print(evaluation_date)
+        # print(evaluation_comment)
 
         # You can now use these variables to update your database or perform any other actions as needed.
         # Update the database with the new data
@@ -783,7 +789,7 @@ def supervisorStudentDetails_student_evaluate(student_id):
             
             query = """
             UPDATE student
-            SET ev_pk=%s, ev_db=%s, ev_dek=%s, ev_tk=%s, ev_date=%s, ev_comment=%s
+            SET ev_pk=%s, ev_db=%s, ev_dek=%s, ev_tk=%s, ev_ddate=%s, ev_comment=%s
             WHERE student_id = %s
             """
             cursor.execute(query, (programming_knowledge, database_knowledge, debugging_knowledge, teamwork_skills, evaluation_date, evaluation_comment, student_id))
