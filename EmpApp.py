@@ -244,24 +244,29 @@ def display_results():
     cursor = db_conn.cursor()
     # Fetch data from your database or any other source
     user_id = session.get('user_id')
-    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
-    try:
-        cursor.execute(select_sql, (user_id, ))
-        student_data = cursor.fetchone()  # Assuming you want to display data for one student
+    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_duration FROM student WHERE student_id = %s"
+    student_data = None
+    try: 
+        cursor.execute(select_sql, (user_id,))
+        student_data = cursor.fetchone() 
+        print(student_data) # Assuming you want to display data for one student
     except Exception as e:
         print(f"Error fetching student data: {e}")
     finally:
         cursor.close()
 
     # Pass the data to the HTML template
-    return render_template('studentResults.html',  result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_position  = student_data[6], internship_duration  = student_data[7])
+    if student_data is not None:
+        return render_template('studentResults.html', result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_duration  = student_data[6])
+    else:
+        return "No data found for this student"
 
 @app.route('/generate_pdf', methods=['GET'])
 def generate_pdf():
  # Fetch student data from the database
     user_id = session.get('user_id')
     cursor = db_conn.cursor()
-    select_sql =  "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
+    select_sql =  "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_duration FROM student WHERE student_id = %s"
     
     try:
         cursor.execute(select_sql, (  user_id,))
@@ -306,8 +311,7 @@ def generate_pdf():
         ["Student Email", student_data[3]],
         ["Student Cohort", student_data[4]],
         ["Student Programme", student_data[5]],
-        ["Internship Position", student_data[6]],
-        ["Internship Duration", student_data[7]],
+        ["Internship Duration", student_data[6]],
         ["Internship Results", student_data[0]],
         ["Supervisor's Comments", student_data[1]],
         # ["Company Name", company_data[0]],
