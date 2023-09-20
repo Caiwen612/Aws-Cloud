@@ -201,6 +201,8 @@ def upload_document():
         file_extension = os.path.splitext(uploaded_file.filename)[1]
         student_file_name_in_s3 = "student_Test" + file_extension
         # print("FILE=" ,str(uploaded_file.filename))
+               # Retrieve the document type from the form
+        document_type = request.form['document_type']
 
         #SQL
         cursor = db_conn.cursor()
@@ -220,6 +222,19 @@ def upload_document():
             #Insert url to mariadb
             try:
                 update_sql = "UPDATE student SET acceptance_letter = %s WHERE student_id = %s"
+                if document_type == "Company Acceptance Letter":
+                    update_sql = "UPDATE student SET acceptance_letter = %s WHERE student_id = %s"
+                elif document_type == "Indemnity Letter":
+                    update_sql = "UPDATE student SET indemnity_letter = %s WHERE student_id = %s"
+                elif document_type == "Parent Acknowledgement Form":
+                    update_sql = "UPDATE student SET parent_form = %s WHERE student_id = %s"
+                elif document_type == "Company Supervisor Evaluation Form":
+                    update_sql = "UPDATE student SET evaluation_form= %s WHERE student_id = %s"
+                elif document_type == "Student Progress Report":
+                    update_sql = "UPDATE student SET progress_report = %s WHERE student_id = %s"
+                    
+                # Add more conditions for other document types
+                
                 value = (str(object_url),user_id )
                 # value = ("TESSTTTTTT",student_id)
                 cursor.execute(update_sql,value)
@@ -365,7 +380,7 @@ def display_results():
                         disable = True
         else:
             disable = False
-            
+
         print(disable)
     except Exception as e:
         print(f"Error fetching student data: {e}")
