@@ -1,243 +1,298 @@
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Student Details</title>
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="manifest" href="site.webmanifest" />
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="/static/img/favicon.ico"
-    />
-    <!-- CSS here -->
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" />
-    <!-- Add more stylesheets as needed -->
-    <link rel="stylesheet" href="/static/css/style.css" />
-  </head>
-  <body>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-      <div class="preloader d-flex align-items-center justify-content-center">
-        <div class="preloader-inner position-relative">
-          <div class="preloader-circle"></div>
-          <div class="preloader-img pere-text">
-            <img src="../static/img/logo/logo.png" alt="" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Preloader End -->
-    <header>
-      <!-- Header Start -->
-      <div class="header-area header-transparrent">
-        <div class="headder-top header-sticky">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-lg-3 col-md-2">
-                <!-- Logo -->
-                <div class="logo">
-                  <a href="{{ url_for('supervisorStudentDetails') }}">
-                    <img src="../static/img/logo/logo.png" alt="" />
-                  </a>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Student Details</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
+        <!-- CSS here -->
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+        <!-- Add more stylesheets as needed -->
+        <link rel="stylesheet" href="/static/css/style.css">
+    </head>
+    <body>
+        <!-- Preloader Start -->
+        <div id="preloader-active">
+            <div class="preloader d-flex align-items-center justify-content-center">
+                <div class="preloader-inner position-relative">
+                    <div class="preloader-circle"></div>
+                    <div class="preloader-img pere-text">
+                        <img src="../static/img/logo/logo.png" alt="">
+                    </div>
                 </div>
-              </div>
-              <div class="col-lg-9 col-md-9">
-                <div class="menu-wrapper">
-                  <!-- Main-menu -->
-                  <div class="main-menu">
-                    <nav class="d-none d-lg-block">
-                      <ul id="navigation">
-                        <li>
-                          <a href="{{ url_for('supervisorStudentDetails') }}"
-                            >Student List</a
+            </div>
+        </div>
+        <!-- Preloader End -->
+        <header>
+            <!-- Header Start -->
+            <div class="header-area header-transparrent">
+                <div class="headder-top header-sticky">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-3 col-md-2">
+                                <!-- Logo -->
+                                <div class="logo">
+                                    <a href="{{ url_for('supervisorStudentDetails') }}">
+                                        <img src="../static/img/logo/logo.png" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9">
+                                <div class="menu-wrapper">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu">
+                                        <nav class="d-none d-lg-block">
+                                            <ul id="navigation">
+                                                <li>
+                                                    <a href="{{ url_for('supervisorStudentDetails') }}">
+                                                        Student List
+                                                    </a
                           >
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Mobile Menu -->
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <!-- Mobile Menu -->
-              <div class="col-12">
-                <div class="mobile_menu d-block d-lg-none"></div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <!-- Header End -->
-    </header>
-    <main>
-      <!-- Hero Area Start -->
-      <div class="slider-area">
-        <div
-          class="single-slider section-overly slider-height2 d-flex align-items-center"
-          data-background="/static/img/hero/about.jpg"
-        >
-          <div class="container">
-            <div class="row">
-              <div class="col-xl-12">
-                <div class="hero-cap text-center">
-                  <h2>Student Details</h2>
+            <!-- Header End -->
+        </header>
+        <main>
+            <!-- Hero Area Start -->
+            <div class="slider-area">
+                <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="/static/img/hero/about.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="hero-cap text-center">
+                                    <h2>Student Details</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <!-- Hero Area End -->
-      <!-- Student Details Start -->
-      <div class="student-details pt-80 pb-120">
-        <div class="container">
-          <div class="row justify-content-between">
-            <!-- Left Content -->
-            <div class="col-xl-8">
-              <!-- Student Profile -->
-              <div class="student-profile mb-50">
-                <div class="job-items">
-                  <img
-                    class="img-rounded"
-                    style="
+            <!-- Hero Area End -->
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container mt-4">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+            <!-- End of Flash Messages -->
+            <!-- Student Details Start -->
+            <div class="student-details pt-80 pb-120">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <!-- Left Content -->
+                        <div class="col-xl-8">
+                            <!-- Student Profile -->
+                            <div class="student-profile mb-50">
+                                <div class="job-items">
+                                    <img
+                                        class="img-rounded"
+                                        style="
                       width: auto;
                       height: 135px;
                       margin-right: 2rem;
                       margin-bottom: 1rem;
                     "
-                    src="../static/img/icon/studentIcon.png"
-                    alt="Student Icon"
-                  />
-                  <div class="job-tittle">
-                    <h4>{{studentDetails[1]}} ({{studentDetails[0]}})</h4>
-                    <table class="table table-borderless">
-                      <tbody>
-                        <tr>
-                          <td style="padding-left: 0; width: 40px">
-                            <strong>Level</strong>
-                          </td>
-                          <td style="width: 100px; padding-left: 7px;">{{studentDetails[5]}}</td>
-                          <td style="padding-left: 0; width: 70px">
-                            <strong>Programme</strong>
-                          </td>
-                          <td style="width: 90px">{{studentDetails[4]}}</td>
-                          <td style="padding-left: 0; width: 40px">
-                            <strong>Cohort</strong>
-                          </td>
-                          <td style="width: 100px">{{studentDetails[3]}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table class="table table-borderless">
-                      <tbody>
-                        <tr>
-                          <td style="padding-left: 0; width: 70px">
-                            <strong>E-mail</strong>
-                          </td>
-                          <td>{{studentDetails[2]}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <!-- Student Profile End -->
-              <!-- Additional Information -->
-              <div class="additional-info mb-50">
-                <div class="post-details1 mb-50">
-                  <div class="small-section-tittle">
-                    <h4>Programming Knowledge</h4>
-                  </div>
-                  <p>{{studentDetails[7]}}</p>
-                </div>
-                <div class="post-details2 mb-50">
-                  <div class="small-section-tittle">
-                    <h4>Database Knowledge</h4>
-                  </div>
-                  <p>{{studentDetails[8]}}</p>
-                </div>
-                <div class="post-details2 mb-50">
-                  <div class="small-section-tittle">
-                    <h4>Networking Knowledge</h4>
-                  </div>
-                  <p>{{studentDetails[9]}}</p>
-                </div>
-              </div>
-              <!-- Additional Information End -->
-            </div>
-            <!-- Right Content -->
-            <div class="col-xl-4">
-              <!-- Student Letters -->
-              <div class="student-letters mb-50">
-                <div class="small-section-tittle">
-                  <h4 style="font-size: 24px">Student Letters</h4>
-                </div>
-                <ul class="student-letters">
-                  <li>
-                    <span style="font-weight: bold">Acceptance Letter:</span>
-                    <br />
-                    <a href="{{studentDetails[16]}}" style="text-decoration: none;">
-                      <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
-                    </a>                    
-                  </li>
-                  <br />
-                  <li>
-                    <span style="font-weight: bold">Indemnity Letter:</span>
-                    <br />
-                    <a href="{{studentDetails[17]}}" style="text-decoration: none;">
-                      <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
-                    </a>   
-                  </li>
-                  <br />
-                  <li>
-                    <span style="font-weight: bold"
-                      >Parent Acknowledgement Letter:</span
+                                        src="../static/img/icon/studentIcon.png"
+                                        alt="Student Icon"
+                                    >
+                                    <div class="job-tittle">
+                                        <h4>{{studentDetails[1]}} ({{studentDetails[0]}})</h4>
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding-left: 0; width: 40px">
+                                                        <strong>Level</strong>
+                                                    </td>
+                                                    <td style="width: 100px; padding-left: 7px;">{{studentDetails[5]}}</td>
+                                                    <td style="padding-left: 0; width: 70px">
+                                                        <strong>Programme</strong>
+                                                    </td>
+                                                    <td style="width: 90px">{{studentDetails[4]}}</td>
+                                                    <td style="padding-left: 0; width: 40px">
+                                                        <strong>Cohort</strong>
+                                                    </td>
+                                                    <td style="width: 100px">{{studentDetails[3]}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding-left: 0; width: 70px">
+                                                        <strong>E-mail</strong>
+                                                    </td>
+                                                    <td>{{studentDetails[2]}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Student Profile End -->
+                            <!-- Additional Information -->
+                            <div class="additional-info mb-50">
+                                <div class="post-details1 mb-50">
+                                    <div class="small-section-tittle">
+                                        <h4>Programming Knowledge</h4>
+                                    </div>
+                                    <p>{{studentDetails[7]}}</p>
+                                </div>
+                                <div class="post-details2 mb-50">
+                                    <div class="small-section-tittle">
+                                        <h4>Database Knowledge</h4>
+                                    </div>
+                                    <p>{{studentDetails[8]}}</p>
+                                </div>
+                                <div class="post-details2 mb-50">
+                                    <div class="small-section-tittle">
+                                        <h4>Networking Knowledge</h4>
+                                    </div>
+                                    <p>{{studentDetails[9]}}</p>
+                                </div>
+                            </div>
+                            <!-- Additional Information End -->
+                        </div>
+                        <!-- Right Content -->
+                        <div class="col-xl-4">
+                            <!-- Student Letters -->
+                            <div class="student-letters mb-50">
+                                <div class="small-section-tittle">
+                                    <h4 style="font-size: 24px">Student Letters</h4>
+                                </div>
+                                <ul class="student-letters">
+                                    <li>
+                                        <span style="font-weight: bold">Acceptance Letter:</span>
+                                        <br>
+                                        <a href="{{studentDetails[16]}}" style="text-decoration: none;">
+                                            <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
+                                        </a>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span style="font-weight: bold">Indemnity Letter:</span>
+                                        <br>
+                                        <a href="{{studentDetails[17]}}" style="text-decoration: none;">
+                                            <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
+                                        </a>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span style="font-weight: bold">
+                                            Parent Acknowledgement Letter:
+                                        </span
                     >
-                    <br />
-                    <a href="{{studentDetails[18]}}" style="text-decoration: none;">
-                      <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
-                    </a>   
-                  </li>
-                  <br />
-                  <li>
-                    <span style="font-weight: bold">Progress Report:</span>
-                    <br />
-                    <a href="{{studentDetails[20]}}" style="text-decoration: none;">
-                      <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
-                    </a>   
-                  </li>
-                </ul>
-              </div>
-
-              <div class="post-details4 mb-50">
-                <!-- Small Section Tittle -->
-                <div class="small-section-tittle">
-                  <h4 style="font-size: 24px;">Actions</h4>
+                                        <br>
+                                        <a href="{{studentDetails[18]}}" style="text-decoration: none;">
+                                            <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
+                                        </a>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span style="font-weight: bold">Progress Report:</span>
+                                        <br>
+                                        <a href="{{studentDetails[20]}}" style="text-decoration: none;">
+                                            <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% if studentDetails[25] is not none %}
+                            <div class="student-letters mb-50">
+                                <div class="small-section-tittle">
+                                    <h4 style="font-size: 24px">Evaluation Results</h4>
+                                </div>
+                                <ul class="student-letters">
+                                    <li>
+                                        <span style="font-weight: bold">Programming Knowledge</span>
+                                        <br>
+                                        <span style="font-size: 16px; color: darkgrey">({{studentDetails[24]}}/100)</span>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span style="font-weight: bold">Database Knowledge</span>
+                                        <br>
+                                        <span style="font-size: 16px; color: darkgrey">({{studentDetails[25]}}/100)</span>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span style="font-weight: bold">Debugging Knowledge</span>
+                                        <br>
+                                        <span style="font-size: 16px; color: darkgrey">({{studentDetails[26]}}/100)</span>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span style="font-weight: bold">Teamwork Skills</span>
+                                        <br>
+                                        <span style="font-size: 16px; color: darkgrey">({{studentDetails[27]}}/100)</span>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span style="font-weight: bold">Evaluation Date</span>
+                                        <br>
+                                        <span style="font-size: 16px; color: darkgrey">{{studentDetails[28]}}</span>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span style="font-weight: bold">Comment</span>
+                                        <br>
+                                        <span style="font-size: 16px; color: darkgrey">{{studentDetails[29]}}</span>
+                                    </li>
+                                    <br>
+                                </ul>
+                            </div>
+                            {% endif %}
+                            {% if studentDetails[25] is none %}
+                            <div class="post-details4 mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4 style="font-size: 24px;">Actions</h4>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <a href="{{ url_for('supervisorStudentDetails_student_evaluate', student_id=studentDetails[0]) }}" class="btn head-btn1 mb-3" style="color: white;">Evaluate Student</a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <!-- Student Letters End -->
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex flex-column">
-                  <a <a href="{{ url_for('supervisorStudentDetails_student_evaluate', student_id=studentDetails[0]) }}" class="btn head-btn1 mb-3" style="color: white;">Evaluate Student</a>
-                </div>
-              </div>
-              <!-- Student Letters End -->
             </div>
-          </div>
-        </div>
-      </div>
-      <!-- Student Details End -->
-    </main>
-    <footer>
-        <!-- Footer Start-->
-        <!-- footer-bottom area -->
-        <div class="footer-bottom-area footer-bg">
-            <div class="container">
-                <div class="footer-border">
-                    <div class="row d-flex justify-content-between align-items-center">
-                        <div class="col-xl-10 col-lg-10 ">
-                            <div class="footer-copy-right">
-                                <p>Copyright &copy;
-                                    <script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a>
+            <!-- Student Details End -->
+        </main>
+        <footer>
+            <!-- Footer Start-->
+            <!-- footer-bottom area -->
+            <div class="footer-bottom-area footer-bg">
+                <div class="container">
+                    <div class="footer-border">
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <div class="col-xl-10 col-lg-10 ">
+                                <div class="footer-copy-right">
+                                    <p>
+                                        Copyright &copy;
+                                        <script>document.write(new Date().getFullYear());</script>
+                                        TAR UMT ITP
+                                    </a>
                                 </p>
                             </div>
                         </div>
@@ -277,5 +332,5 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="../static/js/plugins.js"></script>
     <script src="../static/js/main.js"></script>
-  </body>
+</body>
 </html>

@@ -87,7 +87,17 @@
             </div>
         </div>
         <!-- Hero Area End-->
-
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    <div class="container mt-4">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+    <!-- End of Flash Messages -->
         <section class="featured-job-area feature-padding" style="padding-top: 50px;">
             <div class="container">
                 <!-- Section Tittle -->
