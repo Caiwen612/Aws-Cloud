@@ -238,28 +238,6 @@ def upload_document():
     except Exception as e:
         print("Error occurred: ", str(e))
         return str(e)
-    
-@app.route('/studentResults', methods=['GET'])
-def display_results():
-    cursor = db_conn.cursor()
-    # Fetch data from your database or any other source
-    user_id = session.get('user_id')
-    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_duration FROM student WHERE student_id = %s"
-    student_data = None
-    try: 
-        cursor.execute(select_sql, (user_id,))
-        student_data = cursor.fetchone() 
-        print(student_data) # Assuming you want to display data for one student
-    except Exception as e:
-        print(f"Error fetching student data: {e}")
-    finally:
-        cursor.close()
-
-    # Pass the data to the HTML template
-    if student_data is not None:
-        return render_template('studentResults.html', result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_duration  = student_data[6])
-    else:
-        return "No data found for this student"
 
 @app.route('/generate_pdf', methods=['GET'])
 def generate_pdf():
@@ -349,6 +327,56 @@ def generate_pdf():
 
     return response
 
+def checkInternshipStatus():
+    cursor = db_conn.cursor()
+    user_id = session.get('user_id')
+    select_sql = "SELECT evaluation_form, progress_report FROM student WHERE student_id = %s"
+    cursor.execute(select_sql, (user_id,))
+    data = cursor.fetchone() 
+    print(data)
+    cursor.close()
+    return data
+
+@app.route('/studentResults', methods=['GET'])
+def display_results():
+    cursor = db_conn.cursor()
+    # Fetch data from your database or any other source
+    user_id = session.get('user_id')
+    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_duration FROM student WHERE student_id = %s"
+    student_data = None
+    try: 
+        cursor.execute(select_sql, (user_id,))
+        student_data = cursor.fetchone() 
+        data = checkInternshipStatus()
+        disable = False
+        if data[0]!= '' and data[1] !=  '':
+                        cursor = db_conn.cursor()
+                        user_id = session.get('user_id')
+                        print(user_id)
+                        update_query = """
+                            UPDATE student
+                            SET internship_status = %s
+                            WHERE student_id = %s
+                        """
+                        cursor.execute(update_query, ('Ended', user_id,))
+                        db_conn.commit()
+                        data = cursor.fetchone() 
+                        cursor.close()
+                        disable = True
+        else:
+            disable = False
+            
+        print(disable)
+    except Exception as e:
+        print(f"Error fetching student data: {e}")
+    finally:
+        cursor.close()
+
+    # Pass the data to the HTML template
+    if student_data is not None:
+        return render_template('studentResults.html', result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_duration  = student_data[6], disable = disable)
+    else:
+        return "No data found for this student"
 
 #Get company job listing details by job listing id
 @app.route('/studentInternship/<int:listing_id>')
@@ -391,6 +419,15 @@ def get_unique_job_positions():
     cursor.close()
     return job_positions
 
+def checkApplicationStatus():
+    cursor = db_conn.cursor()
+    user_id = session.get('user_id')
+    select_sql = "SELECT acceptance_letter, indemnity_letter, parent_form, application_status FROM student WHERE student_id = %s"
+    cursor.execute(select_sql, (user_id,))
+    data = cursor.fetchone() 
+    cursor.close()
+    return data
+
 @app.route('/studentInternship')
 def show_all_jobs():
     try:
@@ -403,9 +440,26 @@ def show_all_jobs():
         cursor.execute(query)
         job_posting = cursor.fetchall()
         job_positions = get_unique_job_positions()
+        data = checkApplicationStatus()
+        disablepage = False
+        if data[0] is not None and data[1] is not None and data[2] is not None:
+                cursor = db_conn.cursor()
+                user_id = session.get('user_id')
+                print(user_id)
+                update_query = """
+                    UPDATE student
+                    SET application_status = %s
+                    WHERE student_id = %s
+                """
+                cursor.execute(update_query, ('Approved', user_id,))
+                db_conn.commit()
+                data = cursor.fetchone() 
+                cursor.close()
+                disablepage = True
+        print(disablepage)
         cursor.close()
 
-        return render_template('studentInternship.html', job_posting=job_posting, job_positions=job_positions)
+        return render_template('studentInternship.html', job_posting=job_posting, job_positions=job_positions, disablepage= disablepage)
 
     except Exception as e:
         print(f"Error fetching job postings: {e}")

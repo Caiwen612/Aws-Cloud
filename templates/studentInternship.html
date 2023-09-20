@@ -93,7 +93,7 @@
        </div>
         <!-- Header End -->
     </header>
-
+	
 
 	<div class="slider-area ">
 		<div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="static/img/hero/ok.jpeg">
@@ -108,6 +108,15 @@
 			</div>
 		</div>
 	</div>
+	{% if disablepage %}
+	<!-- Display "Not eligible to apply for internships" message -->
+	<section class="not-eligible-section", style="padding:30px">
+		<div class="container">
+			<h1>Not eligible to apply for internships</h1>
+			<p>You do not meet the eligibility criteria for internships.</p>
+		</div>
+	</section>
+{% else %}
 
 	<section class="sample-text-area">
 		<div class="container box_1170">
@@ -295,7 +304,7 @@
         </div>
     </div>
 </div>
-
+{% endif %}
 
 	<footer>
 		<!-- Footer Start-->
