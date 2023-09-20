@@ -775,12 +775,14 @@ def supervisorStudentDetails_student_evaluate(student_id):
         teamwork_skills = request.form['teamwork_skills']
         evaluation_date = request.form['evaluation_date']
         evaluation_comment = request.form['evaluation_comment']
+        #Debug Info purpose
         # print(programming_knowledge)
         # print(database_knowledge)
         # print(debugging_knowledge)
         # print(teamwork_skills)
         # print(evaluation_date)
         # print(evaluation_comment)
+
 
         # You can now use these variables to update your database or perform any other actions as needed.
         # Update the database with the new data
