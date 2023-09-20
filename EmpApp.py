@@ -47,7 +47,7 @@ db_conn.autocommit = False
 # output = {}
 # table = 'employee'
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/github-webhook', methods=['GET','POST'])
 def handle_webhook():
     try:
         #When receive a push request do this
