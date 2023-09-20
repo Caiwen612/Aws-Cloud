@@ -8,7 +8,7 @@ from reportlab.platypus import Paragraph, SimpleDocTemplate, Table, TableStyle
 
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from io import BytesIO
-
+import subprocess
 from pymysql import connections
 
 # from pymysql import connections
@@ -18,9 +18,13 @@ from config import *
 import sys
 
 app = Flask(__name__)
+# app.debug = True
 app.config['SECRET_KEY'] = 'a3c2b5f01d686ffe7ca287ff4e8d9f2d'
 bucket = custombucket
 region = customregion
+# Add a WebHook
+WEBHOOK_SECRET = 'WebHockServiceSecret'
+GITHUB_REPO_PATH = '/home/ec2-user/Aws-Cloud'
 
 # Connect to Maria DB
 try:
@@ -43,6 +47,29 @@ db_conn.autocommit = False
 # output = {}
 # table = 'employee'
 
+@app.route('/github-webhook', methods=['POST'])
+def handle_webhook():
+    try:
+        #When receive a push request do this
+        subprocess.call(['sudo','git', 'pull'], cwd=GITHUB_REPO_PATH)
+        subprocess.call(['sudo', 'systemctl', 'restart', 'simpleflaskapp'])
+        print("Trying to fetch and pull new request from webhooks")
+        # # Verify GitHub's request
+        # payload = request.data
+        # signature = 'sha1=' + hmac.new(WEBHOOK_SECRET.encode(), payload, digestmod='sha1').hexdigest()
+        
+        # if request.headers.get('X-Hub-Signature') != signature:
+        #     abort(400)  # Request is not from GitHub. Abort!
+        # If request is authenticated, pull latest changes and restart Flask
+        #Sudo test 
+        #test
+    except Exception as e:
+        # Log the exception
+        app.logger.error('An exception occurred: %s', str(e))
+        traceback.print_exc()
+        abort(500)  # Return a 500 Internal Server Error
+    
+    return 'OK', 200
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -174,6 +201,8 @@ def upload_document():
         file_extension = os.path.splitext(uploaded_file.filename)[1]
         student_file_name_in_s3 = "student_Test" + file_extension
         # print("FILE=" ,str(uploaded_file.filename))
+               # Retrieve the document type from the form
+        document_type = request.form['document_type']
 
         #SQL
         cursor = db_conn.cursor()
@@ -193,6 +222,19 @@ def upload_document():
             #Insert url to mariadb
             try:
                 update_sql = "UPDATE student SET acceptance_letter = %s WHERE student_id = %s"
+                if document_type == "Company Acceptance Letter":
+                    update_sql = "UPDATE student SET acceptance_letter = %s WHERE student_id = %s"
+                elif document_type == "Indemnity Letter":
+                    update_sql = "UPDATE student SET indemnity_letter = %s WHERE student_id = %s"
+                elif document_type == "Parent Acknowledgement Form":
+                    update_sql = "UPDATE student SET parent_form = %s WHERE student_id = %s"
+                elif document_type == "Company Supervisor Evaluation Form":
+                    update_sql = "UPDATE student SET evaluation_form= %s WHERE student_id = %s"
+                elif document_type == "Student Progress Report":
+                    update_sql = "UPDATE student SET progress_report = %s WHERE student_id = %s"
+                    
+                # Add more conditions for other document types
+                
                 value = (str(object_url),user_id )
                 # value = ("TESSTTTTTT",student_id)
                 cursor.execute(update_sql,value)
@@ -211,30 +253,13 @@ def upload_document():
     except Exception as e:
         print("Error occurred: ", str(e))
         return str(e)
-    
-@app.route('/studentResults', methods=['GET'])
-def display_results():
-    cursor = db_conn.cursor()
-    # Fetch data from your database or any other source
-    user_id = session.get('user_id')
-    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
-    try:
-        cursor.execute(select_sql, (user_id ,))
-        student_data = cursor.fetchone()  # Assuming you want to display data for one student
-    except Exception as e:
-        print(f"Error fetching student data: {e}")
-    finally:
-        cursor.close()
-
-    # Pass the data to the HTML template
-    return render_template('studentResults.html',  result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_position  = student_data[6], internship_duration  = student_data[7])
 
 @app.route('/generate_pdf', methods=['GET'])
 def generate_pdf():
  # Fetch student data from the database
     user_id = session.get('user_id')
     cursor = db_conn.cursor()
-    select_sql =  "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_position, internship_duration FROM student WHERE student_id = %s"
+    select_sql =  "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_duration FROM student WHERE student_id = %s"
     
     try:
         cursor.execute(select_sql, (  user_id,))
@@ -279,8 +304,7 @@ def generate_pdf():
         ["Student Email", student_data[3]],
         ["Student Cohort", student_data[4]],
         ["Student Programme", student_data[5]],
-        ["Internship Position", student_data[6]],
-        ["Internship Duration", student_data[7]],
+        ["Internship Duration", student_data[6]],
         ["Internship Results", student_data[0]],
         ["Supervisor's Comments", student_data[1]],
         # ["Company Name", company_data[0]],
@@ -318,24 +342,56 @@ def generate_pdf():
 
     return response
 
-@app.route('/studentInternship')
-def show_all_jobs():
-    try:
-        cursor = db_conn.cursor()
-        query = """
-            SELECT job_listings.*, company.company_name AS company_name
-            FROM job_listings
-            JOIN company ON job_listings.company_id = company.company_id
-        """
-        cursor.execute(query)
-        job_posting = cursor.fetchall()
+def checkInternshipStatus():
+    cursor = db_conn.cursor()
+    user_id = session.get('user_id')
+    select_sql = "SELECT evaluation_form, progress_report FROM student WHERE student_id = %s"
+    cursor.execute(select_sql, (user_id,))
+    data = cursor.fetchone() 
+    print(data)
+    cursor.close()
+    return data
+
+@app.route('/studentResults', methods=['GET'])
+def display_results():
+    cursor = db_conn.cursor()
+    # Fetch data from your database or any other source
+    user_id = session.get('user_id')
+    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_duration FROM student WHERE student_id = %s"
+    student_data = None
+    try: 
+        cursor.execute(select_sql, (user_id,))
+        student_data = cursor.fetchone() 
+        data = checkInternshipStatus()
+        disable = False
+        if data[0]!= '' and data[1] !=  '':
+                        cursor = db_conn.cursor()
+                        user_id = session.get('user_id')
+                        print(user_id)
+                        update_query = """
+                            UPDATE student
+                            SET internship_status = %s
+                            WHERE student_id = %s
+                        """
+                        cursor.execute(update_query, ('Ended', user_id,))
+                        db_conn.commit()
+                        data = cursor.fetchone() 
+                        cursor.close()
+                        disable = True
+        else:
+            disable = False
+
+        print(disable)
+    except Exception as e:
+        print(f"Error fetching student data: {e}")
+    finally:
         cursor.close()
 
-        return render_template('studentInternship.html', job_posting=job_posting)
-
-    except Exception as e:
-        print(f"Error fetching job postings: {e}")
-        return "An error occurred while fetching job postings."
+    # Pass the data to the HTML template
+    if student_data is not None:
+        return render_template('studentResults.html', result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_duration  = student_data[6], disable = disable)
+    else:
+        return "No data found for this student"
 
 #Get company job listing details by job listing id
 @app.route('/studentInternship/<int:listing_id>')
@@ -374,15 +430,56 @@ def get_unique_job_positions():
     cursor = db_conn.cursor()
     select_sql = "SELECT DISTINCT position FROM job_listings"
     cursor.execute(select_sql)
-    job_positions = cursor.fetchall()
+    job_positions = [row[0] for row in cursor.fetchall()]  # Extract the first column (position)
     cursor.close()
-    print(job_positions)  # Add this line for debugging
     return job_positions
 
+def checkApplicationStatus():
+    cursor = db_conn.cursor()
+    user_id = session.get('user_id')
+    select_sql = "SELECT acceptance_letter, indemnity_letter, parent_form, application_status FROM student WHERE student_id = %s"
+    cursor.execute(select_sql, (user_id,))
+    data = cursor.fetchone() 
+    cursor.close()
+    return data
+
 @app.route('/studentInternship')
-def internship_position():
-    job_positions = get_unique_job_positions()
-    return render_template('studentInternship.html', job_positions=job_positions)
+def show_all_jobs():
+    try:
+        cursor = db_conn.cursor()
+        query = """
+            SELECT job_listings.*, company.company_name AS company_name
+            FROM job_listings
+            JOIN company ON job_listings.company_id = company.company_id
+        """
+        cursor.execute(query)
+        job_posting = cursor.fetchall()
+        job_positions = get_unique_job_positions()
+        data = checkApplicationStatus()
+        disablepage = False
+        if data[0] is not None and data[1] is not None and data[2] is not None:
+                cursor = db_conn.cursor()
+                user_id = session.get('user_id')
+                print(user_id)
+                update_query = """
+                    UPDATE student
+                    SET application_status = %s
+                    WHERE student_id = %s
+                """
+                cursor.execute(update_query, ('Approved', user_id,))
+                db_conn.commit()
+                data = cursor.fetchone() 
+                cursor.close()
+                disablepage = True
+        print(disablepage)
+        cursor.close()
+
+        return render_template('studentInternship.html', job_posting=job_posting, job_positions=job_positions, disablepage= disablepage)
+
+    except Exception as e:
+        print(f"Error fetching job postings: {e}")
+        return "An error occurred while fetching job postings."
+
 
 #----------------Company CRUD----------------
 
@@ -1076,8 +1173,10 @@ def logout():
 
 if __name__ == '__main__':
     if os.environ.get('FLASK_ENV') == 'production':
-        app.run(host='0.0.0.0', port=80)
+        print("PRODUCTION ENVIRONMENT")
+        app.run(host='0.0.0.0', port=8080)
     else:
+        print("DEVELOPMENT ENVIRONMENT")
         app.run(debug=True)
 
     
