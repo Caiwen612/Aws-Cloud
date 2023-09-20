@@ -52,7 +52,7 @@ def handle_webhook():
     try:
         #When receive a push request do this
         subprocess.call(['sudo','git', 'pull'], cwd=GITHUB_REPO_PATH)
-        subprocess.call(['sudo', 'systemctl', 'restart', 'myflaskapp'])
+        subprocess.call(['sudo', 'systemctl', 'restart', 'simpleflaskapp'])
         print("Trying to fetch and pull new request from webhooks")
         # # Verify GitHub's request
         # payload = request.data
