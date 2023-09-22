@@ -80,7 +80,10 @@
                                         </ul>
                                         
                                     </nav>
-                                </div>          
+                                </div>   
+								<div class="header-btn d-none f-right d-lg-block">
+                                    <a href="{{ url_for('logout') }}" class="btn head-btn1">Logout</a>
+                                </div>               
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -110,7 +113,7 @@
 	</div>
 	{% if disablepage %}
 	<!-- Display "Not eligible to apply for internships" message -->
-	<section class="not-eligible-section", style="padding:30px">
+	<section class="not-eligible-section", style="padding:30px; height: 370px;">
 		<div class="container">
 			<h1>Not eligible to apply for internships</h1>
 			<p>You do not meet the eligibility criteria for internships.</p>
@@ -193,16 +196,18 @@
 						   <div class="small-section-tittle2"  >
 								 <h4>State</h4>
 						   </div>
-							<!-- Select job items start -->
-							<div class="select-job-items2" "">
-								<select name="select">
-									<option value="">Anywhere</option>
-									<option value="">Category 1</option>
-									<option value="">Category 2</option>
-									<option value="">Category 3</option>
-									<option value="">Category 4</option>
+
+							<div class="form-select" id="default-select">
+								<select name="cohort" id="cohort">
+									<option value="default" {% if form_data and
+										form_data.get('cohort')=='default' %}selected{% endif %}>All States</option>
+									{% for position in job_positions %}
+										<option value="{{ position }}">{{ position }}</option>
+									{% endfor %}
 								</select>
-							</div>
+
+						</div>
+
 						</div>
 						
 						<div class="single-listing" style="padding-top: 90px;">
@@ -369,100 +374,77 @@
 			 const itemsPerPage = 6; // Number of job listings per page
 			 paginateJobListings(jobItems, itemsPerPage);
 		 
-// Function to filter job listings by company name
-function filterJobListings() {
-    const input = document.querySelector("#company-name-input");
-    const filterValue = input.value.toLowerCase();
-    const jobListingsContainer = document.querySelector("#job-listings");
-    const jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+			// Function to filter job listings by company name
+			function filterJobListings() {
+				const input = document.querySelector("#company-name-input");
+				const filterValue = input.value.toLowerCase();
+				const jobListingsContainer = document.querySelector("#job-listings");
+				const jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
 
-    // Clear previous filters
-    jobItems.forEach((jobItem) => {
-        jobItem.style.display = ""; // Reset display property
-    });
+				// Clear previous filters
+				jobItems.forEach((jobItem) => {
+					jobItem.style.display = ""; // Reset display property
+				});
 
-    jobItems.forEach((jobItem) => {
-        const companyNameElement = jobItem.querySelector(".job-tittle2 h4");
-        if (companyNameElement) {
-            const companyName = companyNameElement.textContent.toLowerCase();
-            if (!companyName.includes(filterValue)) {
-                jobItem.style.display = "none"; // Hide the element
-            }
-        }
-    });
-}
+				jobItems.forEach((jobItem) => {
+					const companyNameElement = jobItem.querySelector(".job-tittle2 h4");
+					if (companyNameElement) {
+						const companyName = companyNameElement.textContent.toLowerCase();
+						if (!companyName.includes(filterValue)) {
+							jobItem.style.display = "none"; // Hide the element
+						}
+					}
+				});
+			}
 
-// Add an event listener to the search button
-const searchButton = document.querySelector("#search-button");
-searchButton.addEventListener("click", filterJobListings);
+			// Add an event listener to the search button
+			const searchButton = document.querySelector("#search-button");
+			searchButton.addEventListener("click", filterJobListings);
 
-// Optionally, you can also add an event listener for the Enter key
-const companyNameInput = document.querySelector("#company-name-input");
-companyNameInput.addEventListener("keyup", function (event) {
-    if (event.key === "Enter") {
-        filterJobListings();
-    }
-});
- 
-		// Function to sort job postings
-function sortJobPostings() {
-    var sortSelect = document.getElementById("sort-select");
-    var selectedValue = sortSelect.value;
-    
-    var jobListingsContainer = document.querySelector(".job-listings");
-    var jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+			// Optionally, you can also add an event listener for the Enter key
+			const companyNameInput = document.querySelector("#company-name-input");
+			companyNameInput.addEventListener("keyup", function (event) {
+				if (event.key === "Enter") {
+					filterJobListings();
+				}
+			});
+			
+					// Function to sort job postings
+			function sortJobPostings() {
+				var sortSelect = document.getElementById("sort-select");
+				var selectedValue = sortSelect.value;
+				
+				var jobListingsContainer = document.querySelector(".job-listings");
+				var jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
 
-    // Convert jobItems NodeList to an array for easier sorting
-    var jobItemsArray = Array.from(jobItems);
+				// Convert jobItems NodeList to an array for easier sorting
+				var jobItemsArray = Array.from(jobItems);
 
-    if (selectedValue === "latest") {
-        // Sort by latest posting (newest to oldest)
-        jobItemsArray.sort(function(a, b) {
-            var dateA = new Date(a.querySelector(".items-link span").textContent);
-            var dateB = new Date(b.querySelector(".items-link span").textContent);
-            return dateB - dateA;
-        });
-    } else if (selectedValue === "none") {
-    // Sort by the original order
-    jobItemsArray.sort(function(a, b) {
-        var orderA = parseInt(a.getAttribute("data-original-order"));
-        var orderB = parseInt(b.getAttribute("data-original-order"));
-        return orderA - orderB;
-    });
-}
+				if (selectedValue === "latest") {
+					// Sort by latest posting (newest to oldest)
+					jobItemsArray.sort(function(a, b) {
+						var dateA = new Date(a.querySelector(".items-link span").textContent);
+						var dateB = new Date(b.querySelector(".items-link span").textContent);
+						return dateB - dateA;
+					});
+				} else if (selectedValue === "none") {
+				// Sort by the original order
+				jobItemsArray.sort(function(a, b) {
+					var orderA = parseInt(a.getAttribute("data-original-order"));
+					var orderB = parseInt(b.getAttribute("data-original-order"));
+					return orderA - orderB;
+				});
+			}
 
-    // Append sorted job items back to the container
-    for (var i = 0; i < jobItemsArray.length; i++) {
-        jobListingsContainer.appendChild(jobItemsArray[i]);
-    }
-}
-
-$(document).ready(function () {
-            // Initialize Select2
-            $(".select2").select2();
-
-            // Handle the change event when an option is selected
-            $(".select2").on("change", function () {
-                const selectedPosition = $(this).val();
-
-                // Send an AJAX request to the server for filtering
-                $.ajax({
-                    url: "/filter_job_listings",
-                    type: "POST",
-                    data: { selected_position: selectedPosition },
-                    success: function (response) {
-                        // Handle the filtered job listings returned from the server
-                        // You can update the job listings on the page based on the response
-                    },
-                    error: function (error) {
-                        console.error("Error:", error);
-                    },
-                });
-            });
-        });
+				// Append sorted job items back to the container
+				for (var i = 0; i < jobItemsArray.length; i++) {
+					jobListingsContainer.appendChild(jobItemsArray[i]);
+				}
+			}
 
 		 
-				 </script>
+		</script>
+
         <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
 		<!-- Jquery, Popper, Bootstrap -->
 		<script src="./static/js/vendor/jquery-1.12.4.min.js"></script>

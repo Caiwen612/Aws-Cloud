@@ -154,7 +154,25 @@ def displayStudentData():
     # Query the database to retrieve student data
     cursor = db_conn.cursor()
     user_id = session.get('user_id')
-    select_sql = "SELECT student_name, student_email FROM student WHERE student_id = %s"
+    select_sql = """SELECT 
+                    s.student_name,
+                    s.student_id,
+                    s.student_email,
+                    s.student_cohort,
+                    s.student_programme,
+                    s.student_level,
+                    s.student_tutgrp,
+                    c.company_name,
+                    sv.supervisor_email,
+                    s.internship_status,
+                    s.application_status
+                    FROM student AS s
+                    LEFT JOIN
+                        company AS c ON s.company_id = c.company_id
+                    LEFT JOIN
+                        supervisor AS sv ON s.supervisor_id = sv.supervisor_id
+                    WHERE
+                        s.student_id = %s"""
     try:
         cursor.execute(select_sql, ( user_id,))
         student_data = cursor.fetchone()  # Assuming you want to display data for one student
@@ -164,7 +182,7 @@ def displayStudentData():
         cursor.close()
 
     # Pass the data to the HTML template
-    return render_template('studentDetails.html', student_name=student_data[0], student_email=student_data[1])
+    return render_template('studentDetails.html', student_name=student_data[0], student_ID=student_data[1], student_email=student_data[2], student_cohort=student_data[3], student_programme=student_data[4], student_level=student_data[5], student_tutgrp=student_data[6], company_name=student_data[7], supervisor_email =student_data[8], internship_status=student_data[9], application_status=student_data[10])
 
 @app.route("/studentDetails", methods=['POST'])
 def updateStudentData():
@@ -173,11 +191,15 @@ def updateStudentData():
         user_id = session.get('user_id')
         Name = request.form.get('Name')
         Email = request.form.get('Email')
+        Cohort = request.form.get('Cohort')
+        Programme = request.form.get('Programme')
+        Level = request.form.get('Level')
+        Group = request.form.get('Tutorial Group')
 
         # Perform the database update
         cursor = db_conn.cursor()
-        update_sql = "UPDATE student SET student_name = %s, student_email = %s WHERE student_id = %s"
-        values = (Name, Email,  user_id)
+        update_sql = "UPDATE student SET student_name = %s, student_email = %s, student_cohort = %s, student_programme= %s, student_level= %s, student_tutgrp= %s  WHERE student_id = %s"
+        values = (Name,  Email, Cohort,  Programme, Level, Group, user_id)
         try:
             cursor.execute(update_sql, values)
             db_conn.commit()
@@ -440,6 +462,7 @@ def checkApplicationStatus():
     select_sql = "SELECT acceptance_letter, indemnity_letter, parent_form, application_status FROM student WHERE student_id = %s"
     cursor.execute(select_sql, (user_id,))
     data = cursor.fetchone() 
+    print(data)
     cursor.close()
     return data
 
@@ -457,7 +480,8 @@ def show_all_jobs():
         job_positions = get_unique_job_positions()
         data = checkApplicationStatus()
         disablepage = False
-        if data[0] is not None and data[1] is not None and data[2] is not None:
+
+        if all(item is not None and item != '' for item in data):
                 cursor = db_conn.cursor()
                 user_id = session.get('user_id')
                 print(user_id)
@@ -471,6 +495,8 @@ def show_all_jobs():
                 data = cursor.fetchone() 
                 cursor.close()
                 disablepage = True
+        else:
+            disablepage = False
         print(disablepage)
         cursor.close()
 
@@ -479,7 +505,6 @@ def show_all_jobs():
     except Exception as e:
         print(f"Error fetching job postings: {e}")
         return "An error occurred while fetching job postings."
-
 
 #----------------Company CRUD----------------
 
@@ -775,7 +800,18 @@ def supervisorStudentDetails_student_evaluate(student_id):
         teamwork_skills = request.form['teamwork_skills']
         evaluation_date = request.form['evaluation_date']
         evaluation_comment = request.form['evaluation_comment']
-        
+        #Debug Info purpose
+        # print(programming_knowledge)
+        # print(database_knowledge)
+        # print(debugging_knowledge)
+        # print(teamwork_skills)
+        # print(evaluation_date)
+        # print(evaluation_comment)
+        #TEst
+
+
+        # You can now use these variables to update your database or perform any other actions as needed.
+        # Update the database with the new data
         try:
             cursor = db_conn.cursor()
             
