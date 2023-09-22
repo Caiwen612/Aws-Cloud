@@ -131,6 +131,8 @@
 							<h3 class="text-heading">Internship Details:</h3>
 							<p>Position: {{ internship_position }}</p>
 							<p>Duration: {{ internship_duration }} months</p>
+							<p>Company: {{ company_name}} </p>
+							<p>Supervisor: {{ supervisor_name}}</p>
 						</div>
 					</div>
 				</div>
@@ -139,10 +141,17 @@
 	
 
 			<div>
-				<h1 class="text-heading" style="font-weight: bolder; font-size: 30px; color: rgb(164, 190, 20);">RESULTS:</h1>
+				<h1 class="text-heading" style="font-weight: bolder; font-size: 30px; color: rgb(179, 194, 95);">RESULTS:</h1>
 				<div class="blog_details" style="width: 70%; margin: 0 auto; text-align: center;">
 					<div class="d-inline-block">
-						<h2>{{ result_title }}</h2>
+						<h2>
+						{% if  result_title == "Failed" %}
+						<span style="color: red;">{{ result_title }}</span>
+					{% elif  result_title == "Passed" %}
+						<span style="color: green;">{{	result_title }}</span>
+
+					{% endif %}
+				</h2>
 					</div>
 					<p>{{ result_description }}</p>
 				</div>

@@ -211,20 +211,32 @@ def updateStudentData():
 
         return redirect(url_for('studentDetails', student_id=user_id ))
 
+def get_student_name(id):
+    cursor = db_conn.cursor()
+    select_sql = "SELECT  student_name FROM student WHERE student_id = %s"
+    cursor.execute(select_sql, (id,))
+    data = cursor.fetchone() 
+    cursor.close()
+    if data:
+        return data[0]  # Extract the value from the tuple
+    else:
+        return None  # Return None if no data is found
+
 app.config['UPLOAD_FOLDER'] = "C:\\Users\\User\\Desktop"
 @app.route('/studentUpload', methods=['POST'])
 def upload_document():
     try:
         # Retrieve form data
         user_id = session.get('user_id')
+        student_name = get_student_name(user_id)
 
         # Retrieve the uploaded file
         uploaded_file = request.files['document_file']
         file_extension = os.path.splitext(uploaded_file.filename)[1]
-        student_file_name_in_s3 = "student_Test" + file_extension
         # print("FILE=" ,str(uploaded_file.filename))
                # Retrieve the document type from the form
         document_type = request.form['document_type']
+        student_file_name_in_s3 = f"{student_name}_{document_type.replace(' ', '_')}{file_extension}"
 
         #SQL
         cursor = db_conn.cursor()
@@ -281,8 +293,25 @@ def generate_pdf():
  # Fetch student data from the database
     user_id = session.get('user_id')
     cursor = db_conn.cursor()
-    select_sql =  "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_duration FROM student WHERE student_id = %s"
-    
+    select_sql =   """SELECT 
+                    s.student_name,
+                    s.student_email,
+                    s.student_cohort,
+                    s.student_programme,
+                    s.internship_duration,
+                    s.internship_position,
+                    s.internship_results,
+                    s.internship_comments,
+                    c.company_name,
+                    sv.supervisor_name
+
+                    FROM student AS s
+                    LEFT JOIN
+                        company AS c ON s.company_id = c.company_id
+                    LEFT JOIN
+                        supervisor AS sv ON s.supervisor_id = sv.supervisor_id
+                    WHERE
+                        s.student_id = %s"""
     try:
         cursor.execute(select_sql, (  user_id,))
         student_data = cursor.fetchone()
@@ -291,18 +320,6 @@ def generate_pdf():
     finally:
         cursor.close()
 
-    # # Fetch company data from the database (assuming you have a table for company details)
-    # company_id = "XYZ123"
-    # cursor = db_conn.cursor()
-    # select_company_sql = "SELECT company_name, company_location FROM company WHERE company_id = %s"
-    
-    # try:
-    #     cursor.execute(select_company_sql, (company_id,))
-    #     company_data = cursor.fetchone()
-    # except Exception as e:
-    #     print(f"Error fetching company data: {e}")
-    # finally:
-    #     cursor.close()
 
     # Create a PDF buffer
     buffer = BytesIO()
@@ -322,15 +339,16 @@ def generate_pdf():
 
     # Create a table to display student and company data
     data = [
-        ["Student Name", student_data[2]],
-        ["Student Email", student_data[3]],
-        ["Student Cohort", student_data[4]],
-        ["Student Programme", student_data[5]],
-        ["Internship Duration", student_data[6]],
-        ["Internship Results", student_data[0]],
-        ["Supervisor's Comments", student_data[1]],
-        # ["Company Name", company_data[0]],
-        # ["Company Location", company_data[1]],
+        ["Student Name", student_data[0]],
+        ["Student Email", student_data[1]],
+        ["Student Cohort", student_data[2]],
+        ["Student Programme", student_data[3]],
+        ["Internship Duration", student_data[4]],
+        ["Internship Position", student_data[5]],
+        ["Internship Results", student_data[6]],
+        ["Supervisor's Name",student_data[9]],
+        ["Supervisor's Comments", student_data[7]],
+        ["Company's Name", student_data[8]]
     ]
 
     # Define table styles
@@ -359,7 +377,7 @@ def generate_pdf():
     # Create a response to send the PDF
     response = make_response(buffer.read())
     response.mimetype = 'application/pdf'
-    filename = f"{student_data[2]}_Internship_Results.pdf"
+    filename = f"{student_data[0]}_Internship_Results.pdf"
     response.headers['Content-Disposition'] = f'attachment; filename={filename}'
 
     return response
@@ -379,7 +397,26 @@ def display_results():
     cursor = db_conn.cursor()
     # Fetch data from your database or any other source
     user_id = session.get('user_id')
-    select_sql = "SELECT internship_results, internship_comments,  student_name, student_email,student_cohort, student_programme, internship_duration FROM student WHERE student_id = %s"
+    select_sql =  """SELECT 
+                    s.student_name,
+                    s.student_email,
+                    s.student_cohort,
+                    s.student_programme,
+                    s.internship_duration,
+                    s.internship_position,
+                    s.internship_results,
+                    s.internship_comments,
+                    c.company_name,
+                    sv.supervisor_name
+
+                    FROM student AS s
+                    LEFT JOIN
+                        company AS c ON s.company_id = c.company_id
+                    LEFT JOIN
+                        supervisor AS sv ON s.supervisor_id = sv.supervisor_id
+                    WHERE
+                        s.student_id = %s"""
+
     student_data = None
     try: 
         cursor.execute(select_sql, (user_id,))
@@ -408,10 +445,10 @@ def display_results():
         print(f"Error fetching student data: {e}")
     finally:
         cursor.close()
-
     # Pass the data to the HTML template
     if student_data is not None:
-        return render_template('studentResults.html', result_title =student_data[0], result_description =student_data[1], student_name = student_data[2],  student_email  = student_data[3], student_cohort  = student_data[4], student_programme  = student_data[5], internship_duration  = student_data[6], disable = disable)
+        print(student_data)
+        return render_template('studentResults.html', result_title =student_data[6], result_description =student_data[7], student_name = student_data[0],  student_email  = student_data[1], student_cohort  = student_data[2], student_programme  = student_data[3], internship_duration  = student_data[4], internship_position= student_data[5], company_name= student_data[8], supervisor_name =  student_data[9], disable = disable)
     else:
         return "No data found for this student"
 
@@ -459,7 +496,7 @@ def get_unique_job_positions():
 def checkApplicationStatus():
     cursor = db_conn.cursor()
     user_id = session.get('user_id')
-    select_sql = "SELECT acceptance_letter, indemnity_letter, parent_form, application_status FROM student WHERE student_id = %s"
+    select_sql = "SELECT acceptance_letter, indemnity_letter, parent_form FROM student WHERE student_id = %s"
     cursor.execute(select_sql, (user_id,))
     data = cursor.fetchone() 
     print(data)

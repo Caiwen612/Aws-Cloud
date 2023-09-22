@@ -232,33 +232,45 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        // Attach a submit event handler to all the upload forms
-        $(".upload-form").submit(function (e) {
-            e.preventDefault(); // Prevent the form from submitting the traditional way
+ $(document).ready(function () {
+    // Attach a submit event handler to all the upload forms
+    $(".upload-form").submit(function (e) {
+        e.preventDefault(); // Prevent the form from submitting the traditional way
 
-            var formId = $(this).attr("id"); // Get the ID of the current form
-            var statusId = "#upload-status-" + formId.split("-")[2]; // Generate the corresponding status ID
+        var form = this; // Store a reference to the current form
+        var formId = $(this).attr("id"); // Get the ID of the current form
+        var statusId = "#upload-status-" + formId.split("-")[2]; // Generate the corresponding status ID
 
-            // Use AJAX to submit the form data
-            $.ajax({
-                type: "POST",
-                url: $(this).attr("action"),
-                data: new FormData(this),
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    // Assuming the response indicates a successful upload
-                    // Update the column to indicate the file is uploaded
-                    $(statusId).text("File Uploaded");
-                },
-                error: function () {
-                    // Handle errors if the upload fails
-                    alert("File upload failed.");
-                },
-            });
+        var fileInput = $(form).find('input[type="file"]')[0];
+        var file = fileInput.files[0];
+
+        if (!file) {
+            // If no file is selected, display an error message
+            $(statusId).text("No file uploaded");
+            return; // Exit the function without submitting the form
+        }
+
+        // Use AJAX to submit the form data
+        $.ajax({
+            type: "POST",
+            url: $(this).attr("action"),
+            data: new FormData(form),
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                // Assuming the response indicates a successful upload
+                // Update the column to indicate the file is uploaded
+                $(statusId).text("File Uploaded");
+                // You can add more handling here, such as redirecting the user
+            },
+            error: function () {
+                // Handle errors if the upload fails
+                alert("File upload failed.");
+            },
         });
     });
+});
+
 </script>
 		<!-- All JS Custom Plugins Link Here here -->
         <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
