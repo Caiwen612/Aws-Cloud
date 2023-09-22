@@ -440,6 +440,7 @@ def checkApplicationStatus():
     select_sql = "SELECT acceptance_letter, indemnity_letter, parent_form, application_status FROM student WHERE student_id = %s"
     cursor.execute(select_sql, (user_id,))
     data = cursor.fetchone() 
+    print(data)
     cursor.close()
     return data
 
@@ -457,7 +458,7 @@ def show_all_jobs():
         job_positions = get_unique_job_positions()
         data = checkApplicationStatus()
         disablepage = False
-        if data[0] is not None and data[1] is not None and data[2] is not None:
+        if data[0] != '' and data[1] != '' and data[2] != '':
                 cursor = db_conn.cursor()
                 user_id = session.get('user_id')
                 print(user_id)
@@ -471,6 +472,8 @@ def show_all_jobs():
                 data = cursor.fetchone() 
                 cursor.close()
                 disablepage = True
+        else:
+            disablepage = False
         print(disablepage)
         cursor.close()
 
@@ -479,7 +482,6 @@ def show_all_jobs():
     except Exception as e:
         print(f"Error fetching job postings: {e}")
         return "An error occurred while fetching job postings."
-
 
 #----------------Company CRUD----------------
 
