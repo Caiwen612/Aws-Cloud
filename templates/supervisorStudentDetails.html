@@ -1,170 +1,186 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Job board HTML-5 Template </title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
-    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
-    <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="static/css/flaticon.css">
-    <link rel="stylesheet" href="static/css/price_rangs.css">
-    <link rel="stylesheet" href="static/css/slicknav.css">
-    <link rel="stylesheet" href="static/css/animate.min.css">
-    <link rel="stylesheet" href="static/css/magnific-popup.css">
-    <link rel="stylesheet" href="static/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="static/css/themify-icons.css">
-    <link rel="stylesheet" href="static/css/slick.css">
-    <link rel="stylesheet" href="static/css/nice-select.css">
-    <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
-    <!-- Preloader Start -->
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="static/img/logo/logo.png" alt="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Job board HTML-5 Template</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="static/css/flaticon.css">
+        <link rel="stylesheet" href="static/css/price_rangs.css">
+        <link rel="stylesheet" href="static/css/slicknav.css">
+        <link rel="stylesheet" href="static/css/animate.min.css">
+        <link rel="stylesheet" href="static/css/magnific-popup.css">
+        <link rel="stylesheet" href="static/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="static/css/themify-icons.css">
+        <link rel="stylesheet" href="static/css/slick.css">
+        <link rel="stylesheet" href="static/css/nice-select.css">
+        <link rel="stylesheet" href="static/css/style.css">
+    </head>
+    <body>
+        <!-- Preloader Start -->
+        <div id="preloader-active">
+            <div class="preloader d-flex align-items-center justify-content-center">
+                <div class="preloader-inner position-relative">
+                    <div class="preloader-circle"></div>
+                    <div class="preloader-img pere-text">
+                        <img src="static/img/logo/logo.png" alt="">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Preloader End -->
-    <header>
-        <!-- Header Start -->
-        <div class="header-area header-transparrent">
-            <div class="headder-top header-sticky">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-3 col-md-2">
-                            <!-- Logo -->
-                            <div class="logo">
-                                <a href="{{ url_for('supervisorStudentDetails') }}"><img src="static/img/logo/logo.png" alt=""></a>
+        <!-- Preloader End -->
+        <header>
+            <!-- Header Start -->
+            <div class="header-area header-transparrent">
+                <div class="headder-top header-sticky">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-3 col-md-2">
+                                <!-- Logo -->
+                                <div class="logo">
+                                    <a href="{{ url_for('supervisorStudentDetails', supervisor_id=student_list[12]) }}">
+                                        <img src="static/img/logo/logo.png" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9">
+                                <div class="menu-wrapper">
+                                    <!-- Main-menu -->
+                                    <div class="main-menu">
+                                        <nav class="d-none d-lg-block">
+                                            <ul id="navigation">
+                                                <li>
+                                                    <a href="{{ url_for('supervisorStudentDetails', supervisor_id=student_list[12]) }}">Student List</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ url_for('portfolioList', supervisor_id=student_list[0])}}">Portfolio</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Mobile Menu -->
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
                             </div>
                         </div>
-                        <div class="col-lg-9 col-md-9">
-                            <div class="menu-wrapper">
-                                <!-- Main-menu -->
-                                <div class="main-menu">
-                                    <nav class="d-none d-lg-block">
-                                        <ul id="navigation">
-                                            <li><a href="{{ url_for('supervisorStudentDetails') }}">Student List</a></li>
-                                            
-                                        </ul>
-                                    </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Header End -->
+        </header>
+        <main>
+            <!-- Hero Area Start-->
+            <div class="slider-area ">
+                <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="static/img/hero/about.jpg">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="hero-cap text-center">
+                                    <h2>Students</h2>
                                 </div>
                             </div>
                         </div>
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Header End -->
-    </header>
-     <main>
-        <!-- Hero Area Start-->
-        <div class="slider-area ">
-            <div class="single-slider section-overly slider-height2 d-flex align-items-center"
-                data-background="static/img/hero/about.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="hero-cap text-center">
-                                <h2>Students</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Hero Area End-->
-<!-- Flash Messages -->
-{% with messages = get_flashed_messages(with_categories=true) %}
+            <!-- Hero Area End-->
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
-    <div class="container mt-4">
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
-        {% endfor %}
-    </div>
-    {% endif %}
+            <div class="container mt-4">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
 {% endwith %}
-    <!-- End of Flash Messages -->
-        <section class="featured-job-area feature-padding" style="padding-top: 50px;">
-            <div class="container">
-                <!-- Section Tittle -->
-                <div class="row" style="margin-bottom: 0px;">
-                    <div class="col-lg-12">
-                        <div class="section-tittle text-center">
-                            <span>My Students</span>
-                            <h2 class="mb-4">Student List</h2>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single student -->
-                <div class="row justify-content-center">
-                    <div class="col-xl-10">
-                        {% for student in student_list %}
-                        <div class="single-job-items mb-30" style="position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                            <div class="job-items d-flex">
-                                <img class="img-rounded" style="width: auto; height: 135px; margin-right: 2rem;" src="static/img/icon/studentIcon.png" alt="Student Icon">
-                                <div class="job-tittle">
-                                    <h4>{{student[1]}} ({{student[0]}})</h4>
-                                    <table class="table table-borderless">
-                                        <tbody>
-                                          <tr>
-                                            <td style="padding-left: 0; width: 40px;"><strong>Level</strong></td>
-                                            <td style="width: 120px;">{{student[5]}}</td>
-                                            <td style="padding-left: 0; width: 105px;"><strong>Programme</strong></td>
-                                            <td style="width: 100px;">{{student[4]}}</td>
-                                            <td style="padding-left: 0; width: 40px;"><strong>Cohort</strong></td>
-                                            <td style="width: 120px;">{{student[3]}}</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                      <table class="table table-borderless">
-                                        <tbody>
-                                            <tr>
-                                                <td style="padding-left: 0; width: 70px;"><strong>E-mail</strong></td>
-                                                <td>{{student[2]}}</td>
-                                            </tr>
-                                        </tbody>
-                                      </table>
-                                </div>
-                                <div style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%);">
-                                    <a href="{{ url_for('supervisorStudentDetails_student', student_id=student[0]) }}" class="btn btn-secondary">Show Details</a>
-                                </div>
-                                
+            <!-- End of Flash Messages -->
+            <section class="featured-job-area feature-padding" style="padding-top: 50px;">
+                <div class="container">
+                    <!-- Section Tittle -->
+                    <div class="row" style="margin-bottom: 0px;">
+                        <div class="col-lg-12">
+                            <div class="section-tittle text-center">
+                                <span>My Students</span>
+                                <h2 class="mb-4">Student List</h2>
                             </div>
                         </div>
-                        {% endfor %}
+                    </div>
+                    <!-- Single student -->
+                    <div class="row justify-content-center">
+                        <div class="col-xl-10">
+                            {% for student in student_list %}
+                            <div class="single-job-items mb-30" style="position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                                <div class="job-items d-flex">
+                                    <img
+                                        class="img-rounded"
+                                        style="width: auto; height: 135px; margin-right: 2rem;"
+                                        src="static/img/icon/studentIcon.png"
+                                        alt="Student Icon"
+                                    >
+                                    <div class="job-tittle">
+                                        <h4>{{student[1]}} ({{student[0]}})</h4>
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding-left: 0; width: 40px;">
+                                                        <strong>Level</strong>
+                                                    </td>
+                                                    <td style="width: 120px;">{{student[5]}}</td>
+                                                    <td style="padding-left: 0; width: 105px;">
+                                                        <strong>Programme</strong>
+                                                    </td>
+                                                    <td style="width: 100px;">{{student[4]}}</td>
+                                                    <td style="padding-left: 0; width: 40px;">
+                                                        <strong>Cohort</strong>
+                                                    </td>
+                                                    <td style="width: 120px;">{{student[3]}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="padding-left: 0; width: 70px;">
+                                                        <strong>E-mail</strong>
+                                                    </td>
+                                                    <td>{{student[2]}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div style="position: absolute; top: 50%; right: 20px; transform: translateY(-50%);">
+                                        <a href="{{ url_for('supervisorStudentDetails_student', student_id=student[0]) }}" class="btn btn-secondary">Show Details</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <!-- Featured_job_end -->
-     </main>
-    
-    <footer>
-        <!-- Footer Start-->
-        <!-- footer-bottom area -->
-        <div class="footer-bottom-area footer-bg">
-            <div class="container">
-                <div class="footer-border">
-                    <div class="row d-flex justify-content-between align-items-center">
-                        <div class="col-xl-10 col-lg-10 ">
-                            <div class="footer-copy-right">
-                                <p>Copyright &copy;
-                                    <script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a>
+            </section>
+            <!-- Featured_job_end -->
+        </main>
+        <footer>
+            <!-- Footer Start-->
+            <!-- footer-bottom area -->
+            <div class="footer-bottom-area footer-bg">
+                <div class="container">
+                    <div class="footer-border">
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <div class="col-xl-10 col-lg-10 ">
+                                <div class="footer-copy-right">
+                                    <p>
+                                        Copyright &copy;
+                                        <script>document.write(new Date().getFullYear());</script> TAR UMT ITP
+                                    </a>
                                 </p>
                             </div>
                         </div>
@@ -174,9 +190,7 @@
         </div>
         <!-- Footer End-->
     </footer>
-
     <!-- JS here -->
-
     <!-- All JS Custom Plugins Link Here here -->
     <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->
@@ -185,29 +199,24 @@
     <script src="./static/js/bootstrap.min.js"></script>
     <!-- Jquery Mobile Menu -->
     <script src="./static/js/jquery.slicknav.min.js"></script>
-
     <!-- Jquery Slick , Owl-Carousel Plugins -->
     <script src="./static/js/owl.carousel.min.js"></script>
     <script src="./static/js/slick.min.js"></script>
     <script src="./static/js/price_rangs.js"></script>
-
     <!-- One Page, Animated-HeadLin -->
     <script src="./static/js/wow.min.js"></script>
     <script src="./static/js/animated.headline.js"></script>
     <script src="./static/js/jquery.magnific-popup.js"></script>
-
     <!-- Scrollup, nice-select, sticky -->
     <script src="./static/js/jquery.scrollUp.min.js"></script>
     <script src="./static/js/jquery.nice-select.min.js"></script>
     <script src="./static/js/jquery.sticky.js"></script>
-
     <!-- contact js -->
     <script src="./static/js/contact.js"></script>
     <script src="./static/js/jquery.form.js"></script>
     <script src="./static/js/jquery.validate.min.js"></script>
     <script src="./static/js/mail-script.js"></script>
     <script src="./static/js/jquery.ajaxchimp.min.js"></script>
-
     <!-- Jquery Plugins, main Jquery -->
     <script src="./static/js/plugins.js"></script>
     <script src="./static/js/main.js"></script>

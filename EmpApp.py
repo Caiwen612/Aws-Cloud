@@ -737,7 +737,7 @@ def supervisorStudentDetails():
         # Fetch student list from the database with the supervisor id
         query = "SELECT * FROM student WHERE supervisor_id = %s"
         cursor.execute(query, (user_id,))
-        student_list = cursor.fetchall()
+        student_list = cursor.fetchone()
         cursor.close()
 
         return render_template('supervisorStudentDetails.html', student_list=student_list)
@@ -775,17 +775,7 @@ def supervisorStudentDetails_student_evaluate(student_id):
         teamwork_skills = request.form['teamwork_skills']
         evaluation_date = request.form['evaluation_date']
         evaluation_comment = request.form['evaluation_comment']
-        #Debug Info purpose
-        # print(programming_knowledge)
-        # print(database_knowledge)
-        # print(debugging_knowledge)
-        # print(teamwork_skills)
-        # print(evaluation_date)
-        # print(evaluation_comment)
-
-
-        # You can now use these variables to update your database or perform any other actions as needed.
-        # Update the database with the new data
+        
         try:
             cursor = db_conn.cursor()
             
@@ -821,7 +811,30 @@ def supervisorStudentDetails_student_evaluate(student_id):
         except Exception as e:
             print(f"Error fetching student details: {e}")
             return "An error occurred while fetching student details."
+        
+@app.route('/portfolioList/<supervisor_id>')
+def portfolioList(supervisor_id):
+    return render_template('portfolioList.html', supervisor_id=supervisor_id)
 
+@app.route('/portfolioEugene')
+def portfolioEugene():
+    return render_template('portfolioEugene.html')
+
+@app.route('/portfolioWilson')
+def portfolioWilson():
+    return render_template('portfolioWilson.html')
+
+@app.route('/portfolioChunKai')
+def portfolioChunKai():
+    return render_template('portfolioChunKai.html')
+
+@app.route('/portfolioChaiBoon')
+def portfolioChaiBoon():
+    return render_template('portfolioChaiBoon.html')
+
+@app.route('/portfolioKeEn')
+def portfolioKeEn():
+    return render_template('portfolioKeEn.html')
 #-----------------ROUTING-----------------
 @app.route('/')
 def index():
