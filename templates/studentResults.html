@@ -47,7 +47,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="{{ url_for('index') }}" ><img src="static/img/logo/logo.png" alt=""></a>
+                                <a href="{{ url_for('index') }}" ><img src="static/img/logo/logo.jpg"  style="height:60px; width:90px"></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -99,19 +99,11 @@
 			</div>
 		</div>
 	</div>
-	{% if not disable %}
-	<!-- Display "Not eligible to apply for internships" message -->
-	<section class="not-eligible-section", style="padding:30px; height: 370px;">
-		<div class="container">
-			<h1>Not eligible to check for internship results</h1>
-			<p>You do not meet the eligibility criteria to check for internship results.</p>
-		</div>
-	</section>
-{% else %}
+
 	<section class="sample-text-area">
 		<div class="container box_1170">
 			<p class="sample-text">
-				Internship results are as shown below. Please contact "" for any enquiries.
+				Internship results are as shown below. Please contact the institude for any enquiries.
 			</p>
 		</div>
 	</section>
@@ -163,7 +155,7 @@
 	<div style="position: relative; left: 80%; padding: 30px;">
 		<a href="{{ url_for('generate_pdf') }}" class="genric-btn primary-border">Download PDF</a>
 	</div>
-	{% endif %}
+
     <footer>
 		<!-- Footer Start-->
 		<!-- footer-bottom area -->

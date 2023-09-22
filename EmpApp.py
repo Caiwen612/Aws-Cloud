@@ -367,7 +367,7 @@ def generate_pdf():
 def checkInternshipStatus():
     cursor = db_conn.cursor()
     user_id = session.get('user_id')
-    select_sql = "SELECT evaluation_form, progress_report FROM student WHERE student_id = %s"
+    select_sql = "SELECT  evaluation_form, progress_report, internship_results, internship_comments FROM student WHERE student_id = %s"
     cursor.execute(select_sql, (user_id,))
     data = cursor.fetchone() 
     print(data)
@@ -386,7 +386,7 @@ def display_results():
         student_data = cursor.fetchone() 
         data = checkInternshipStatus()
         disable = False
-        if data[0]!= '' and data[1] !=  '':
+        if all(item is not None and item != '' for item in data):
                         cursor = db_conn.cursor()
                         user_id = session.get('user_id')
                         print(user_id)

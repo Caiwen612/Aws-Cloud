@@ -32,7 +32,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="static/img/logo/logo.png" alt="">
+                    <img src="static/img/logo/logo.jpg"  style="height:60px; width:90px">
                 </div>
             </div>
         </div>
@@ -121,9 +121,9 @@
 							<h4>Company Acceptance Letter</h4>
 						</a>
 						<p>To upload the offer letter given by the company as an indication of position placement confirmation</p>
-						<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-1">
+						<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-1" style="padding-top:20px; ">
 							<input type="hidden" name="document_type" value="Company Acceptance Letter">
-							<input type="file" name="document_file" accept=".pdf">
+							<input type="file" name="document_file" accept=".pdf"  style="padding-right:600px;">
 							<button type="submit" class="genric-btn info">Upload PDF</button>
 						</form>
 						<p id="upload-status-1"></p>
@@ -140,9 +140,9 @@
 							<h4>Indemnity Letter</h4>
 						</a>
 						<p>To upload a legal document that allocates risk and protects one party from potential financial harm</p>
-						<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-2">
+						<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-2"  style="padding-top:20px;">
 							<input type="hidden" name="document_type" value="Indemnity Letter">
-							<input type="file" name="document_file" accept=".pdf">
+							<input type="file" name="document_file" accept=".pdf"  style="padding-right:600px;">
 							<button type="submit" class="genric-btn info">Upload PDF</button>
 						</form>
 						<p id="upload-status-2"></p>
@@ -159,9 +159,9 @@
 						<h4>Parent Acknowledgement Form</h4>
 					</a>
 					<p>To upload a document used to obtain writtern consent from a parent or legal guardian</p>
-					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-3">
+					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-3"   style="padding-top:20px;">
 						<input type="hidden" name="document_type" value="Parent Acknowledgement Form">
-						<input type="file" name="document_file" accept=".pdf">
+						<input type="file" name="document_file" accept=".pdf"  style="padding-right:600px;">
 						<button type="submit" class="genric-btn info">Upload PDF</button>
 					</form>
 					<p id="upload-status-3"></p>
@@ -177,9 +177,9 @@
 						<h4>Company Supervisor Evaluation Form</h4>
 					</a>
 					<p>To upload a from to provide feedback on students supervisor's performance evaluation and leadership skills</p>
-					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-4">
+					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-4"   style="padding-top:20px;">
 						<input type="hidden" name="document_type" value="Company Supervisor Evaluation Form">
-						<input type="file" name="document_file" accept=".pdf">
+						<input type="file" name="document_file" accept=".pdf"  style="padding-right:600px;">
 						<button type="submit" class="genric-btn info">Upload PDF</button>
 					</form>
 					<p id="upload-status-4"></p>
@@ -195,9 +195,9 @@
 						<h4>Student Progress Report</h4>
 					</a>
 					<p>To upload the offer letter given by the company as an indication of position placement confirmation</p>
-					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-5">
+					<form action="{{ url_for('studentUpload') }}" method="POST" enctype="multipart/form-data" class="upload-form"  id="document-column-5"   style="padding-top:20px;">
 						<input type="hidden" name="document_type" value="Student Progress Report">
-						<input type="file" name="document_file" accept=".pdf">
+						<input type="file" name="document_file" accept=".pdf"  style="padding-right:600px;">
 						<button type="submit" class="genric-btn info">Upload PDF</button>
 					</form>
 					<p id="upload-status-5"></p>
