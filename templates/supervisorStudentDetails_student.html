@@ -21,7 +21,7 @@
                 <div class="preloader-inner position-relative">
                     <div class="preloader-circle"></div>
                     <div class="preloader-img pere-text">
-                        <img src="static/img/logo/logo.jpg"  style="height:60px; width:90px">
+                        <img src="static/img/logo/logo.jpg" style="height:60px; width:90px">
                     </div>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="header-btn d-none f-right d-lg-block">
                                         <a href="{{ url_for('logout') }}" class="btn head-btn1">Logout</a>
-                                    </div>   
+                                    </div>
                                 </div>
                             </div>
                             <!-- Mobile Menu -->
@@ -213,6 +213,17 @@
                                     </li>
                                     <br>
                                     <li>
+                                        <span style="font-weight: bold">
+                                            Company Supervisor Evaluation Letter:
+                                        </span
+                    >
+                                        <br>
+                                        <a href="{{studentDetails[19]}}" style="text-decoration: none;">
+                                            <span style="font-size: 16px; color: lightskyblue;" onmouseover="this.style.color='darkblue';" onmouseout="this.style.color='lightskyblue';">Download PDF</span>
+                                        </a>
+                                    </li>
+                                    <br>
+                                    <li>
                                         <span style="font-weight: bold">Progress Report:</span>
                                         <br>
                                         <a href="{{studentDetails[20]}}" style="text-decoration: none;">
@@ -221,7 +232,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            {% if studentDetails[25] is not none %}
+                            {% if studentDetails[25] is not none and studentDetails[25] != "" %}
                             <div class="student-letters mb-50">
                                 <div class="small-section-tittle">
                                     <h4 style="font-size: 24px">Evaluation Results</h4>
@@ -265,8 +276,7 @@
                                     <br>
                                 </ul>
                             </div>
-                            {% endif %}
-                            {% if studentDetails[25] is none %}
+                            {% else %}
                             <div class="post-details4 mb-50">
                                 <!-- Small Section Tittle -->
                                 <div class="small-section-tittle">
