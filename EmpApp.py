@@ -762,7 +762,7 @@ def supervisorStudentDetails():
         # Fetch student list from the database with the supervisor id
         query = "SELECT * FROM student WHERE supervisor_id = %s"
         cursor.execute(query, (user_id,))
-        student_list = cursor.fetchone()
+        student_list = cursor.fetchall()
         cursor.close()
 
         return render_template('supervisorStudentDetails.html', student_list=student_list)
