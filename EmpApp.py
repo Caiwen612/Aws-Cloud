@@ -557,9 +557,16 @@ def company():
         query = "SELECT listing_id, position, min_salary, max_salary, working_hours FROM job_listings WHERE company_id = %s"
         cursor.execute(query, (user_id,))
         job_postings = cursor.fetchall()
+
+
+        # Fetch company details from the database
+        query = "SELECT * FROM company WHERE company_id = %s"
+        cursor.execute(query, (user_id,))
+        company_details = cursor.fetchone()
         cursor.close()
 
-        return render_template('company.html', job_postings=job_postings)
+
+        return render_template('company.html', job_postings=job_postings, company_details=company_details)
 
     except Exception as e:
         print(f"Error fetching job postings: {e}")
@@ -749,8 +756,12 @@ def handle_company_profile():
         industry = request.form['industry']
         company_type = request.form['company_type']
         description = request.form['description']
+        uploaded_file = request.files.get('profile_picture')
 
 
+        print("uploaded_file:", uploaded_file)
+
+        upload_profile_picture(uploaded_file, company_id) 
 
         # Update the database with the new data
         try:
@@ -787,6 +798,48 @@ def handle_company_profile():
         except Exception as e:
             print(f"Error fetching company details: {e}")
             return "An error occurred while fetching company details."
+        
+def upload_profile_picture(uploaded_file, company_id):
+    try:
+        # You can fetch company_name from the database using company_id if needed
+        # For now, let's just use company_id for the S3 filename
+        file_extension = os.path.splitext(uploaded_file.filename)[1]
+        company_profile_name_in_s3 = f"company_{company_id}_profile_picture{file_extension}"
+
+        # SQL
+        cursor = db_conn.cursor()
+
+        # Make connection with S3
+        s3 = boto3.resource('s3', region_name=customregion)
+        print("uploading company profile picture to S3...")
+
+        # Set the desired Content-Disposition header
+        content_disposition = 'inline'
+
+        # Upload the file to S3 with the specified Content-Disposition header
+        s3.Bucket(custombucket).put_object(
+            Key=company_profile_name_in_s3,
+            Body=uploaded_file,
+            Metadata={'Content-Disposition': content_disposition}
+        )
+
+        # Generate the object URL
+        object_url = f"https://{custombucket}.s3.amazonaws.com/{company_profile_name_in_s3}"
+        print("object url:", object_url)
+
+        # Insert URL into MariaDB
+        update_sql = "UPDATE company SET profile_picture_url = %s WHERE company_id = %s"
+        values = (str(object_url), company_id)
+        cursor.execute(update_sql, values)
+        db_conn.commit()
+        cursor.close()
+
+        return object_url
+
+    except Exception as e:
+        print("Error during profile picture upload: ", str(e))
+        return None
+
 
 #---------------- Eugene ----------------
 @app.route('/supervisorStudentDetails')
