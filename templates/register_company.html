@@ -79,10 +79,10 @@
                     <h4 class="text-center">Register</h4>
                     <hr>
                     <!-- Display error message here -->
-                    {% if error_messages and (error_messages.get('all_fields') or error_messages.get('userEmail')) %}
+                    {% if error_messages and (error_messages.get('error') )%}
                     <span class="text-danger"
                         style="display: block; text-align: center; border: 1px solid #f00; padding: 10px; margin-bottom: 20px;">
-                        {{ error_messages.get('all_fields') if error_messages.get('all_fields') else error_messages.get('userEmail') }}
+                        {{ error_messages.get('error') if error_messages.get('error') }}
                     </span>
                     {% endif %}
 

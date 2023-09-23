@@ -1097,23 +1097,24 @@ def register_company():
             
             #Check if all fields are filled
             if not all([companyName, industry, contactName, contactEmail, userEmail, userPassword, companyConfirmedPassword]):
-                error_messages['all_fields'] = 'Error! Please fill in all fields.'
+                error_messages['error'] = 'Error! Please fill in all fields.'
+                return render_template('register_company.html', error_messages=error_messages, form_data=request.form)
+
 
             # Check if password and confirmed password match
             if userPassword != companyConfirmedPassword:
-                error_messages['companyPassword'] = 'Password and confirmed password do not match.'
+                error_messages['error'] = 'Password and confirmed password do not match.'
+                return render_template('register_company.html', error_messages=error_messages, form_data=request.form)
+
 
             # Check if email already exists
             query = "SELECT * FROM user WHERE email = %s"
             cursor.execute(query, (userEmail,))
             user_data = cursor.fetchone()
             if user_data:
-                error_messages['userEmail'] = 'Email already exists.'
-
-
-            if error_messages:
+                error_messages['error'] = 'Email already exists.'
                 return render_template('register_company.html', error_messages=error_messages, form_data=request.form)
-            
+
             # Insert into user table
             query = """INSERT INTO user
                     (email, password, role)
@@ -1182,49 +1183,92 @@ def register_student():
 
             #Check if all fields are filled
             if not all([educationLevel, cohort, programme, tutorialGroup, studentID, studentEmail, supervisorName, supervisorEmail, programmingKnowledge, databaseKnowledge, networkingKnowledge, studentPassword, studentConfirmedPassword]):
-                error_messages['all_fields'] = 'Error! Please fill in all fields.'
+                error_messages['error'] = 'Error! Please fill in all fields.'
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
 
             # Check if password and confirmed password match
             if studentPassword != studentConfirmedPassword:
-                error_messages['studentPassword'] = 'Password and confirmed password do not match.'
+                error_messages['error'] = 'Password and confirmed password do not match.'
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
 
-            # Check if email already exists
-            query = "SELECT * FROM user WHERE email = %s"
+            # Check if email already registered
+            query = "SELECT * FROM user WHERE email = %s AND role = 'student'"
             cursor.execute(query, (studentEmail,))
             student_data = cursor.fetchone()
 
             if student_data :
-                error_messages['studentEmail'] = 'Email already exists.'
-
-            # Check if student ID already exists
-            query = "SELECT * FROM student WHERE student_id = %s"
-            cursor.execute(query, (studentID,))
-            student_data = cursor.fetchone()
-            if not student_data:
-                error_messages['studentID'] = 'Student ID not found.'
+                error_messages['error'] = 'Email already registered.'
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
 
             
 
+            # Check if student ID already registered
+            query = "SELECT * FROM student WHERE student_id = %s"
+            cursor.execute(query, (studentID,))
+            student_data = cursor.fetchone()
+            print(student_data)
+            #Check if the user_id column is empty
+            # Check if a student with the given ID was found in the database
+            if student_data is not None:
+                # Check if the user_id column is empty
+                print(student_data[21])
+                if student_data[21] is not None:
+                    error_messages['error'] = 'Student ID already registered.'
+                    return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+            else:
+                error_messages['error'] = 'Student ID not found.'
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
 
-       # Check if the supervisor name not found
+
+            # Check if the student ID matches the student email
+            query = "SELECT * FROM student WHERE student_id = %s AND student_email = %s"
+            cursor.execute(query, (studentID, studentEmail))
+            student_data = cursor.fetchone()
+            if not student_data:
+                error_messages['error'] = 'Student ID does not match the student email.'
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+
+
+            # Check if the supervisor name not found
             query = "SELECT * FROM supervisor WHERE supervisor_name = %s"
             cursor.execute(query, (supervisorName,))
             supervisor_name= cursor.fetchone()
              # Check if supervisor name matches
             if not  supervisor_name:  # Assuming supervisor name is in the second column
-                error_messages['supervisorName'] = 'Supervisor name does not match the database.'
+                error_messages['error'] = 'Supervisor name does not match the database.'
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+
 
             # Check if supervisor email not found
             query = "SELECT * FROM supervisor WHERE supervisor_email = %s"
             cursor.execute(query, (supervisorEmail,))
             supervisor_data = cursor.fetchone()
             if not supervisor_data:
-                error_messages['supervisorEmail'] = 'Supervisor email not found.'
-            else:
-                supervisor_id = supervisor_data[0]
-                
-            if error_messages:
+                error_messages['error'] = 'Supervisor email not found.'
                 return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+            
+
+            # Check if supervisor email matches
+            query = "SELECT * FROM supervisor WHERE supervisor_email = %s AND supervisor_name = %s"
+            cursor.execute(query, (supervisorEmail, supervisorName))
+            supervisor_data = cursor.fetchone()
+            if not supervisor_data:
+                error_messages['error'] = 'Supervisor email does not match the supervisor name.'
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+            
+            # Get the supervisor_id
+            query = "SELECT supervisor_id FROM supervisor WHERE supervisor_email = %s AND supervisor_name = %s"
+            cursor.execute(query, (supervisorEmail, supervisorName))
+            supervisor_id = cursor.fetchone()[0]
+            
+            # Check if student is assigned to the supervisor
+            query = "SELECT * FROM student WHERE student_id = %s AND supervisor_id = %s"
+            cursor.execute(query, (studentID, supervisor_id))
+            student_data = cursor.fetchone()
+            if not student_data:
+                error_messages['error'] = 'Student is not assigned to the supervisor.'
+                return render_template('register_student.html', error_messages=error_messages, form_data=request.form)
+            
 
             # Insert into user table
             query = """INSERT INTO user
@@ -1256,12 +1300,12 @@ def register_student():
             if any(value is None for value in [educationLevel, cohort , programme,  tutorialGroup,    studentName , studentID , studentEmail ,  programmingKnowledge,   databaseKnowledge,  networkingKnowledge, user_id, studentID]):
                 return "Some required form fields are missing."
             else:
-                        # Provide the values for the update
-                        value=  (educationLevel, cohort , programme,  tutorialGroup,    studentName ,  studentEmail ,  programmingKnowledge,   databaseKnowledge,  networkingKnowledge, user_id, studentID, )
-                        print(value)
-                        cursor.execute(query,  value)
-                        db_conn.commit()
-                        cursor.close()
+                # Provide the values for the update
+                value=  (educationLevel, cohort , programme,  tutorialGroup,    studentName ,  studentEmail ,  programmingKnowledge,   databaseKnowledge,  networkingKnowledge, user_id, studentID, )
+                print(value)
+                cursor.execute(query,  value)
+                db_conn.commit()
+                cursor.close()
 
             flash('Registration successful!', 'success')
             return redirect(url_for('login'))  # Redirect to the login page
