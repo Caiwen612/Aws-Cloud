@@ -761,7 +761,9 @@ def handle_company_profile():
 
         print("uploaded_file:", uploaded_file)
 
-        upload_profile_picture(uploaded_file, company_id) 
+        # Only upload the profile picture if the user has selected a file
+        if uploaded_file:
+            upload_profile_picture(uploaded_file, company_id) 
 
         # Update the database with the new data
         try:

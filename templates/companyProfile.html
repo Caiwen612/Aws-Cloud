@@ -153,7 +153,8 @@
                                     <div class="form-group">
                                         <label for="company_name">Company Name</label>
                                         <input class="form-control valid" name="company_name" id="company_name"
-                                            type="text" value="{{ company[1] or '' }}" placeholder="Enter Company Name">
+                                            type="text" value="{{ company[1] or '' }}" placeholder="Enter Company Name" readonly>
+                                        <small class="text-muted">*Company name cannot be changed.</small>
                                     </div>
                                 </div>
                                 <div class="col-6">
