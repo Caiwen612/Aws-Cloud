@@ -261,16 +261,16 @@
 
 								<div class="single-job-items" data-original-order="{{ loop.index }}">
 									<div class="job-items">
-										<div class="company-img">
+										<div class="company-img" style="width: 50px; height:50px;padding-right:150px;">
 											<!-- You can replace 'posting.company_logo_url' with your actual logo data -->
-											<a href="#"><img src="{{ posting.company_logo_url }}" alt="{{ posting.company_id }}"></a>
+											<a href="#"><img src="{{ posting[10] }}" alt="{{ posting.company_id }}" style="width: 110px; height:110px;"></a>
 										</div>
 										<div class="job-tittle job-tittle2">
 											<a href="#">
 												<h4>{{ posting[1] }}</h4>
 											</a>
 											<ul>
-												<li>{{ posting[10]}}</li>
+												<li>{{ posting[11]}}</li>
 												<li><i class="fas fa-map-marker-alt"></i>{{ posting.location }}</li>
 												<li>${{ posting[2]}} - ${{ posting[3] }}</li>
 											</ul>

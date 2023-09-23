@@ -474,6 +474,8 @@ def intern_job_details(listing_id):
             cursor.close()
 
             if company_data:
+                print(company_data)
+                print(job_data)
                 return render_template('studentInternDetails.html', companyData=company_data, jobData=job_data)
             else:
                 return "Company not found."
@@ -508,7 +510,7 @@ def show_all_jobs():
     try:
         cursor = db_conn.cursor()
         query = """
-            SELECT job_listings.*, company.company_name AS company_name
+            SELECT job_listings.*,company.profile_picture_url , company.company_name AS company_name
             FROM job_listings
             JOIN company ON job_listings.company_id = company.company_id
         """
