@@ -1197,11 +1197,11 @@ def register_student():
                 error_messages['studentEmail'] = 'Email already exists.'
 
             # Check if student ID already exists
-            query = "SELECT * FROM user WHERE studentId = %s"
+            query = "SELECT * FROM student WHERE student_id = %s"
             cursor.execute(query, (studentID,))
             student_data = cursor.fetchone()
-            if student_data:
-                error_messages['studentID'] = 'Student ID already exists.'
+            if not student_data:
+                error_messages['studentID'] = 'Student ID not found.'
 
             
 
@@ -1241,14 +1241,27 @@ def register_student():
             # Update the student table
             query = """UPDATE student 
                     SET 
+                        student_level = %s,
+                        student_cohort = %s,
+                        student_programme = %s,
+                        student_tutgrp = %s,
+                        student_name = %s,
+                        student_email = %s,
+                        student_pk = %s,
+                        student_dk = %s,
+                        student_nk = %s,
                         user_id = %s
                     WHERE student_id = %s"""
 
-            # Provide the values for the update
-            cursor.execute(query, (user_id, studentID ))
-            db_conn.commit()
-            cursor.close()
-
+            if any(value is None for value in [educationLevel, cohort , programme,  tutorialGroup,    studentName , studentID , studentEmail ,  programmingKnowledge,   databaseKnowledge,  networkingKnowledge, user_id, studentID]):
+                return "Some required form fields are missing."
+            else:
+                        # Provide the values for the update
+                        value=  (educationLevel, cohort , programme,  tutorialGroup,    studentName ,  studentEmail ,  programmingKnowledge,   databaseKnowledge,  networkingKnowledge, user_id, studentID, )
+                        print(value)
+                        cursor.execute(query,  value)
+                        db_conn.commit()
+                        cursor.close()
 
             flash('Registration successful!', 'success')
             return redirect(url_for('login'))  # Redirect to the login page
@@ -1257,7 +1270,6 @@ def register_student():
             print(f"Error during registration: {e}")
             flash('An error occurred during registration. Please try again.', 'error')
             return redirect(url_for('register_student'))  # Redirect to the registration page
-
 
 @app.route('/logout')
 def logout():
