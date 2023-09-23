@@ -872,12 +872,13 @@ def supervisorStudentDetails_student(student_id):
         query = "SELECT * FROM student WHERE student_id = %s"
         cursor.execute(query, (student_id,))
         student_details = cursor.fetchone()
+        print(student_details)
         cursor.close()
 
         return render_template('supervisorStudentDetails_student.html', studentDetails=student_details)
 
     except Exception as e:
-        print(f"Error fetching student details: {e}")
+        print(f"Here: Error fetching student details: {e}")
         return "An error occurred while fetching student details."
     
 @app.route('/supervisorStudentDetails/evaluate/<student_id>', methods=['GET', 'POST'])
