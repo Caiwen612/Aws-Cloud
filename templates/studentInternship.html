@@ -441,6 +441,7 @@
 			for (const posting of filteredJobPostings) {
 				const date = new Date(posting[8]);
 				const formattedDate = date.toLocaleDateString('en-CA'); // 'en-CA' format gives YYYY-MM-DD
+				
 				const jobItemHTML = `
     				<div class="single-job-items" data-original-order="${index}"
 					style="padding: 36px 30px; display: flex; justify-content: space-between; flex-wrap: wrap; -webkit-transition: .4s; -moz-transition: .4s; -o-transition: .4s; transition: .4s;" >
