@@ -420,17 +420,10 @@
 		function sortJobPosition() {
 			var jobPositionSelect = document.getElementById('job-position-select');
 			var selectedValue = jobPositionSelect.options[jobPositionSelect.selectedIndex].value;
-
 			var jobListingsContainer = document.querySelector(".job-listings");
 			var jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
-
-			console.log('Selected value:', selectedValue);
-
 			const jobPostings = JSON.parse('{{ job_posting | tojson | safe }}');
 			var filteredJobPostings = [];
-			console.log(jobPostings);
-			// console.log(jobPostings[0]);
-			// console.log(jobPostings[0][1]);
 
 			// If 'all' is selected, skip filtering and use the entire jobPostings array
 			if (selectedValue === "all") {
@@ -443,16 +436,11 @@
 				}
 			}
 
-
 			jobListingsContainer.innerHTML = '';
 			let index = 1;
-			console.log(filteredJobPostings)
 			for (const posting of filteredJobPostings) {
-
 				const date = new Date(posting[8]);
 				const formattedDate = date.toLocaleDateString('en-CA'); // 'en-CA' format gives YYYY-MM-DD
-
-
 				const jobItemHTML = `
     				<div class="single-job-items" data-original-order="${index}"
 					style="padding: 36px 30px; display: flex; justify-content: space-between; flex-wrap: wrap; -webkit-transition: .4s; -moz-transition: .4s; -o-transition: .4s; transition: .4s;" >
@@ -484,13 +472,9 @@
 
 				jobListingsContainer.innerHTML += jobItemHTML;
 			}
-
-
-
 		}
 
 	</script>
-
 	<script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
 	<!-- Jquery, Popper, Bootstrap -->
 	<script src="./static/js/vendor/jquery-1.12.4.min.js"></script>
@@ -498,35 +482,27 @@
 	<script src="./static/js/bootstrap.min.js"></script>
 	<!-- Jquery Mobile Menu -->
 	<script src="./static/js/jquery.slicknav.min.js"></script>
-
 	<!-- Jquery Slick , Owl-Carousel Plugins -->
 	<script src="./static/js/owl.carousel.min.js"></script>
 	<script src="./static/js/slick.min.js"></script>
 	<script src="./static/js/price_rangs.js"></script>
-
 	<!-- One Page, Animated-HeadLin -->
 	<script src="./static/js/wow.min.js"></script>
 	<script src="./static/js/animated.headline.js"></script>
 	<script src="./static/js/jquery.magnific-popup.js"></script>
-
-	<!-- Scrollup, nice-select, sticky -->
+	<!--Scrollup, nice-select, sticky -->
 	<script src="./static/js/jquery.scrollUp.min.js"></script>
 	<script src="./static/js/jquery.nice-select.min.js"></script>
 	<script src="./static/js/jquery.sticky.js"></script>
-
 	<!-- contact js -->
 	<script src="./static/js/contact.js"></script>
 	<script src="./static/js/jquery.form.js"></script>
 	<script src="./static/js/jquery.validate.min.js"></script>
 	<script src="./static/js/mail-script.js"></script>
 	<script src="./static/js/jquery.ajaxchimp.min.js"></script>
-
 	<!-- Jquery Plugins, main Jquery -->
 	<script src="./static/js/plugins.js"></script>
 	<script src="./static/js/main.js"></script>
-
-
-
 </body>
 
 </html>
