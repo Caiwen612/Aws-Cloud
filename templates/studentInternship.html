@@ -99,7 +99,7 @@
 	
 
 	<div class="slider-area ">
-		<div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="static/img/hero/ok.jpeg">
+		<div class="single-slider section-overly slider-height2 d-flex align-items-center"   data-background="static/img/hero/about.jpg">
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-12">
@@ -191,41 +191,6 @@
 								</select>
 							</div>
 						</div>
-						<!-- single two -->
-						<div class="single-listing" style="padding-top: 60px;">
-						   <div class="small-section-tittle2"  >
-								 <h4>State</h4>
-						   </div>
-
-							<div class="form-select" id="default-select">
-								<select name="cohort" id="cohort">
-									<option value="default" {% if form_data and
-										form_data.get('cohort')=='default' %}selected{% endif %}>All States</option>
-									{% for position in job_positions %}
-										<option value="{{ position }}">{{ position }}</option>
-									{% endfor %}
-								</select>
-
-						</div>
-
-						</div>
-						
-						<div class="single-listing" style="padding-top: 90px;">
-							<div class="small-section-tittle2"  >
-								<h4>Area</h4>
-						  </div>
-						   <!-- Select job items start -->
-						   <div class="select-job-items2">
-							   <select name="select">
-								   <option value="">Anywhere</option>
-								   <option value="">Category 1</option>
-								   <option value="">Category 2</option>
-								   <option value="">Category 3</option>
-								   <option value="">Category 4</option>
-							   </select>
-						   </div>
-						</div>
-						
 	
 					</div>
 

@@ -1388,3 +1388,16 @@ if __name__ == '__main__':
         app.run(debug=True)
 
     
+
+
+CREATE TABLE `user` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`email` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`password` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	`role` VARCHAR(50) NULL DEFAULT NULL COLLATE 'latin1_swedish_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=23
+;
