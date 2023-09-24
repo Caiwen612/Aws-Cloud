@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register As Company Page</title>
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700&display=swap" rel="stylesheet"> -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <style>
         body {
             font-family: 'Muli', sans-serif;
@@ -30,8 +28,6 @@
             border-bottom: 1px solid #e0e0e0;
             padding-bottom: 10px;
         }
-
-
 
         .btn-primary {
             background-color: #fb246a;
@@ -64,18 +60,14 @@
     <link rel="stylesheet" href="/static/css/nice-select.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/responsive.css">
-
 </head>
 
 <body onload="determineFieldsVisibility();">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-
-
                 <div class="card p-4">
-
-                    <img  src="static/img/logo/logo.jpg"  alt="Website Logo" class="logo">
+                    <img src="static/img/logo/logo.jpg" alt="Website Logo" class="logo">
                     <h4 class="text-center">Register</h4>
                     <hr>
                     <!-- Display error message here -->
@@ -86,12 +78,10 @@
                     </span>
                     {% endif %}
 
-
-
                     <form action="{{ url_for('register_company') }}" method="POST" id="roleForm">
                         <div class="form-group row">
                             <h5 class="col-12 text-center mb-3">Register as:</h5>
-                            <div class="row justify-content-center align-items-center" style="margin: auto;"    >
+                            <div class="row justify-content-center align-items-center" style="margin: auto;">
                                 <div class="col-6 text-center">
                                     <a href="{{ url_for('register_student') }}" class="btn head-btn2">Student</a>
                                 </div>
@@ -100,9 +90,8 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Fields for Company -->
-                        <div id="companyFields" {% if selected_role =='student' %}style="display: none;" {% endif %}>
+                        <div id="companyFields" {% if selected_role=='student' %}style="display: none;" {% endif %}>
                             <!-- Company Details -->
                             <div class="section-heading">
                                 <h5>Company Details</h5>
@@ -169,7 +158,6 @@
 
                         </div>
 
-
                         <!-- Declaration Section -->
                         <div class="section-heading">
                             <h5>Declaration</h5>
@@ -184,14 +172,13 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn head-btn1"
-                            style="width: 100%; margin-top: 5%;">Register as Company</button>
+                        <button type="submit" class="btn head-btn1" style="width: 100%; margin-top: 5%;">Register as
+                            Company</button>
                         <div class="mt-3 text-center">
                             <p>Already have an account? <a href="{{ url_for('login') }}"
                                     style="color: #fb246a; text-decoration: none;">Login here</a>.</p>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -199,12 +186,9 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <!-- JS here -->
     <!-- All JS Custom Plugins Link Here here -->
     <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
@@ -214,33 +198,27 @@
     <script src="./static/js/bootstrap.min.js"></script>
     <!-- Jquery Mobile Menu -->
     <script src="./static/js/jquery.slicknav.min.js"></script>
-
     <!-- Jquery Slick , Owl-Carousel Plugins -->
     <script src="./static/js/owl.carousel.min.js"></script>
     <script src="./static/js/slick.min.js"></script>
     <script src="./static/js/price_rangs.js"></script>
-
     <!-- One Page, Animated-HeadLin -->
     <script src="./static/js/wow.min.js"></script>
     <script src="./static/js/animated.headline.js"></script>
     <script src="./static/js/jquery.magnific-popup.js"></script>
-
     <!-- Scrollup, nice-select, sticky -->
     <script src="./static/js/jquery.scrollUp.min.js"></script>
     <script src="./static/js/jquery.nice-select.min.js"></script>
     <script src="./static/js/jquery.sticky.js"></script>
-
     <!-- contact js -->
     <script src="./static/js/contact.js"></script>
     <script src="./static/js/jquery.form.js"></script>
     <script src="./static/js/jquery.validate.min.js"></script>
     <script src="./static/js/mail-script.js"></script>
     <script src="./static/js/jquery.ajaxchimp.min.js"></script>
-
     <!-- Jquery Plugins, main Jquery -->
     <script src="./static/js/plugins.js"></script>
     <script src="./static/js/main.js"></script>
-
 </body>
 
 </html>

@@ -63,11 +63,6 @@
                                 <div class="header-btn d-none f-right d-lg-block">
                                     <a href="{{ url_for('logout') }}" class="btn head-btn1">Logout</a>
                                 </div>
-                                <!-- Header-btn
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn1">Register</a>
-                                    <a href="#" class="btn head-btn2">Login</a>
-                                </div> -->
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -97,7 +92,6 @@
             </div>
         </div>
         <!-- Hero Area End -->
-
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -109,9 +103,6 @@
         {% endif %}
         {% endwith %}
         <!-- End of Flash Messages -->
-
-
-        <!-- ================ contact section start ================= -->
         <section class="contact-section" style="padding-top: 50px;">
             <div class="container">
                 <div class="row">
@@ -119,12 +110,10 @@
                         <h2 class="contact-title">Company Profile</h2>
                     </div>
                     <div class="col-lg-10">
-
                         <form class="form-contact contact_form" action="{{ url_for('handle_company_profile') }}"
                             method="post" id="companyProfileForm" novalidate="novalidate" enctype="multipart/form-data">
                             <div class="row">
                                 <!-- Company Info -->
-
                                 <div class="col-12 mt-4">
                                     <div class="form-group">
                                         <label for="edit_profile">Company Profile Picture</label>
@@ -147,13 +136,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="company_name">Company Name</label>
                                         <input class="form-control valid" name="company_name" id="company_name"
-                                            type="text" value="{{ company[1] or '' }}" placeholder="Enter Company Name" readonly>
+                                            type="text" value="{{ company[1] or '' }}" placeholder="Enter Company Name"
+                                            readonly>
                                         <small class="text-muted">*Company name cannot be changed.</small>
                                     </div>
                                 </div>
@@ -194,7 +182,6 @@
                                             type="text" value="{{ company[5] or '' }}" placeholder="Enter State">
                                     </div>
                                 </div>
-
                                 <!-- Contact Info -->
                                 <div class="col-6">
                                     <div class="form-group">
@@ -211,7 +198,6 @@
                                             placeholder="Enter Contact Email">
                                     </div>
                                 </div>
-
                                 <!-- Industry and Type -->
                                 <div class="col-6">
                                     <div class="form-group">
@@ -228,7 +214,6 @@
                                             placeholder="Enter Company Type">
                                     </div>
                                 </div>
-
                                 <!-- Description -->
                                 <div class="col-12">
                                     <div class="form-group">
@@ -238,7 +223,6 @@
                                             placeholder="Enter Description">{{ company[11] or '' }}</textarea>
                                     </div>
                                 </div>
-
                                 <!-- Save Button -->
                                 <div class="col-12 mt-3">
                                     <div class="form-group">
@@ -252,7 +236,6 @@
                 </div>
             </div>
         </section>
-
     </main>
     <footer>
         <!-- Footer Start-->
@@ -274,7 +257,6 @@
         </div>
         <!-- Footer End-->
     </footer>
-
     <!-- JS here -->
     <script>
         function displaySelectedImage(input) {
@@ -292,7 +274,6 @@
             }
         }
     </script>
-
     <!-- All JS Custom Plugins Link Here here -->
     <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->
@@ -301,33 +282,27 @@
     <script src="./static/js/bootstrap.min.js"></script>
     <!-- Jquery Mobile Menu -->
     <script src="./static/js/jquery.slicknav.min.js"></script>
-
     <!-- Jquery Slick , Owl-Carousel Plugins -->
     <script src="./static/js/owl.carousel.min.js"></script>
     <script src="./static/js/slick.min.js"></script>
     <script src="./static/js/price_rangs.js"></script>
-
     <!-- One Page, Animated-HeadLin -->
     <script src="./static/js/wow.min.js"></script>
     <script src="./static/js/animated.headline.js"></script>
     <script src="./static/js/jquery.magnific-popup.js"></script>
-
     <!-- Scrollup, nice-select, sticky -->
     <script src="./static/js/jquery.scrollUp.min.js"></script>
     <script src="./static/js/jquery.nice-select.min.js"></script>
     <script src="./static/js/jquery.sticky.js"></script>
-
     <!-- contact js -->
     <script src="./static/js/contact.js"></script>
     <script src="./static/js/jquery.form.js"></script>
     <script src="./static/js/jquery.validate.min.js"></script>
     <script src="./static/js/mail-script.js"></script>
     <script src="./static/js/jquery.ajaxchimp.min.js"></script>
-
     <!-- Jquery Plugins, main Jquery -->
     <script src="./static/js/plugins.js"></script>
     <script src="./static/js/main.js"></script>
-
 </body>
 
 </html>

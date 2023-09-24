@@ -8,7 +8,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href=" {{ url_for('static', filename='img/favicon.ico') }}">
-
     <!-- CSS here -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
@@ -22,7 +21,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/slick.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
 </head>
 
 <body>
@@ -48,9 +46,8 @@
                             <!-- Logo -->
                             <div class="logo">
                                 <a href="{{ url_for('company') }}">
-                 
-                                    <img
-                                        src="{{ url_for('static', filename='../static/img/logo/logo.jpg') }}"  style="height:60px; width:90px" alt=""></a>
+                                    <img src="{{ url_for('static', filename='../static/img/logo/logo.jpg') }}"
+                                        style="height:60px; width:90px" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -99,7 +96,6 @@
             </div>
         </div>
     </div>
-
     <!-- Flash Messages -->
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -111,7 +107,6 @@
     {% endif %}
     {% endwith %}
     <!-- End of Flash Messages -->
-
     <!-- Hero Area End -->
     <!-- ================ contact section start ================= -->
     <section class="contact-section">
@@ -126,13 +121,13 @@
                         style="background-color: #FF5555; border: 1px solid #FF0000; padding: 10px;  margin-bottom: 20px;">
                         <p style="color: #FFFFFF; font-weight: bold;">Please complete your company details before
                             posting a job position.</p>
-                        <a href="{{ url_for('handle_company_profile') }}" class="button button-warning" id="goToCompanyProfile"
-                            style="text-decoration: underline;">Go to Company Profile</a>
+                        <a href="{{ url_for('handle_company_profile') }}" class="button button-warning"
+                            id="goToCompanyProfile" style="text-decoration: underline;">Go to Company Profile</a>
                     </div>
                     <!-- End of warning section -->
-
-
-                    <form class="form-contact contact_form" action="{{ url_for('handle_create_job_listing') if not job else url_for('handle_edit_job_listing', job_id=job[0]) }}" method="post" id="jobApplicationForm" novalidate="novalidate">
+                    <form class="form-contact contact_form"
+                        action="{{ url_for('handle_create_job_listing') if not job else url_for('handle_edit_job_listing', job_id=job[0]) }}"
+                        method="post" id="jobApplicationForm" novalidate="novalidate">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
@@ -203,16 +198,15 @@
                                 Submit Application
                                 {% endif %}
                             </button>
-                    
                             <!-- Add Cancel button here -->
-                            <a href="{{ url_for('company') }}" class="button button-contactForm boxed-btn cancel-btn mx-3">Cancel</a>
+                            <a href="{{ url_for('company') }}"
+                                class="button button-contactForm boxed-btn cancel-btn mx-3">Cancel</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </section>
-
     <footer>
         <!-- Footer Start-->
         <!-- footer-bottom area -->
@@ -233,9 +227,7 @@
         </div>
         <!-- Footer End-->
     </footer>
-
     <!-- JS here -->
-
     <!-- All JS Custom Plugins Link Here here -->
     <script src="{{ url_for('static', filename='js/vendor/modernizr-3.5.0.min.js') }}"></script>
     <!-- Jquery, Popper, Bootstrap -->
@@ -244,33 +236,27 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <!-- Jquery Mobile Menu -->
     <script src="{{ url_for('static', filename='js/jquery.slicknav.min.js') }}"></script>
-
     <!-- Jquery Slick , Owl-Carousel Plugins -->
     <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/slick.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/price_rangs.js') }}"></script>
-
     <!-- One Page, Animated-HeadLin -->
     <script src="{{ url_for('static', filename='js/wow.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/animated.headline.js') }}"></script>
-
     <!-- Scrollup, nice-select, sticky -->
     <script src="{{ url_for('static', filename='js/jquery.scrollUp.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.nice-select.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.sticky.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.magnific-popup.js') }}"></script>
-
     <!-- contact js -->
     <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.form.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.validate.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mail-script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/jquery.ajaxchimp.min.js') }}"></script>
-
     <!-- Jquery Plugins, main Jquery -->
     <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-
     <script>
         // Variable to track whether company details are filled in
         let companyDetailsFilled = {{ details_filled|default (true) | tojson }};
@@ -302,7 +288,6 @@
         // Initial call to set form state based on companyDetailsFilled
         toggleFormState();
     </script>
-
 </body>
 
 </html>

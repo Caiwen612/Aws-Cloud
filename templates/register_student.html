@@ -31,8 +31,6 @@
             padding-bottom: 10px;
         }
 
-
-
         .btn-primary {
             background-color: #fb246a;
             border: none;
@@ -64,17 +62,13 @@
     <link rel="stylesheet" href="/static/css/nice-select.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/responsive.css">
-
 </head>
 
 <body onload="determineFieldsVisibility();">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
-
-
                 <div class="card p-4">
-
                     <img src="static/img/logo/logo.jpg" alt="Website Logo" class="logo">
                     <h4 class="text-center">Register</h4>
                     <hr>
@@ -101,12 +95,10 @@
 
                         <!-- Fields for Student -->
                         <div id="studentFields" {% if selected_role=='company' %}style="display: none;" {% endif %}>
-
                             <!-- Academic Details -->
                             <div class="section-heading">
                                 <h5>Academic Details</h5>
                             </div>
-
                             <div class="row" style="margin-top: 20px;">
                                 <div class="form-group col-md-6">
                                     <div class="form-select" id="default-select">
@@ -137,7 +129,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
@@ -248,8 +239,6 @@
                                 {{ error_messages.get('studentPassword') }}
                             </span>
                             {% endif %}
-
-
                         </div>
 
                         <!-- Declaration Section -->
@@ -273,20 +262,15 @@
                                     style="color: #fb246a; text-decoration: none;">Login here</a>.</p>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <!-- JS here -->
     <!-- All JS Custom Plugins Link Here here -->
     <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
@@ -296,33 +280,27 @@
     <script src="./static/js/bootstrap.min.js"></script>
     <!-- Jquery Mobile Menu -->
     <script src="./static/js/jquery.slicknav.min.js"></script>
-
     <!-- Jquery Slick , Owl-Carousel Plugins -->
     <script src="./static/js/owl.carousel.min.js"></script>
     <script src="./static/js/slick.min.js"></script>
     <script src="./static/js/price_rangs.js"></script>
-
     <!-- One Page, Animated-HeadLin -->
     <script src="./static/js/wow.min.js"></script>
     <script src="./static/js/animated.headline.js"></script>
     <script src="./static/js/jquery.magnific-popup.js"></script>
-
     <!-- Scrollup, nice-select, sticky -->
     <script src="./static/js/jquery.scrollUp.min.js"></script>
     <script src="./static/js/jquery.nice-select.min.js"></script>
     <script src="./static/js/jquery.sticky.js"></script>
-
     <!-- contact js -->
     <script src="./static/js/contact.js"></script>
     <script src="./static/js/jquery.form.js"></script>
     <script src="./static/js/jquery.validate.min.js"></script>
     <script src="./static/js/mail-script.js"></script>
     <script src="./static/js/jquery.ajaxchimp.min.js"></script>
-
     <!-- Jquery Plugins, main Jquery -->
     <script src="./static/js/plugins.js"></script>
     <script src="./static/js/main.js"></script>
-
 </body>
 
 </html>
