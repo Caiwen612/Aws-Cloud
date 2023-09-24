@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Tay Chai Boon's portfolioList</title>
-        <!-- Meta -->
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Responsive HTML5 Resume/CV Template for Developers">
-        <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
-        <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
-        <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic" rel="stylesheet" type="text/css">
-        <!-- FontAwesome JS-->
-        <script defer src="assets/fontawesome/js/all.min.js"></script>
-        <!-- Global CSS -->
-        <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
-        <!-- CSS here -->
-        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
-        <!-- Add more stylesheets as needed -->
-        <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
-        <!-- Theme CSS -->
-        <style>
+
+<head>
+    <title>Tay Chai Boon's portfolioList</title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Responsive HTML5 Resume/CV Template for Developers">
+    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Roboto:400,500,400italic,300italic,300,500italic,700,700italic,900,900italic"
+        rel="stylesheet" type="text/css">
+    <!-- FontAwesome JS-->
+    <script defer src="assets/fontawesome/js/all.min.js"></script>
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- CSS here -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
+    <!-- Add more stylesheets as needed -->
+    <!-- <link rel="stylesheet" href="/static/css/style.css"> -->
+    <!-- Theme CSS -->
+    <style>
         body {
             font-family: "Roboto", sans-serif;
             color: #545E6C;
@@ -29,33 +32,40 @@
             font-size: 14px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            }
+        }
 
-            h1, h2, h3, h4, h5, h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
             font-weight: 700;
-            }
+        }
 
-            a {
+        a {
             color: #f47c03;
             text-decoration: none;
-            }
-            a:hover {
+        }
+
+        a:hover {
             text-decoration: underline;
             color: #a85502;
             -webkit-transition: all 0.4s ease-in-out;
             -moz-transition: all 0.4s ease-in-out;
             -ms-transition: all 0.4s ease-in-out;
             -o-transition: all 0.4s ease-in-out;
-            }
-            a:focus {
+        }
+
+        a:focus {
             text-decoration: none;
-            }
+        }
 
-            p {
+        p {
             line-height: 1.5;
-            }
+        }
 
-            .wrapper {
+        .wrapper {
             background: #6966fd;
             max-width: 960px;
             margin: 0 auto;
@@ -63,9 +73,9 @@
             -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
             box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-            }
+        }
 
-            .sidebar-wrapper {
+        .sidebar-wrapper {
             background: #6966fd;
             position: absolute;
             right: 0;
@@ -73,107 +83,131 @@
             height: 100%;
             min-height: 800px;
             color: #fff;
-            }
-            .sidebar-wrapper a {
+        }
+
+        .sidebar-wrapper a {
             color: #fff;
-            }
-            .sidebar-wrapper .profile-container {
+        }
+
+        .sidebar-wrapper .profile-container {
             padding: 30px;
             background: rgba(0, 0, 0, 0.2);
             text-align: center;
             color: #fff;
-            }
-            .sidebar-wrapper .name {
+        }
+
+        .sidebar-wrapper .name {
             font-size: 32px;
             font-weight: 900;
             margin-top: 0;
             margin-bottom: 10px;
-            }
-            .sidebar-wrapper .tagline {
+        }
+
+        .sidebar-wrapper .tagline {
             color: rgba(255, 255, 255, 0.6);
             font-size: 16px;
             font-weight: 400;
             margin-top: 0;
             margin-bottom: 0;
-            }
-            .sidebar-wrapper .profile {
+        }
+
+        .sidebar-wrapper .profile {
             margin-bottom: 15px;
-            }
-            .sidebar-wrapper .contact-list .svg-inline--fa {
+        }
+
+        .sidebar-wrapper .contact-list .svg-inline--fa {
             margin-right: 5px;
             font-size: 18px;
             vertical-align: middle;
-            }
-            .sidebar-wrapper .contact-list li {
+        }
+
+        .sidebar-wrapper .contact-list li {
             margin-bottom: 15px;
-            }
-            .sidebar-wrapper .contact-list li:last-child {
+        }
+
+        .sidebar-wrapper .contact-list li:last-child {
             margin-bottom: 0;
-            }
-            .sidebar-wrapper .contact-list .email .svg-inline--fa {
+        }
+
+        .sidebar-wrapper .contact-list .email .svg-inline--fa {
             font-size: 14px;
-            }
-            .sidebar-wrapper .container-block {
+        }
+
+        .sidebar-wrapper .container-block {
             padding: 30px;
-            }
-            .sidebar-wrapper .container-block-title {
+        }
+
+        .sidebar-wrapper .container-block-title {
             text-transform: uppercase;
             font-size: 16px;
             font-weight: 700;
             margin-top: 0;
             margin-bottom: 15px;
-            }
-            .sidebar-wrapper .degree {
+        }
+
+        .sidebar-wrapper .degree {
             font-size: 14px;
             margin-top: 0;
             margin-bottom: 5px;
-            }
-            .sidebar-wrapper .education-container .item {
+        }
+
+        .sidebar-wrapper .education-container .item {
             margin-bottom: 15px;
-            }
-            .sidebar-wrapper .education-container .item:last-child {
+        }
+
+        .sidebar-wrapper .education-container .item:last-child {
             margin-bottom: 0;
-            }
-            .sidebar-wrapper .education-container .meta {
+        }
+
+        .sidebar-wrapper .education-container .meta {
             color: rgba(255, 255, 255, 0.6);
             font-weight: 500;
             margin-bottom: 0px;
             margin-top: 0;
             font-size: 14px;
-            }
-            .sidebar-wrapper .education-container .time {
+        }
+
+        .sidebar-wrapper .education-container .time {
             color: rgba(255, 255, 255, 0.6);
             font-weight: 500;
             margin-bottom: 0px;
-            }
-            .sidebar-wrapper .languages-container .lang-desc {
-            color: rgba(255, 255, 255, 0.6);
-            }
-            .sidebar-wrapper .languages-list {
-            margin-bottom: 0;
-            }
-            .sidebar-wrapper .languages-list li {
-            margin-bottom: 10px;
-            }
-            .sidebar-wrapper .languages-list li:last-child {
-            margin-bottom: 0;
-            }
-            .sidebar-wrapper .interests-list {
-            margin-bottom: 0;
-            }
-            .sidebar-wrapper .interests-list li {
-            margin-bottom: 10px;
-            }
-            .sidebar-wrapper .interests-list li:last-child {
-            margin-bottom: 0;
-            }
+        }
 
-            .main-wrapper {
+        .sidebar-wrapper .languages-container .lang-desc {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .sidebar-wrapper .languages-list {
+            margin-bottom: 0;
+        }
+
+        .sidebar-wrapper .languages-list li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-wrapper .languages-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-wrapper .interests-list {
+            margin-bottom: 0;
+        }
+
+        .sidebar-wrapper .interests-list li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-wrapper .interests-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .main-wrapper {
             background: #fff;
             padding: 60px;
             padding-right: 300px;
-            }
-            .main-wrapper .section-title {
+        }
+
+        .main-wrapper .section-title {
             text-transform: uppercase;
             font-size: 20px;
             font-weight: 500;
@@ -181,8 +215,9 @@
             position: relative;
             margin-top: 0;
             margin-bottom: 20px;
-            }
-            .main-wrapper .section-title .icon-holder {
+        }
+
+        .main-wrapper .section-title .icon-holder {
             width: 30px;
             height: 30px;
             margin-right: 8px;
@@ -202,258 +237,306 @@
             position: relative;
             top: -2px;
             padding-top: 2px;
-            }
-            .main-wrapper .section-title .icon-holder .svg-inline--fa {
+        }
+
+        .main-wrapper .section-title .icon-holder .svg-inline--fa {
             font-size: 14px;
             margin-top: 6px;
-            }
-            .main-wrapper .section {
+        }
+
+        .main-wrapper .section {
             margin-bottom: 60px;
-            }
-            .main-wrapper .experiences-section .item {
+        }
+
+        .main-wrapper .experiences-section .item {
             margin-bottom: 30px;
-            }
-            .main-wrapper .upper-row {
+        }
+
+        .main-wrapper .upper-row {
             position: relative;
             overflow: hidden;
             margin-bottom: 2px;
-            }
-            .main-wrapper .job-title {
+        }
+
+        .main-wrapper .job-title {
             color: #3F4650;
             font-size: 16px;
             margin-top: 0;
             margin-bottom: 0;
             font-weight: 500;
-            }
-            .main-wrapper .time {
+        }
+
+        .main-wrapper .time {
             position: absolute;
             right: 0;
             top: 0;
             color: #97AAC3;
-            }
-            .main-wrapper .company {
+        }
+
+        .main-wrapper .company {
             margin-bottom: 10px;
             color: #97AAC3;
-            }
-            .main-wrapper .project-title {
+        }
+
+        .main-wrapper .project-title {
             font-size: 16px;
             font-weight: 400;
             margin-top: 0;
             margin-bottom: 5px;
-            }
-            .main-wrapper .projects-section .intro {
+        }
+
+        .main-wrapper .projects-section .intro {
             margin-bottom: 30px;
-            }
-            .main-wrapper .projects-section .item {
+        }
+
+        .main-wrapper .projects-section .item {
             margin-bottom: 15px;
-            }
-            @media (max-width: 767.98px) {
+        }
+
+        @media (max-width: 767.98px) {
             .sidebar-wrapper {
                 position: static;
                 width: inherit;
             }
+
             .main-wrapper {
                 padding: 30px;
             }
+
             .main-wrapper .time {
                 position: static;
                 display: block;
                 margin-top: 5px;
             }
+
             .main-wrapper .upper-row {
                 margin-bottom: 0;
             }
-            }
-            @media (min-width: 992px) {
+        }
+
+        @media (min-width: 992px) {
             .skillset .level-title {
                 display: inline-block;
                 float: left;
                 width: 30%;
                 margin-bottom: 0;
             }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="wrapper mt-lg-5">
-            <div class="sidebar-wrapper">
-                <div class="profile-container">
-                    <img style="height: 200px; " src="../static/img/portfolio/chaiboon.jpg" alt="" style="width: 100%; margin-bottom: 10px;" />
-                    <h1 class="name">Tay Chai Boon</h1>
-                    <h3 class="tagline">UI/UX Developer</h3>
-                </div>
-                <!--//profile-container-->
-                <div class="contact-container container-block">
-                    <li style="margin-bottom: 5px;" class="email">
-                        chaiboon@gmail.com
-                    </li>
-                    <li class="phone">
-                        011-2822 7757
-                    </li>
-                </div>
-                <!--//contact-container-->
-                <div class="education-container container-block">
-                    <h2 class="container-block-title">Education</h2>
-                    <div class="item">
-                        <h4 class="degree">Foundation in Computing</h4>
-                        <h5 class="meta">Tunku Abdul Rahman University College</h5>
-                        <div class="time">2019 - 2020</div>
-                    </div>
-                    <!--//item-->
-                    <div class="item">
-                        <h4 class="degree">Bachelor in Software Engineering</h4>
-                        <h5 class="meta">Tunku Abdul Rahman University of Management and Technology</h5>
-                        <div class="time">2020 - Current</div>
-                    </div>
-                    <!--//item-->
-                </div>
-                <!--//education-container-->
-                <div class="languages-container container-block">
-                    <h2 class="container-block-title">Languages</h2>
-                    <ul class="list-unstyled interests-list">
-                        <li>
-                            English
-                            <span class="lang-desc">(Intermediate)</span>
-                        </li>
-                        <li>
-                            Chinese
-                            <span class="lang-desc">(Intermediate)</span>
-                        </li>
-                        <li>
-                            Malay
-                            <span class="lang-desc">(Intermediate)</span>
-                        </li>
-                    </ul>
-                </div>
-                <!--//interests-->
-                <!--//education-container-->
-                <div class="languages-container container-block">
-                    <h2 class="container-block-title">Skills</h2>
-                    <ul class="list-unstyled interests-list">
-                        <li>
-                            Design Software: 
-                            <span class="lang-desc">Proficiency in design tools such as Adobe XD, Sketch, Figma, or similar software.</span>
-                        </li>
-                    </ul>
-                </div>
-                <!--//interests-->
-                <div class="interests-container container-block">
-                    <h2 class="container-block-title">Interests</h2>
-                    <ul class="list-unstyled interests-list">
-                        <li>Badminton</li>
-                        <li>Debug</li>
-                        <li>Sleep</li>
-                    </ul>
-                </div>
-                <!--//interests-->
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper mt-lg-5">
+        <div class="sidebar-wrapper">
+            <div class="profile-container">
+                <img style="height: 200px; " src="../static/img/portfolio/chaiboon.jpg" alt=""
+                    style="width: 100%; margin-bottom: 10px;" />
+                <h1 class="name">Tay Chai Boon</h1>
+                <h3 class="tagline">UI/UX Developer</h3>
             </div>
-            <!--//sidebar-wrapper-->
-            <div class="main-wrapper">
-                <section class="section summary-section" style="margin-bottom: 30px;">
-                    <h2 class="section-title">
-                        <span class="icon-holder">
-                            <i class="fa-solid fa-user"></i>
-                        </span>
-                        Career Profile
-                    </h2>
-                    <div class="summary">
-                        <p>
-                            A UI/UX Designer, often referred to as a User Interface/User Experience Designer, is a creative professional who plays a crucial role in shaping digital products and applications to ensure they are visually appealing, user-friendly, and deliver exceptional user experiences. UI/UX Designers blend elements of design, psychology, and technology to craft seamless interactions between users and digital interfaces.                        </p>
-                    </div>
-                    <!--//summary-->
-                </section>
-                <!--//section-->
-                <section class="section experiences-section">
-                    <h2 class="section-title">
-                        <span class="icon-holder">
-                            <i class="fa-solid fa-briefcase"></i>
-                        </span>
-                        Experiences
-                    </h2>
-                    <div class="item">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">UI/UX Designer</h3>
-                                <div class="time">January 2019 - Present</div>
-                            </div>
-                            <!--//upper-row-->
-                            <div class="company">TikTok Company</div>
-                        </div>
-                        <!--//meta-->
-                        <div class="details">
-                            <p style="font-weight: bold;">
-                                1. User-Centric Mobile App Redesign:
-                            </p>
-                            <p>At TikTok, I led a cross-functional team in a comprehensive redesign of the mobile app interface, resulting in a 20% increase in user engagement and a 15% decrease in bounce rates. This project involved conducting extensive user research to understand the evolving preferences of our diverse user base. I created wireframes, interactive prototypes, and high-fidelity designs, ensuring a seamless and visually appealing experience. Our user testing and feedback-driven approach allowed us to iteratively improve the app's navigation, content discovery, and overall usability.</p>
-                            <p style="font-weight: bold;">
-                                2. Gamified Onboarding Experience:
-                            </p>
-                            <p>To enhance user onboarding and retention, I conceptualized and designed a gamified tutorial experience within the TikTok app. This feature introduced users to key functionalities while making the learning process fun and interactive. The result was a 25% increase in user completion rates for the onboarding process, contributing significantly to our user retention goals. This project required close collaboration with developers to implement gamification mechanics seamlessly.</p>
-                            <p style="font-weight: bold;">
-                                3. Accessibility and Inclusivity Initiatives:
-                            </p>
-                            <p>At TikTok, I championed accessibility and inclusivity in our design practices. I conducted accessibility audits, ensuring compliance with WCAG guidelines, and initiated training sessions for the design team. Additionally, I led a project to introduce alternative text descriptions for videos, making TikTok more accessible to users with visual impairments. These efforts not only improved our user experience but also reflected TikTok's commitment to inclusivity.</p>
-                        </div>
-                        <!--//details-->
-                    </div>
-                    <!--//item-->
-                    <div class="item">
-                        <div class="meta">
-                            <div class="upper-row">
-                                <h3 class="job-title">UI/UX Designer</h3>
-                                <div class="time">July 2018 - January 2019</div>
-                            </div>
-                            <!--//upper-row-->
-                            <div class="company">Twitter Company</div>
-                        </div>
-                        <!--//meta-->
-                        <div class="details">
-                            <p style="font-weight: bold;">
-                                1. Redesign of the Tweet Composer:
-                            </p>
-                            <p>
-                                At Twitter, I led the redesign of the tweet composer interface across multiple platforms, including web and mobile. The goal was to streamline the tweet creation process and make it more intuitive for users. I conducted user research, gathered feedback from power users, and collaborated closely with engineers to implement the changes. The redesigned composer resulted in a 15% increase in daily tweet creation, enhancing user engagement and satisfaction.
-                            </p>
-                            <p style="font-weight: bold;">
-                                2. Dark Mode Implementation:
-                            </p>
-                            <p>I played a key role in the implementation of Twitter's highly anticipated dark mode feature. This project involved designing a dark color scheme that was visually appealing and comfortable for users during nighttime browsing. I also ensured that all elements, including text and icons, maintained readability and accessibility. Dark mode became one of Twitter's most beloved features, with over 70% of users opting for this mode.</p>
-                        </div>
-                        <!--//details-->
-                    </div>
-                </section>
-                <!--//skills-section-->
+            <!--//profile-container-->
+            <div class="contact-container container-block">
+                <li style="margin-bottom: 5px;" class="email">
+                    chaiboon@gmail.com
+                </li>
+                <li class="phone">
+                    011-2822 7757
+                </li>
             </div>
-            <!--//main-body-->
+            <!--//contact-container-->
+            <div class="education-container container-block">
+                <h2 class="container-block-title">Education</h2>
+                <div class="item">
+                    <h4 class="degree">Foundation in Computing</h4>
+                    <h5 class="meta">Tunku Abdul Rahman University College</h5>
+                    <div class="time">2019 - 2020</div>
+                </div>
+                <!--//item-->
+                <div class="item">
+                    <h4 class="degree">Bachelor in Software Engineering</h4>
+                    <h5 class="meta">Tunku Abdul Rahman University of Management and Technology</h5>
+                    <div class="time">2020 - Current</div>
+                </div>
+                <!--//item-->
+            </div>
+            <!--//education-container-->
+            <div class="languages-container container-block">
+                <h2 class="container-block-title">Languages</h2>
+                <ul class="list-unstyled interests-list">
+                    <li>
+                        English
+                        <span class="lang-desc">(Intermediate)</span>
+                    </li>
+                    <li>
+                        Chinese
+                        <span class="lang-desc">(Intermediate)</span>
+                    </li>
+                    <li>
+                        Malay
+                        <span class="lang-desc">(Intermediate)</span>
+                    </li>
+                </ul>
+            </div>
+            <!--//interests-->
+            <!--//education-container-->
+            <div class="languages-container container-block">
+                <h2 class="container-block-title">Skills</h2>
+                <ul class="list-unstyled interests-list">
+                    <li>
+                        Design Software:
+                        <span class="lang-desc">Proficiency in design tools such as Adobe XD, Sketch, Figma, or similar
+                            software.</span>
+                    </li>
+                </ul>
+            </div>
+            <!--//interests-->
+            <div class="interests-container container-block">
+                <h2 class="container-block-title">Interests</h2>
+                <ul class="list-unstyled interests-list">
+                    <li>Badminton</li>
+                    <li>Debug</li>
+                    <li>Sleep</li>
+                </ul>
+            </div>
+            <!--//interests-->
         </div>
-        <!-- All JS Custom Plugins Link Here here -->
-        <script src="../static/js/vendor/modernizr-3.5.0.min.js"></script>
-        <!-- Jquery, Popper, Bootstrap -->
-        <script src="../static/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="../static/js/popper.min.js"></script>
-        <script src="../static/js/bootstrap.min.js"></script>
-        <!-- Jquery Mobile Menu -->
-        <script src="../static/js/jquery.slicknav.min.js"></script>
-        <!-- Jquery Slick, Owl-Carousel Plugins -->
-        <script src="../static/js/owl.carousel.min.js"></script>
-        <script src="../static/js/slick.min.js"></script>
-        <script src="../static/js/price_rangs.js"></script>
-        <!-- One Page, Animated-HeadLin -->
-        <script src="../static/js/wow.min.js"></script>
-        <script src="../static/js/animated.headline.js"></script>
-        <script src="../static/js/jquery.magnific-popup.js"></script>
-        <!-- Scrollup, nice-select, sticky -->
-        <script src="../static/js/jquery.scrollUp.min.js"></script>
-        <script src="../static/js/jquery.nice-select.min.js"></script>
-        <script src="../static/js/jquery.sticky.js"></script>
-        <!-- Contact js -->
-        <script src="../static/js/contact.js"></script>
-        <script src="../static/js/jquery.form.js"></script>
-        <script src="../static/js/jquery.validate.min.js"></script>
-        <script src="../static/js/mail-script.js"></script>
-        <script src="../static/js/jquery.ajaxchimp.min.js"></script>
-        <!-- Jquery Plugins, main Jquery -->
-        <script src="../static/js/plugins.js"></script>
-        <script src="../static/js/main.js"></script>
-    </body>
+        <!--//sidebar-wrapper-->
+        <div class="main-wrapper">
+            <section class="section summary-section" style="margin-bottom: 30px;">
+                <h2 class="section-title">
+                    <span class="icon-holder">
+                        <i class="fa-solid fa-user"></i>
+                    </span>
+                    Career Profile
+                </h2>
+                <div class="summary">
+                    <p>
+                        A UI/UX Designer, often referred to as a User Interface/User Experience Designer, is a creative
+                        professional who plays a crucial role in shaping digital products and applications to ensure
+                        they are visually appealing, user-friendly, and deliver exceptional user experiences. UI/UX
+                        Designers blend elements of design, psychology, and technology to craft seamless interactions
+                        between users and digital interfaces. </p>
+                </div>
+                <!--//summary-->
+            </section>
+            <!--//section-->
+            <section class="section experiences-section">
+                <h2 class="section-title">
+                    <span class="icon-holder">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </span>
+                    Experiences
+                </h2>
+                <div class="item">
+                    <div class="meta">
+                        <div class="upper-row">
+                            <h3 class="job-title">UI/UX Designer</h3>
+                            <div class="time">January 2019 - Present</div>
+                        </div>
+                        <!--//upper-row-->
+                        <div class="company">TikTok Company</div>
+                    </div>
+                    <!--//meta-->
+                    <div class="details">
+                        <p style="font-weight: bold;">
+                            1. User-Centric Mobile App Redesign:
+                        </p>
+                        <p>At TikTok, I led a cross-functional team in a comprehensive redesign of the mobile app
+                            interface, resulting in a 20% increase in user engagement and a 15% decrease in bounce
+                            rates. This project involved conducting extensive user research to understand the evolving
+                            preferences of our diverse user base. I created wireframes, interactive prototypes, and
+                            high-fidelity designs, ensuring a seamless and visually appealing experience. Our user
+                            testing and feedback-driven approach allowed us to iteratively improve the app's navigation,
+                            content discovery, and overall usability.</p>
+                        <p style="font-weight: bold;">
+                            2. Gamified Onboarding Experience:
+                        </p>
+                        <p>To enhance user onboarding and retention, I conceptualized and designed a gamified tutorial
+                            experience within the TikTok app. This feature introduced users to key functionalities while
+                            making the learning process fun and interactive. The result was a 25% increase in user
+                            completion rates for the onboarding process, contributing significantly to our user
+                            retention goals. This project required close collaboration with developers to implement
+                            gamification mechanics seamlessly.</p>
+                        <p style="font-weight: bold;">
+                            3. Accessibility and Inclusivity Initiatives:
+                        </p>
+                        <p>At TikTok, I championed accessibility and inclusivity in our design practices. I conducted
+                            accessibility audits, ensuring compliance with WCAG guidelines, and initiated training
+                            sessions for the design team. Additionally, I led a project to introduce alternative text
+                            descriptions for videos, making TikTok more accessible to users with visual impairments.
+                            These efforts not only improved our user experience but also reflected TikTok's commitment
+                            to inclusivity.</p>
+                    </div>
+                    <!--//details-->
+                </div>
+                <!--//item-->
+                <div class="item">
+                    <div class="meta">
+                        <div class="upper-row">
+                            <h3 class="job-title">UI/UX Designer</h3>
+                            <div class="time">July 2018 - January 2019</div>
+                        </div>
+                        <!--//upper-row-->
+                        <div class="company">Twitter Company</div>
+                    </div>
+                    <!--//meta-->
+                    <div class="details">
+                        <p style="font-weight: bold;">
+                            1. Redesign of the Tweet Composer:
+                        </p>
+                        <p>
+                            At Twitter, I led the redesign of the tweet composer interface across multiple platforms,
+                            including web and mobile. The goal was to streamline the tweet creation process and make it
+                            more intuitive for users. I conducted user research, gathered feedback from power users, and
+                            collaborated closely with engineers to implement the changes. The redesigned composer
+                            resulted in a 15% increase in daily tweet creation, enhancing user engagement and
+                            satisfaction.
+                        </p>
+                        <p style="font-weight: bold;">
+                            2. Dark Mode Implementation:
+                        </p>
+                        <p>I played a key role in the implementation of Twitter's highly anticipated dark mode feature.
+                            This project involved designing a dark color scheme that was visually appealing and
+                            comfortable for users during nighttime browsing. I also ensured that all elements, including
+                            text and icons, maintained readability and accessibility. Dark mode became one of Twitter's
+                            most beloved features, with over 70% of users opting for this mode.</p>
+                    </div>
+                    <!--//details-->
+                </div>
+            </section>
+            <!--//skills-section-->
+        </div>
+        <!--//main-body-->
+    </div>
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="../static/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="../static/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="../static/js/popper.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="../static/js/jquery.slicknav.min.js"></script>
+    <!-- Jquery Slick, Owl-Carousel Plugins -->
+    <script src="../static/js/owl.carousel.min.js"></script>
+    <script src="../static/js/slick.min.js"></script>
+    <script src="../static/js/price_rangs.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="../static/js/wow.min.js"></script>
+    <script src="../static/js/animated.headline.js"></script>
+    <script src="../static/js/jquery.magnific-popup.js"></script>
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="../static/js/jquery.scrollUp.min.js"></script>
+    <script src="../static/js/jquery.nice-select.min.js"></script>
+    <script src="../static/js/jquery.sticky.js"></script>
+    <!-- Contact js -->
+    <script src="../static/js/contact.js"></script>
+    <script src="../static/js/jquery.form.js"></script>
+    <script src="../static/js/jquery.validate.min.js"></script>
+    <script src="../static/js/mail-script.js"></script>
+    <script src="../static/js/jquery.ajaxchimp.min.js"></script>
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="../static/js/plugins.js"></script>
+    <script src="../static/js/main.js"></script>
+</body>
+
 </html>
