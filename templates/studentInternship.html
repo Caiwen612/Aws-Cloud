@@ -8,98 +8,101 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.png">
-	
+
 	<!-- CSS here -->
-		<link rel="stylesheet" href="static/css/bootstrap.min.css">
-		<link rel="stylesheet" href="static/css/owl.carousel.min.css">
-		<link rel="stylesheet" href="static/css/slicknav.css">
-		<link rel="stylesheet" href="static/css/price_rangs.css">
-		<link rel="stylesheet" href="static/css/animate.min.css">
-		<link rel="stylesheet" href="static/css/magnific-popup.css">
-		<link rel="stylesheet" href="static/css/fontawesome-all.min.css">
-		<link rel="stylesheet" href="static/css/themify-icons.css">
-		<link rel="stylesheet" href="static/css/slick.css">
-		<link rel="stylesheet" href="static/css/nice-select.css">
-		<link rel="stylesheet" href="static/css/style.css">
-		<link rel="stylesheet" href="static/css/responsive.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css">
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<link rel="stylesheet" href="static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="static/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="static/css/slicknav.css">
+	<link rel="stylesheet" href="static/css/price_rangs.css">
+	<link rel="stylesheet" href="static/css/animate.min.css">
+	<link rel="stylesheet" href="static/css/magnific-popup.css">
+	<link rel="stylesheet" href="static/css/fontawesome-all.min.css">
+	<link rel="stylesheet" href="static/css/themify-icons.css">
+	<link rel="stylesheet" href="static/css/slick.css">
+	<link rel="stylesheet" href="static/css/nice-select.css">
+	<link rel="stylesheet" href="static/css/style.css">
+	<link rel="stylesheet" href="static/css/responsive.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.7.0/nouislider.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 
 
-		
-		
+
+
 </head>
 
 <body>
-	
-    <!-- Preloader Start -->    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="static/img/logo/logo.jpg" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
+
+	<!-- Preloader Start -->
+	<div id="preloader-active">
+		<div class="preloader d-flex align-items-center justify-content-center">
+			<div class="preloader-inner position-relative">
+				<div class="preloader-circle"></div>
+				<div class="preloader-img pere-text">
+					<img src="static/img/logo/logo.jpg" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<header>
-        <!-- Header Start -->
-       <div class="header-area header-transparrent">
-           <div class="headder-top header-sticky">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-3 col-md-2">
-                            <!-- Logo -->
-                            <div class="logo">
-								<img src="static/img/logo/logo.jpg"  style="height:60px; width:90px"></a>
-                            </div>  
-                        </div>
-                        <div class="col-lg-9 col-md-9">
-                            <div class="menu-wrapper">
-                                <!-- Main-menu -->
-                                <div class="main-menu">
-                                    <nav class="d-none d-lg-block">
-                                        <ul id="navigation">
-                                            <li><a href="{{ url_for('studentInternship') }}">Internship</a></li>
+		<!-- Header Start -->
+		<div class="header-area header-transparrent">
+			<div class="headder-top header-sticky">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-lg-3 col-md-2">
+							<!-- Logo -->
+							<div class="logo">
+								<img src="static/img/logo/logo.jpg" style="height:60px; width:90px"></a>
+							</div>
+						</div>
+						<div class="col-lg-9 col-md-9">
+							<div class="menu-wrapper">
+								<!-- Main-menu -->
+								<div class="main-menu">
+									<nav class="d-none d-lg-block">
+										<ul id="navigation">
+											<li><a href="{{ url_for('studentInternship') }}">Internship</a></li>
 											<li><a href="{{ url_for('studentResults') }}">Results</a></li>
-                                            <li><a href="#">Profile</a>
-                                                <ul class="submenu">
-                                                    <li><a href="{{ url_for('studentDetails') }}">Student Details</a></li>
-                               
-                                                    <li><a href="{{ url_for('studentUpload') }}">Upload</a></li>
-           
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                        
-                                    </nav>
-                                </div>   
+											<li><a href="#">Profile</a>
+												<ul class="submenu">
+													<li><a href="{{ url_for('studentDetails') }}">Student Details</a>
+													</li>
+
+													<li><a href="{{ url_for('studentUpload') }}">Upload</a></li>
+
+												</ul>
+											</li>
+										</ul>
+
+									</nav>
+								</div>
 								<div class="header-btn d-none f-right d-lg-block">
-                                    <a href="{{ url_for('logout') }}" class="btn head-btn1">Logout</a>
-                                </div>               
-                            </div>
-                        </div>
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-           </div>
-       </div>
-        <!-- Header End -->
-    </header>
-	
+									<a href="{{ url_for('logout') }}" class="btn head-btn1">Logout</a>
+								</div>
+							</div>
+						</div>
+						<!-- Mobile Menu -->
+						<div class="col-12">
+							<div class="mobile_menu d-block d-lg-none"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Header End -->
+	</header>
+
 
 	<div class="slider-area ">
-		<div class="single-slider section-overly slider-height2 d-flex align-items-center"   data-background="static/img/hero/about.jpg">
+		<div class="single-slider section-overly slider-height2 d-flex align-items-center"
+			data-background="static/img/hero/about.jpg">
 			<div class="container">
 				<div class="row">
 					<div class="col-xl-12">
@@ -113,28 +116,31 @@
 	</div>
 	{% if disablepage %}
 	<!-- Display "Not eligible to apply for internships" message -->
-	<section class="not-eligible-section", style="padding:30px; height: 370px;">
+	<section class="not-eligible-section" , style="padding:30px; height: 370px;">
 		<div class="container">
 			<h1>Not eligible to apply for internships</h1>
 			<p>You do not meet the eligibility criteria for internships.</p>
 		</div>
 	</section>
-{% else %}
+	{% else %}
 
 	<section class="sample-text-area">
 		<div class="container box_1170">
 			<p class="sample-text">
-				Please look through the list of internships in the table below. If interested, kindly click the "APPLY" button for internship placement. You can apply for more than 1 company. Do remember to upload the Company Acceptance Letter, Indemnity Letter and Parent Acknowledgement Form. Once application for the selected company is completed, you no longer allowed for internship application.
+				Please look through the list of internships in the table below. If interested, kindly click the "APPLY"
+				button for internship placement. You can apply for more than 1 company. Do remember to upload the
+				Company Acceptance Letter, Indemnity Letter and Parent Acknowledgement Form. Once application for the
+				selected company is completed, you no longer allowed for internship application.
 			</p>
 		</div>
 	</section>
 
 	<div class="container box_1170 border-top-generic">
-		<h3 class="text-heading" style = "padding-bottom:30px">Internships</h3>
+		<h3 class="text-heading" style="padding-bottom:30px">Internships</h3>
 
 	</div>
 
-	
+
 	<div class="job-listing-area pb-120">
 		<div class="container">
 			<div class="row">
@@ -142,14 +148,12 @@
 				<div class="col-xl-3 col-lg-3 col-md-4">
 					<div class="row">
 						<div class="col-12">
-								<div class="small-section-tittle2 mb-45">
-								<div class="ion"> <svg 
-									xmlns="http://www.w3.org/2000/svg"
-									xmlns:xlink="http://www.w3.org/1999/xlink"
-									width="20px" height="12px">
-								<path fill-rule="evenodd"  fill="rgb(27, 207, 107)"
-									d="M7.778,12.000 L12.222,12.000 L12.222,10.000 L7.778,10.000 L7.778,12.000 ZM-0.000,-0.000 L-0.000,2.000 L20.000,2.000 L20.000,-0.000 L-0.000,-0.000 ZM3.333,7.000 L16.667,7.000 L16.667,5.000 L3.333,5.000 L3.333,7.000 Z"/>
-								</svg>
+							<div class="small-section-tittle2 mb-45">
+								<div class="ion"> <svg xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="12px">
+										<path fill-rule="evenodd" fill="rgb(27, 207, 107)"
+											d="M7.778,12.000 L12.222,12.000 L12.222,10.000 L7.778,10.000 L7.778,12.000 ZM-0.000,-0.000 L-0.000,2.000 L20.000,2.000 L20.000,-0.000 L-0.000,-0.000 ZM3.333,7.000 L16.667,7.000 L16.667,5.000 L3.333,5.000 L3.333,7.000 Z" />
+									</svg>
 								</div>
 								<h4>Filter Jobs</h4>
 							</div>
@@ -165,19 +169,22 @@
 							<aside class="single_sidebar_widget search_widget" style="padding-bottom: 30px;">
 								<div class="form-group">
 									<div class="input-group mb-3">
-										<input type="text" class="form-control" id="company-name-input" placeholder="Search Name">
+										<input type="text" class="form-control" id="company-name-input"
+											placeholder="Search Name">
 										<div class="input-group-append">
-											<button id="search-button" type="button" style="background-color:#fb246a; border: #fb246a;" onclick="filterJobListings()">
+											<button id="search-button" type="button"
+												style="background-color:#fb246a; border: #fb246a;"
+												onclick="filterJobListings()">
 
-												<i class="ti-search"></i> 
-												</button>
+												<i class="ti-search"></i>
+											</button>
 										</div>
 									</div>
 								</div>
 							</aside>
 						</div>
-						
-						
+
+
 						<div class="single-listing">
 							<div class="small-section-tittle2">
 								<h4>Job Position</h4>
@@ -186,12 +193,12 @@
 								<select name="select" id="job-position-select" onchange="sortJobPosition()">
 									<option value="">All Category</option>
 									{% for position in job_positions %}
-										<option value="{{ position }}">{{ position }}</option>
+									<option value="{{ position }}">{{ position }}</option>
 									{% endfor %}
 								</select>
 							</div>
 						</div>
-	
+
 					</div>
 
 				</div>
@@ -221,14 +228,15 @@
 							<!-- Count of Job list End -->
 
 							<!-- Loop through job_postings and generate table rows -->
-							<div class="job-listings"  id="job-listings">
+							<div class="job-listings" id="job-listings">
 								{% for posting in job_posting %}
 
 								<div class="single-job-items" data-original-order="{{ loop.index }}">
 									<div class="job-items">
 										<div class="company-img" style="width: 50px; height:50px;padding-right:150px;">
 											<!-- You can replace 'posting.company_logo_url' with your actual logo data -->
-											<a href="#"><img src="{{ posting[10] }}" alt="{{ posting.company_id }}" style="width: 110px; height:110px;"></a>
+											<a href="#"><img src="{{ posting[10] }}" alt="{{ posting.company_id }}"
+													style="width: 110px; height:110px;"></a>
 										</div>
 										<div class="job-tittle job-tittle2">
 											<a href="#">
@@ -242,7 +250,8 @@
 										</div>
 									</div>
 									<div class="items-link items-link2 f-right">
-										<a href="{{ url_for('intern_job_details', listing_id=posting[0]) }}">Find Out More</a>
+										<a href="{{ url_for('intern_job_details', listing_id=posting[0]) }}">Find Out
+											More</a>
 										<span>Posted on {{ posting[8]}} </span>
 									</div>
 								</div>
@@ -252,29 +261,29 @@
 						</div>
 					</section>
 					<!-- Featured_job_end -->
-					
+
 				</div>
 			</div>
 		</div>
 	</div>
 
-<!-- Pagination area -->
-<div class="pagination-area pb-115 text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="single-wrap d-flex justify-content-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-start" id="pagination">
-                            <!-- Pagination links will be dynamically added here -->
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+	<!-- Pagination area -->
+	<div class="pagination-area pb-115 text-center">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="single-wrap d-flex justify-content-center">
+						<nav aria-label="Page navigation example">
+							<ul class="pagination justify-content-start" id="pagination">
+								<!-- Pagination links will be dynamically added here -->
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endif %}
 
 	<footer>
 		<!-- Footer Start-->
@@ -282,161 +291,163 @@
 		<div class="footer-bottom-area footer-bg">
 			<div class="container">
 				<div class="footer-border">
-					 <div class="row d-flex justify-content-between align-items-center">
-						 <div class="col-xl-10 col-lg-10 ">
-							 <div class="footer-copy-right">
-								 <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a></p>
-							 </div>
-						 </div>
-					 </div>
+					<div class="row d-flex justify-content-between align-items-center">
+						<div class="col-xl-10 col-lg-10 ">
+							<div class="footer-copy-right">
+								<p>Copyright &copy;
+									<script>document.write(new Date().getFullYear());</script> TAR UMT ITP</a>
+								</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<!-- Footer End-->
 	</footer>
-	
-<!-- JS here -->
-		<!-- All JS Custom Plugins Link Here here -->
-		<script>
-			// Function to handle pagination
-			function paginateJobListings(jobItems, itemsPerPage) {
-				 const paginationContainer = document.getElementById("pagination");
-				 const jobListingsContainer = document.querySelector(".job-listings");
-		 
-				 const pageCount = Math.ceil(jobItems.length / itemsPerPage);
-		 
-				 // Create pagination links
-				 for (let i = 1; i <= pageCount; i++) {
-					 const pageLink = document.createElement("li");
-					 pageLink.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
-					 paginationContainer.appendChild(pageLink);
-				 }
-		 
-				 // Function to change the current page
-				 function changePage(pageNumber) {
-					 const startIndex = (pageNumber - 1) * itemsPerPage;
-					 const endIndex = startIndex + itemsPerPage;
-		 
-					 // Hide all job listings
-					 jobItems.forEach((jobItem) => {
-						 jobItem.style.visibility = "hidden"; 	
-					 });
-		 
-					 // Show job listings for the current page
-					 for (let i = startIndex; i < endIndex; i++) {
-						 if (jobItems[i]) {
-							 jobItems[i].style.visibility = "visible";
-						 }
-					 }
-				 }
-		 
-				 // Show the first page by default
-				 changePage(1);
-			 }
-		 
-			 // Call the pagination function with your job items and items per page
-			 const jobItems = document.querySelectorAll(".single-job-items");
-			 const itemsPerPage = 6; // Number of job listings per page
-			 paginateJobListings(jobItems, itemsPerPage);
-		 
-			// Function to filter job listings by company name
-			function filterJobListings() {
-				const input = document.querySelector("#company-name-input");
-				const filterValue = input.value.toLowerCase();
-				const jobListingsContainer = document.querySelector("#job-listings");
-				const jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
 
-				// Clear previous filters
-				jobItems.forEach((jobItem) => {
-					jobItem.style.display = ""; // Reset display property
-				});
+	<!-- JS here -->
+	<!-- All JS Custom Plugins Link Here here -->
+	<script>
+		// Function to handle pagination
+		function paginateJobListings(jobItems, itemsPerPage) {
+			const paginationContainer = document.getElementById("pagination");
+			const jobListingsContainer = document.querySelector(".job-listings");
 
-				jobItems.forEach((jobItem) => {
-					const companyNameElement = jobItem.querySelector(".job-tittle2 h4");
-					if (companyNameElement) {
-						const companyName = companyNameElement.textContent.toLowerCase();
-						if (!companyName.includes(filterValue)) {
-							jobItem.style.display = "none"; // Hide the element
-						}
-					}
-				});
+			const pageCount = Math.ceil(jobItems.length / itemsPerPage);
+
+			// Create pagination links
+			for (let i = 1; i <= pageCount; i++) {
+				const pageLink = document.createElement("li");
+				pageLink.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+				paginationContainer.appendChild(pageLink);
 			}
 
-			// Add an event listener to the search button
-			const searchButton = document.querySelector("#search-button");
-			searchButton.addEventListener("click", filterJobListings);
+			// Function to change the current page
+			function changePage(pageNumber) {
+				const startIndex = (pageNumber - 1) * itemsPerPage;
+				const endIndex = startIndex + itemsPerPage;
 
-			// Optionally, you can also add an event listener for the Enter key
-			const companyNameInput = document.querySelector("#company-name-input");
-			companyNameInput.addEventListener("keyup", function (event) {
-				if (event.key === "Enter") {
-					filterJobListings();
+				// Hide all job listings
+				jobItems.forEach((jobItem) => {
+					jobItem.style.visibility = "hidden";
+				});
+
+				// Show job listings for the current page
+				for (let i = startIndex; i < endIndex; i++) {
+					if (jobItems[i]) {
+						jobItems[i].style.visibility = "visible";
+					}
+				}
+			}
+
+			// Show the first page by default
+			changePage(1);
+		}
+
+		// Call the pagination function with your job items and items per page
+		const jobItems = document.querySelectorAll(".single-job-items");
+		const itemsPerPage = 6; // Number of job listings per page
+		paginateJobListings(jobItems, itemsPerPage);
+
+		// Function to filter job listings by company name
+		function filterJobListings() {
+			const input = document.querySelector("#company-name-input");
+			const filterValue = input.value.toLowerCase();
+			const jobListingsContainer = document.querySelector("#job-listings");
+			const jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+
+			// Clear previous filters
+			jobItems.forEach((jobItem) => {
+				jobItem.style.display = ""; // Reset display property
+			});
+
+			jobItems.forEach((jobItem) => {
+				const companyNameElement = jobItem.querySelector(".job-tittle2 h4");
+				if (companyNameElement) {
+					const companyName = companyNameElement.textContent.toLowerCase();
+					if (!companyName.includes(filterValue)) {
+						jobItem.style.display = "none"; // Hide the element
+					}
 				}
 			});
-			
-					// Function to sort job postings
-			function sortJobPostings() {
-				var sortSelect = document.getElementById("sort-select");
-				var selectedValue = sortSelect.value;
-				
-				var jobListingsContainer = document.querySelector(".job-listings");
-				var jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+		}
 
-				// Convert jobItems NodeList to an array for easier sorting
-				var jobItemsArray = Array.from(jobItems);
+		// Add an event listener to the search button
+		const searchButton = document.querySelector("#search-button");
+		searchButton.addEventListener("click", filterJobListings);
 
-				if (selectedValue === "latest") {
-					// Sort by latest posting (newest to oldest)
-					jobItemsArray.sort(function(a, b) {
-						var dateA = new Date(a.querySelector(".items-link span").textContent);
-						var dateB = new Date(b.querySelector(".items-link span").textContent);
-						return dateB - dateA;
-					});
-				} else if (selectedValue === "none") {
+		// Optionally, you can also add an event listener for the Enter key
+		const companyNameInput = document.querySelector("#company-name-input");
+		companyNameInput.addEventListener("keyup", function (event) {
+			if (event.key === "Enter") {
+				filterJobListings();
+			}
+		});
+
+		// Function to sort job postings
+		function sortJobPostings() {
+			var sortSelect = document.getElementById("sort-select");
+			var selectedValue = sortSelect.value;
+
+			var jobListingsContainer = document.querySelector(".job-listings");
+			var jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+
+			// Convert jobItems NodeList to an array for easier sorting
+			var jobItemsArray = Array.from(jobItems);
+
+			if (selectedValue === "latest") {
+				// Sort by latest posting (newest to oldest)
+				jobItemsArray.sort(function (a, b) {
+					var dateA = new Date(a.querySelector(".items-link span").textContent);
+					var dateB = new Date(b.querySelector(".items-link span").textContent);
+					return dateB - dateA;
+				});
+			} else if (selectedValue === "none") {
 				// Sort by the original order
-				jobItemsArray.sort(function(a, b) {
+				jobItemsArray.sort(function (a, b) {
 					var orderA = parseInt(a.getAttribute("data-original-order"));
 					var orderB = parseInt(b.getAttribute("data-original-order"));
 					return orderA - orderB;
 				});
 			}
 
-				// Append sorted job items back to the container
-				for (var i = 0; i < jobItemsArray.length; i++) {
-					jobListingsContainer.appendChild(jobItemsArray[i]);
+			// Append sorted job items back to the container
+			for (var i = 0; i < jobItemsArray.length; i++) {
+				jobListingsContainer.appendChild(jobItemsArray[i]);
+			}
+		}
+		function sortJobPosition() {
+			var jobPositionSelect = document.getElementById('job-position-select');
+			var selectedValue = jobPositionSelect.options[jobPositionSelect.selectedIndex].value;
+
+			var jobListingsContainer = document.querySelector(".job-listings");
+			var jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+
+			console.log('Selected value:', selectedValue);
+
+			const jobPostings = JSON.parse('{{ job_posting | tojson | safe }}');
+			const filteredJobPostings = [];
+			console.log(jobPostings);
+			// console.log(jobPostings[0]);
+			// console.log(jobPostings[0][1]);
+			for (posting of jobPostings) {
+				// console.log("DEBUG");
+				// console.log(selectedValue);
+				// console.log(posting[1]);
+				if (selectedValue.toString() === posting[1].toString()) {
+					// console.log(posting[1])
+					//Add this item in the array.
+					// console.log("PUSHHHH")
+					filteredJobPostings.push(posting);
 				}
 			}
-			function sortJobPosition(){
-				var jobPositionSelect = document.getElementById('job-position-select');
-        		var selectedValue = jobPositionSelect.options[jobPositionSelect.selectedIndex].value;
 
-				var jobListingsContainer = document.querySelector(".job-listings");
-				var jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
-
-        		console.log('Selected value:', selectedValue);
-				
-				const jobPostings = JSON.parse('{{ job_posting | tojson | safe }}');
-				const filteredJobPostings = [];
-				// console.log(jobPostings);
-				// console.log(jobPostings[0]);
-				// console.log(jobPostings[0][1]);
-				for(posting of jobPostings){
-					// console.log("DEBUG");
-					// console.log(selectedValue);
-					// console.log(posting[1]);
-					if(selectedValue.toString() === posting[1].toString()){
-						// console.log(posting[1])
-						//Add this item in the array.
-						// console.log("PUSHHHH")
-						filteredJobPostings.push(posting);
-					}	
-				}
-
-				jobListingsContainer.innerHTML = '';
-				let index = 1;
-				console.log(filteredJobPostings)
-				for (const posting of filteredJobPostings) {
-					const jobItemHTML = `
+			jobListingsContainer.innerHTML = '';
+			let index = 1;
+			console.log(filteredJobPostings)
+			for (const posting of filteredJobPostings) {
+				const jobItemHTML = `
     				<div class="single-job-items" data-original-order="${index}">
     				    <div class="job-items">
     				        <div class="company-img">
@@ -459,50 +470,53 @@
     				    </div>
     				</div>
   				`;
-				  index++;
+				index++;
 
-					jobListingsContainer.innerHTML += jobItemHTML;
-				}
-
-				
-
+				jobListingsContainer.innerHTML += jobItemHTML;
 			}
-		 
-		</script>
 
-        <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
-		<!-- Jquery, Popper, Bootstrap -->
-		<script src="./static/js/vendor/jquery-1.12.4.min.js"></script>
-        <script src="./static/js/popper.min.js"></script>
-        <script src="./static/js/bootstrap.min.js"></script>
-	    <!-- Jquery Mobile Menu -->
-        <script src="./static/js/jquery.slicknav.min.js"></script>
 
-		<!-- Jquery Slick , Owl-Carousel Plugins -->
-        <script src="./static/js/owl.carousel.min.js"></script>
-		<script src="./static/js/slick.min.js"></script>
-		<script src="./static/js/price_rangs.js"></script>
-		
-		<!-- One Page, Animated-HeadLin -->
-        <script src="./static/js/wow.min.js"></script>
-		<script src="./static/js/animated.headline.js"></script>
-		<script src="./static/js/jquery.magnific-popup.js"></script>
-		
-		<!-- Scrollup, nice-select, sticky -->
-        <script src="./static/js/jquery.scrollUp.min.js"></script>
-        <script src="./static/js/jquery.nice-select.min.js"></script>
-		<script src="./static/js/jquery.sticky.js"></script>
-        
-        <!-- contact js -->
-        <script src="./static/js/contact.js"></script>
-        <script src="./static/js/jquery.form.js"></script>
-        <script src="./static/js/jquery.validate.min.js"></script>
-        <script src="./static/js/mail-script.js"></script>
-        <script src="./static/js/jquery.ajaxchimp.min.js"></script>
-        
-		<!-- Jquery Plugins, main Jquery -->	
-        <script src="./static/js/plugins.js"></script>
-        <script src="./static/js/main.js"></script>
+
+		}
+
+	</script>
+
+	<script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
+	<!-- Jquery, Popper, Bootstrap -->
+	<script src="./static/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="./static/js/popper.min.js"></script>
+	<script src="./static/js/bootstrap.min.js"></script>
+	<!-- Jquery Mobile Menu -->
+	<script src="./static/js/jquery.slicknav.min.js"></script>
+
+	<!-- Jquery Slick , Owl-Carousel Plugins -->
+	<script src="./static/js/owl.carousel.min.js"></script>
+	<script src="./static/js/slick.min.js"></script>
+	<script src="./static/js/price_rangs.js"></script>
+
+	<!-- One Page, Animated-HeadLin -->
+	<script src="./static/js/wow.min.js"></script>
+	<script src="./static/js/animated.headline.js"></script>
+	<script src="./static/js/jquery.magnific-popup.js"></script>
+
+	<!-- Scrollup, nice-select, sticky -->
+	<script src="./static/js/jquery.scrollUp.min.js"></script>
+	<script src="./static/js/jquery.nice-select.min.js"></script>
+	<script src="./static/js/jquery.sticky.js"></script>
+
+	<!-- contact js -->
+	<script src="./static/js/contact.js"></script>
+	<script src="./static/js/jquery.form.js"></script>
+	<script src="./static/js/jquery.validate.min.js"></script>
+	<script src="./static/js/mail-script.js"></script>
+	<script src="./static/js/jquery.ajaxchimp.min.js"></script>
+
+	<!-- Jquery Plugins, main Jquery -->
+	<script src="./static/js/plugins.js"></script>
+	<script src="./static/js/main.js"></script>
+
+
 
 </body>
+
 </html>

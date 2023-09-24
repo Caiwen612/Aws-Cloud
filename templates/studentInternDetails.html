@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico">
-
     <!-- CSS here -->
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/owl.carousel.min.css">
@@ -32,23 +31,23 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="static/img/logo/logo.jpg"   alt="">
+                    <img src="static/img/logo/logo.jpg" alt="">
                 </div>
             </div>
         </div>
     </div>
     <!-- Preloader Start -->
-	<header>
+    <header>
         <!-- Header Start -->
-       <div class="header-area header-transparrent">
-           <div class="headder-top header-sticky">
+        <div class="header-area header-transparrent">
+            <div class="headder-top header-sticky">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <img src="../static/img/logo/logo.jpg"  style="height:60px; width:90px"></a>
-                            </div>  
+                                <img src="../static/img/logo/logo.jpg" style="height:60px; width:90px"></a>
+                            </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
                             <div class="menu-wrapper">
@@ -57,22 +56,21 @@
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a href="{{ url_for('studentInternship') }}">Internship</a></li>
-											<li><a href="{{ url_for('studentResults') }}">Results</a></li>
+                                            <li><a href="{{ url_for('studentResults') }}">Results</a></li>
                                             <li><a href="#">Profile</a>
                                                 <ul class="submenu">
-                                                    <li><a href="{{ url_for('studentDetails') }}">Student Details</a></li>
-                               
+                                                    <li><a href="{{ url_for('studentDetails') }}">Student Details</a>
+                                                    </li>
                                                     <li><a href="{{ url_for('studentUpload') }}">Upload</a></li>
-           
                                                 </ul>
                                             </li>
                                         </ul>
-                                        
+
                                     </nav>
-                                </div>  
+                                </div>
                                 <div class="header-btn d-none f-right d-lg-block">
                                     <a href="{{ url_for('logout') }}" class="btn head-btn1">Logout</a>
-                                </div>                
+                                </div>
                             </div>
                         </div>
                         <!-- Mobile Menu -->
@@ -81,13 +79,11 @@
                         </div>
                     </div>
                 </div>
-           </div>
-       </div>
+            </div>
+        </div>
         <!-- Header End -->
     </header>
-
     <main>
-
         <!-- Hero Area Start-->
         <div class="slider-area ">
             <div class="single-slider section-overly slider-height2 d-flex align-items-center"
@@ -114,7 +110,8 @@
                         <div class="single-job-items mb-50">
                             <div class="job-items">
                                 <div class="company-img company-img-details">
-                                    <a href="#"><img src="{{companyData[13]}}" alt="" style="width: 100px; height: 100px;"></a>
+                                    <a href="#"><img src="{{companyData[13]}}" alt=""
+                                            style="width: 100px; height: 100px;"></a>
                                 </div>
                                 <div class="job-tittle">
                                     <a href="#">
@@ -132,7 +129,6 @@
                             </div>
                         </div>
                         <!-- job single End -->
-
                         <div class="job-post-details">
                             <div class="post-details1 mb-50">
                                 <!-- Small Section Tittle -->
@@ -156,7 +152,6 @@
                                 <p>{{jobData[7]}}</p> <!-- Additional Information -->
                             </div>
                         </div>
-
                     </div>
                     <!-- Right Content -->
                     <div class="col-xl-4 col-lg-4">
@@ -168,9 +163,10 @@
                             <span>{{companyData[1]}}</span> <!-- Company Name -->
                             <p>{{companyData[11]}}</p> <!-- Company Description -->
                             <ul>
-                                <li>Address : <span> {{companyData[2]}}, {{companyData[4]}} {{companyData[3]}}, {{companyData[5]}}</span></li> <!-- Company Address -->
+                                <li>Address : <span> {{companyData[2]}}, {{companyData[4]}} {{companyData[3]}},
+                                        {{companyData[5]}}</span></li> <!-- Company Address -->
                                 <li>Industry: <span>{{companyData[9]}}</span></li> <!-- Company Industry -->
-                                <li>Company Type : <span>{{companyData[10]}}</span></li>     <!-- Company Type -->
+                                <li>Company Type : <span>{{companyData[10]}}</span></li> <!-- Company Type -->
                             </ul>
                         </div>
 
@@ -185,10 +181,8 @@
                                 <li>Website: <span>{{companyData[8]}}</span></li>
                             </ul>
                         </div>
-
                         <div class="post-details4 mb-50">
                             <!-- Small Section Tittle -->
-                           
                             <!-- Add Edit and Delete buttons here -->
                             <div class="d-flex flex-column">
                                 <a href="mailto:{{companyData[7]}}" class="btn head-btn1 mb-3">Apply</a>
@@ -268,8 +262,6 @@
             }
         }
     </script>
-
-
 </body>
 
 </html>

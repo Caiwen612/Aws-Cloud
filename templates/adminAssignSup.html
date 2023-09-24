@@ -9,7 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
-
     <!-- CSS here -->
     <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/owl.carousel.min.css">
@@ -234,7 +233,8 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="{{ url_for('index') }}"><img src="static/img/logo/logo.png" alt=""></a>
+                                <a href="{{ url_for('company') }}"><img src="static/img/logo/logo.jpg"
+                                        style="height:60px; width:90px"></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -243,26 +243,13 @@
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                            <li><a href="#"></a>
-                                                <ul class="submenu">
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
-                                            </li>
-                                            <li></li>
+                                            <li><a href="{{ url_for('admin') }}">Admin</a></li>
                                         </ul>
-
                                     </nav>
                                 </div>
                                 <!-- Header-btn -->
                                 <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="#" class="btn head-btn1">Register</a>
-                                    <a href="#" class="btn head-btn2">Login</a>
+                                    <a href="{{ url_for('logout') }}" class="btn head-btn1">Logout</a>
                                 </div>
                             </div>
                         </div>
@@ -278,7 +265,22 @@
     </header>
     <main>
 
-
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+            <div class="single-slider section-overly slider-height2 d-flex align-items-center"
+                data-background="static/img/hero/about.jpg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap text-center">
+                                <h2>Student Internship Management</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Area End -->
 
         <!-- Job List Area Start -->
         <div class="job-listing-area pt-120 pb-120">
@@ -412,14 +414,10 @@
                                             <div class="autocomplete">
                                                 <input class="companyInput" type="text"
                                                     name="company_id_{{ student[0] }}"
-                                                    placeholder="Type to search companies..." 
-                                                    {% for company in companies %} 
-                                                    {% if student[12] ~ ""==company[0] ~ "" %}
-                                                    value="{{ company[1] }}" 
-                                                    {% else %}
-                                                    value=None
-                                                    {% endif %} 
-                                                    {% endfor %}>
+                                                    placeholder="Type to search companies..." {% for company in
+                                                    companies %} {% if student[12] ~ ""==company[0] ~ "" %}
+                                                    value="{{ company[1] }}" {% else %} value=None {% endif %} {% endfor
+                                                    %}>
                                                 <div class="autocomplete-items"></div>
                                             </div>
 
@@ -436,8 +434,7 @@
                                         </div>
                                         <div>
                                             {% if student[7] %}
-                                            <a href="{{ student.acceptance_letter }}"
-                                                class="btn head-btn1 download-button" download ">Download Offer Letter</a>
+                                            <a href="{{ student[7] }}" class="btn head-btn1 download-button" download ">Download Offer Letter</a>
                                         {% else %}
                                         <button class=" btn btn-primary" disabled>No Offer Letter</button>
                                                 {% endif %}
@@ -452,124 +449,19 @@
                     <div id="noResultMessage" style="text-align: center; margin-top: 20px; display: none;">No result
                         found.
                     </div>
-                    <div class="save-actions"
-                        style="text-align: right; margin-top: 20px; position: fixed; bottom: 80px; right: 30px; z-index: 1000;">
+                    <div class="save-actions" style="text-align: right; margin-top: 20px; z-index: 1000;">
                         <button type="submit" class="btn head-btn1">Save Changes</button>
                     </div>
                 </form>
             </div>
+        </div>
+
 
     </main>
 
     <footer>
         <!-- Footer Start-->
-        <div class="footer-area footer-bg footer-padding">
-            <div class="container">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="single-footer-caption mb-30">
-                                <div class="footer-tittle">
-                                    <h4>About Us</h4>
-                                    <div class="footer-pera">
-                                        <p>Heaven frucvitful doesn't cover lesser dvsays appear creeping seasons so
-                                            behold.</p>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Contact Info</h4>
-                                <ul>
-                                    <li>
-                                        <p>Address :Your address goes
-                                            here, your demo address.</p>
-                                    </li>
-                                    <li><a href="#">Phone : +8880 44338899</a></li>
-                                    <li><a href="#">Email : info@colorlib.com</a></li>
-                                </ul>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Important Link</h4>
-                                <ul>
-                                    <li><a href="#"> View Project</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Testimonial</a></li>
-                                    <li><a href="#">Proparties</a></li>
-                                    <li><a href="#">Support</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Newsletter</h4>
-                                <div class="footer-pera footer-pera2">
-                                    <p>Heaven fruitful doesn't over lesser in days. Appear creeping.</p>
-                                </div>
-                                <!-- Form -->
-                                <div class="footer-form">
-                                    <div id="mc_embed_signup">
-                                        <form target="_blank"
-                                            action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                            method="get" class="subscribe_form relative mail_part">
-                                            <input type="email" name="email" id="newsletter-form-email"
-                                                placeholder="Email Address" class="placeholder hide-on-focus"
-                                                onfocus="this.placeholder = ''"
-                                                onblur="this.placeholder = ' Email Address '">
-                                            <div class="form-icon">
-                                                <button type="submit" name="submit" id="newsletter-submit"
-                                                    class="email_icon newsletter-submit button-contactForm"><img
-                                                        src="static/img/icon/form.png" alt=""></button>
-                                            </div>
-                                            <div class="mt-10 info"></div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--  -->
-                <div class="row footer-wejed justify-content-between">
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
-                        <!-- logo -->
-                        <div class="footer-logo mb-20">
-                            <a href="{{ url_for('index') }}"><img src="static/img/logo/logo2_footer.png" alt=""></a>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="footer-tittle-bottom">
-                            <span>5000+</span>
-                            <p>Talented Hunter</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="footer-tittle-bottom">
-                            <span>451</span>
-                            <p>Talented Hunter</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <!-- Footer Bottom Tittle -->
-                        <div class="footer-tittle-bottom">
-                            <span>568</span>
-                            <p>Talented Hunter</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!-- footer-bottom area -->
         <div class="footer-bottom-area footer-bg">
             <div class="container">
@@ -600,18 +492,13 @@
         </div>
         <!-- Footer End-->
     </footer>
-
     <script>
         var companies = {{ companies| tojson | safe }};
         console.log("haha", companies);
         var job_listings = {{ job_listings| tojson | safe }};
         console.log("haha", job_listings);
-
     </script>
-
-
     <script>
-
         document.querySelectorAll(".autocomplete .companyInput").forEach((input) => {
             input.addEventListener("input", function (e) {
                 let value = e.target.value;
@@ -663,13 +550,6 @@
             });
         });
 
-
-
-
-
-
-
-
         function toggleDetails(button) {
             const detailsRow = button.closest('tr').nextElementSibling;
             if (detailsRow.style.display === 'none') {
@@ -681,18 +561,12 @@
             }
         }
 
-        function retrieveOfferLetter(studentId) {
-            // Implement your function here
-        }
-
         document.querySelector("[name='student_cohort_filter']").addEventListener("change", filterTable);
         document.querySelector("[name='student_level_filter']").addEventListener("change", filterTable);
         document.querySelector("[name='student_tutgrp_filter']").addEventListener("change", filterTable);
         document.querySelector("[name='student_programme_filter']").addEventListener("change", filterTable);
         document.querySelector("[name='student_email_search']").addEventListener("input", filterTable);
         document.querySelector(".btn-success").addEventListener("click", saveChanges);
-
-
 
         function filterTable() {
             let cohortFilter = document.querySelector("[name='student_cohort_filter']").value;
@@ -701,24 +575,21 @@
             let selectedProgrammeFilter = document.querySelector('[name="student_programme_filter"]').value;
             let emailSearchValue = document.querySelector("[name='student_email_search']").value.toLowerCase();
 
-            console.log(`Filters applied: Cohort(${cohortFilter}), Level(${levelFilter}), TutGrp(${tutgrpFilter}), programme(${selectedProgrammeFilter}),`);
+            console.log(`Filters applied: Cohort(${cohortFilter}), Level(${levelFilter}), TutGrp(${tutgrpFilter}), programme(${selectedProgrammeFilter}), email(${emailSearchValue})`);
 
             let rows = document.querySelectorAll("tbody tr");
-
             let visibleRowCount = 0;
-
             let currentVisibleIndex = 1;
-
             for (let i = 0; i < rows.length; i += 2) {
                 let row = rows[i];
 
-                let cohort = row.children[7].innerText.trim();
-                let level = row.children[6].innerText.trim();
-                let tutgrp = row.children[5].innerText.trim();
+                let cohort = row.children[8].innerText.trim();
+                let level = row.children[7].innerText.trim();
+                let tutgrp = row.children[6].innerText.trim();
                 let programme = row.children[1].innerText.trim();
-                let email = row.children[4].innerText.trim().toLowerCase();
+                let email = row.children[5].innerText.trim().toLowerCase();
 
-                console.log(`Row[${i}] values: Cohort(${cohort}), Level(${level}), TutGrp(${tutgrp})`);
+                console.log(`Row[${i}] values: Cohort(${cohort}), Level(${level}), TutGrp(${tutgrp}), Programme(${programme}), email(${email})`);
 
                 if (
                     (cohortFilter === "" || cohort === cohortFilter) &&
@@ -749,11 +620,7 @@
                 noResultMessage.style.display = "none";
             }
         }
-
-
     </script>
-
-
     <!-- All JS Custom Plugins Link Here here -->
     <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
     <!-- Jquery, Popper, Bootstrap -->
@@ -762,7 +629,6 @@
     <script src="./static/js/bootstrap.min.js"></script>
     <!-- Jquery Mobile Menu -->
     <script src="./static/js/jquery.slicknav.min.js"></script>
-
     <!-- Jquery Slick , Owl-Carousel Range -->
     <script src="./static/js/owl.carousel.min.js"></script>
     <script src="./static/js/slick.min.js"></script>
@@ -771,25 +637,19 @@
     <script src="./static/js/wow.min.js"></script>
     <script src="./static/js/animated.headline.js"></script>
     <script src="./static/js/jquery.magnific-popup.js"></script>
-
     <!-- Scrollup, nice-select, sticky -->
     <script src="./static/js/jquery.scrollUp.min.js"></script>
     <script src="./static/js/jquery.nice-select.min.js"></script>
     <script src="./static/js/jquery.sticky.js"></script>
-
     <!-- contact js -->
     <script src="./static/js/contact.js"></script>
     <script src="./static/js/jquery.form.js"></script>
     <script src="./static/js/jquery.validate.min.js"></script>
     <script src="./static/js/mail-script.js"></script>
     <script src="./static/js/jquery.ajaxchimp.min.js"></script>
-
     <!-- Jquery Plugins, main Jquery -->
     <script src="./static/js/plugins.js"></script>
     <script src="./static/js/main.js"></script>
-
-
-
 </body>
 
 </html>

@@ -76,76 +76,76 @@ def home():
     return render_template('register_student.html')
 
 
-@app.route("/addemp", methods=['POST'])
-def AddEmp():
-    #TODO: READ THE DATA FROM HTML, the 'emp_id' is refer to the name of the form
-    # emp_id = request.form['emp_id']
-    # first_name = request.form['first_name']
-    # last_name = request.form['last_name']
-    # pri_skill = request.form['pri_skill']
-    # location = request.form['location']
-    # emp_image_file = request.files['emp_image_file']
+# @app.route("/addemp", methods=['POST'])
+# def AddEmp():
+#     #TODO: READ THE DATA FROM HTML, the 'emp_id' is refer to the name of the form
+#     # emp_id = request.form['emp_id']
+#     # first_name = request.form['first_name']
+#     # last_name = request.form['last_name']
+#     # pri_skill = request.form['pri_skill']
+#     # location = request.form['location']
+#     # emp_image_file = request.files['emp_image_file']
    
-    cursor = db_conn.cursor()
-    insert_sql = "INSERT INTO student (student_id,student_name,student_email,student_cohort,student_programme) VALUES (?,?,?,?,?)"
-    #TODO: Replace the value with the above form 
-    value = (None,"caiwen","cw@gmail.com","c","RSF") #Insert none is because it will auto generate
+#     cursor = db_conn.cursor()
+#     insert_sql = "INSERT INTO student (student_id,student_name,student_email,student_cohort,student_programme) VALUES (?,?,?,?,?)"
+#     #TODO: Replace the value with the above form 
+#     value = (None,"caiwen","cw@gmail.com","c","RSF") #Insert none is because it will auto generate
 
-    try:
-        cursor.execute(insert_sql, value)
-        db_conn.commit()
+#     try:
+#         cursor.execute(insert_sql, value)
+#         db_conn.commit()
         
-    except Exception as e:
-        print(f"Error insert student data: {e}")
+#     except Exception as e:
+#         print(f"Error insert student data: {e}")
 
-    finally:
-        cursor.close()
+#     finally:
+#         cursor.close()
 
-    #TODO: Pass back data to the html
-    emp_name = str("test add")
-    print("The student data had added successfully")
-    return render_template('AddEmpOutput.html', name=emp_name)
+#     #TODO: Pass back data to the html
+#     emp_name = str("test add")
+#     print("The student data had added successfully")
+#     return render_template('AddEmpOutput.html', name=emp_name)
 
-@app.route("/updateemp", methods=['POST'])
-def updateEmp():
-    #TODO: READ THE DATA FROM HTML
+# @app.route("/updateemp", methods=['POST'])
+# def updateEmp():
+#     #TODO: READ THE DATA FROM HTML
 
-    cursor = db_conn.cursor()
-    update_sql = "UPDATE student SET student_name = %s, student_email = %s, student_cohort = %s, student_programme = %s WHERE student_id = %s"
-    #TODO: Replace the value with the above form 
-    value = ("zdf","zdf@gmail.com","c","RSF",3) 
+#     cursor = db_conn.cursor()
+#     update_sql = "UPDATE student SET student_name = %s, student_email = %s, student_cohort = %s, student_programme = %s WHERE student_id = %s"
+#     #TODO: Replace the value with the above form 
+#     value = ("zdf","zdf@gmail.com","c","RSF",3) 
     
-    try:
-        cursor.execute(update_sql, value)
-        db_conn.commit()
-    except Exception as e:
-        print(f"Error update student data: {e}")
+#     try:
+#         cursor.execute(update_sql, value)
+#         db_conn.commit()
+#     except Exception as e:
+#         print(f"Error update student data: {e}")
 
-    finally:
-        cursor.close()
+#     finally:
+#         cursor.close()
 
-    emp_name = str("test update")
-    print("The student data had update successfully")
-    return render_template('AddEmpOutput.html',name=emp_name)
+#     emp_name = str("test update")
+#     print("The student data had update successfully")
+#     return render_template('AddEmpOutput.html',name=emp_name)
 
-@app.route("/deleteemp", methods=['POST'])
-def deleteEmp():
-    #TODO: READ THE DATA FROM HTML
+# @app.route("/deleteemp", methods=['POST'])
+# def deleteEmp():
+#     #TODO: READ THE DATA FROM HTML
      
-    cursor = db_conn.cursor()
-    delete_sql = "DELETE FROM student WHERE student_id = %s"
-    #TODO: Replace the value with the above form 
-    value = (11,)
+#     cursor = db_conn.cursor()
+#     delete_sql = "DELETE FROM student WHERE student_id = %s"
+#     #TODO: Replace the value with the above form 
+#     value = (11,)
 
-    try:
-        cursor.execute(delete_sql,value)
-        db_conn.commit()
-    except Exception as e:
-        print(f"Error delete student data: {e}")
+#     try:
+#         cursor.execute(delete_sql,value)
+#         db_conn.commit()
+#     except Exception as e:
+#         print(f"Error delete student data: {e}")
 
-    emp_name = str("test delete")
-    print("The student data had delete successfully")
-    return render_template('AddEmpOutput.html',name=emp_name)
+#     emp_name = str("test delete")
+#     print("The student data had delete successfully")
+#     return render_template('AddEmpOutput.html',name=emp_name)
 
 #----------------Admin CRUD------------------
 # Link to adminAssignSup.html
@@ -212,7 +212,7 @@ def save_assignments():
                 print("Po: ", internship_position)
 
                 # If company name is not none, exeicte the query, else set company id to " "
-                if company_name is not None:
+                if company_name != 'None':
                     print("IF")
                     # Convert company name to id based on company table
                     query = "SELECT company_id FROM company WHERE company_name = %s"
@@ -1218,7 +1218,7 @@ def login():
             if user_data:
 
                 # Get the admin_id
-                query = "SELECT admin_id FROM admin WHERE admin_email = %s"
+                query = "SELECT id FROM user WHERE email = %s"
                 cursor.execute(query, (email,))
                 admin_id = cursor.fetchone()[0]
 
@@ -1226,7 +1226,7 @@ def login():
                 session['user_id'] = admin_id
                 session['role'] = 'admin'
                 cursor.close()
-                return redirect(url_for('admin'))
+                return redirect(url_for('adminAssignSup'))
             
             # If user is not a student, company, supervisor or admin, then something is wrong
             flash('An error occurred. Please try again.', 'error')
