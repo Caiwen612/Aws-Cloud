@@ -183,7 +183,7 @@
 								<h4>Job Position</h4>
 							</div>
 							<div class="select-job-items2" style="padding-bottom: 30px;">
-								<select name="select" id="job-position-select">
+								<select name="select" id="job-position-select" onchange="sortJobPosition()">
 									<option value="">All Category</option>
 									{% for position in job_positions %}
 										<option value="{{ position }}">{{ position }}</option>
@@ -406,7 +406,67 @@
 					jobListingsContainer.appendChild(jobItemsArray[i]);
 				}
 			}
+			function sortJobPosition(){
+				var jobPositionSelect = document.getElementById('job-position-select');
+        		var selectedValue = jobPositionSelect.options[jobPositionSelect.selectedIndex].value;
 
+				var jobListingsContainer = document.querySelector(".job-listings");
+				var jobItems = jobListingsContainer.querySelectorAll(".single-job-items");
+
+        		console.log('Selected value:', selectedValue);
+				
+				const jobPostings = JSON.parse('{{ job_posting | tojson | safe }}');
+				const filteredJobPostings = [];
+				// console.log(jobPostings);
+				// console.log(jobPostings[0]);
+				// console.log(jobPostings[0][1]);
+				for(posting of jobPostings){
+					// console.log("DEBUG");
+					// console.log(selectedValue);
+					// console.log(posting[1]);
+					if(selectedValue.toString() === posting[1].toString()){
+						// console.log(posting[1])
+						//Add this item in the array.
+						// console.log("PUSHHHH")
+						filteredJobPostings.push(posting);
+					}	
+				}
+
+				jobListingsContainer.innerHTML = '';
+				let index = 1;
+				console.log(filteredJobPostings)
+				for (const posting of filteredJobPostings) {
+					const jobItemHTML = `
+    				<div class="single-job-items" data-original-order="${index}">
+    				    <div class="job-items">
+    				        <div class="company-img">
+    				            <a href="#"><img src="${posting.company_logo_url}" alt="${posting.company_id}"></a>
+    				        </div>
+    				        <div class="job-tittle job-tittle2">
+    				            <a href="#">
+    				                <h4>${posting[1]}</h4>
+    				            </a>
+    				            <ul>
+    				                <li>${posting[10]}</li>
+    				                <li><i class="fas fa-map-marker-alt"></i></li>
+    				                <li>$${posting[2]} - $${posting[3]}</li>
+    				            </ul>
+    				        </div>
+    				    </div>
+    				    <div class="items-link items-link2 f-right">
+    				        <a href="${posting.url}">Find Out More</a>
+    				        <span>Posted on ${posting[8]}</span>
+    				    </div>
+    				</div>
+  				`;
+				  index++;
+
+					jobListingsContainer.innerHTML += jobItemHTML;
+				}
+
+				
+
+			}
 		 
 		</script>
 
