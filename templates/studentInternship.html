@@ -191,7 +191,7 @@
 							</div>
 							<div class="select-job-items2" style="padding-bottom: 30px;">
 								<select name="select" id="job-position-select" onchange="sortJobPosition()">
-									<option value="">All Category</option>
+									<option value="all">All Category</option>
 									{% for position in job_positions %}
 									<option value="{{ position }}">{{ position }}</option>
 									{% endfor %}
@@ -427,47 +427,57 @@
 			console.log('Selected value:', selectedValue);
 
 			const jobPostings = JSON.parse('{{ job_posting | tojson | safe }}');
-			const filteredJobPostings = [];
+			var filteredJobPostings = [];
 			console.log(jobPostings);
 			// console.log(jobPostings[0]);
 			// console.log(jobPostings[0][1]);
-			for (posting of jobPostings) {
-				// console.log("DEBUG");
-				// console.log(selectedValue);
-				// console.log(posting[1]);
-				if (selectedValue.toString() === posting[1].toString()) {
-					// console.log(posting[1])
-					//Add this item in the array.
-					// console.log("PUSHHHH")
-					filteredJobPostings.push(posting);
+
+			// If 'all' is selected, skip filtering and use the entire jobPostings array
+			if (selectedValue === "all") {
+				filteredJobPostings = jobPostings;
+			} else {
+				for (posting of jobPostings) {
+					if (selectedValue.toString() === posting[1].toString()) {
+						filteredJobPostings.push(posting);
+					}
 				}
 			}
+
 
 			jobListingsContainer.innerHTML = '';
 			let index = 1;
 			console.log(filteredJobPostings)
 			for (const posting of filteredJobPostings) {
+
+				const date = new Date(posting[8]);
+				const formattedDate = date.toLocaleDateString('en-CA'); // 'en-CA' format gives YYYY-MM-DD
+
+
 				const jobItemHTML = `
-    				<div class="single-job-items" data-original-order="${index}">
-    				    <div class="job-items">
-    				        <div class="company-img">
-    				            <a href="#"><img src="${posting.company_logo_url}" alt="${posting.company_id}"></a>
-    				        </div>
-    				        <div class="job-tittle job-tittle2">
-    				            <a href="#">
-    				                <h4>${posting[1]}</h4>
-    				            </a>
-    				            <ul>
-    				                <li>${posting[10]}</li>
-    				                <li><i class="fas fa-map-marker-alt"></i></li>
-    				                <li>$${posting[2]} - $${posting[3]}</li>
-    				            </ul>
-    				        </div>
-    				    </div>
-    				    <div class="items-link items-link2 f-right">
-    				        <a href="${posting.url}">Find Out More</a>
-    				        <span>Posted on ${posting[8]}</span>
-    				    </div>
+    				<div class="single-job-items" data-original-order="${index}"
+					style="padding: 36px 30px; display: flex; justify-content: space-between; flex-wrap: wrap; -webkit-transition: .4s; -moz-transition: .4s; -o-transition: .4s; transition: .4s;" >
+
+						<div style="display: flex; justify-content: space-between; align-items: center;">
+							<div  style="display: flex; flex-wrap: wrap;">
+								<div class="company-img">
+									<a href="#"><img src="${posting[10]}" alt="${posting[0]}" style="width: 110px; height:110px;"></a>
+								</div>
+								<div class="job-tittle job-tittle2" style="width: 400px;">
+									<a href="#">
+										<h4>${posting[1]}</h4>
+									</a>
+									<ul>
+										<li>${posting[11]}</li>
+										<li><i class="fas fa-map-marker-alt"></i></li>
+										<li>$${posting[2]} - $${posting[3]}</li>
+									</ul>
+								</div>
+							</div>
+							<div class="items-link items-link2 f-right" style="width: 200px; display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; margin-left: 0px; margin-top: 20px; margin-bottom: 20px;	">
+								<a href="#">Find Out More</a>
+								<span>Posted on ${formattedDate}</span>
+							</div>
+						</div>
     				</div>
   				`;
 				index++;
