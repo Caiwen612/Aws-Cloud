@@ -1,0 +1,795 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="static/css/price_rangs.css">
+    <link rel="stylesheet" href="static/css/flaticon.css">
+    <link rel="stylesheet" href="static/css/slicknav.css">
+    <link rel="stylesheet" href="static/css/animate.min.css">
+    <link rel="stylesheet" href="static/css/magnific-popup.css">
+    <link rel="stylesheet" href="static/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="static/css/themify-icons.css">
+    <link rel="stylesheet" href="static/css/slick.css">
+    <link rel="stylesheet" href="static/css/nice-select.css">
+    <link rel="stylesheet" href="static/css/style.css">
+
+    <style>
+        .admin-action-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            align-items: center;
+            /* border: 1px solid red; */
+            /* margin-top: 20px; */
+        }
+
+        .full-width-container {
+            width: 95%;
+            max-width: 95%;
+            padding: 0;
+        }
+
+        /* Zebra striping */
+        table tbody tr:nth-child(odd) {
+            background-color: #fffefe;
+        }
+
+        /* Hover Highlight */
+        table tbody tr:hover {
+            background-color: #f5f7fa;
+        }
+
+        .details-row:hover {
+            /* Non effect */
+            background-color: #ffffff;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0 1px;
+            /* border: 1px solid rebeccapurple; */
+            /* adjust the second value for vertical spacing */
+            width: 100%;
+        }
+
+        .fixed-width-select {
+            width: 200px;
+            margin-right: 20px;
+        }
+
+        .fixed-width-select option {
+            width: 200px;
+            /* background-color: #0d1d47; */
+        }
+
+        thead {
+            background-color: #fb246a;
+            color: #f2f2f2;
+            /* margin-top: 50px; */
+            text-align: center;
+            height: 60px;
+            /* border: 10px solid black; */
+        }
+
+
+
+        .filter-row {
+            /* border: 1px solid red; */
+            margin-bottom: 40px;
+        }
+
+        .filter-actions button {
+            background-color: rgb(58, 71, 100);
+            width: 100px;
+            height: 40px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .filter-actions button:hover {
+            background-color: #1b2949;
+            cursor: pointer;
+        }
+
+        .filter-actions button:active {
+            background-color: #0d1d47;
+            cursor: pointer;
+        }
+
+        .search-bar input {
+            height: 40px;
+            width: 250px;
+            padding-left: 15px;
+            border: 1px solid rgb(156, 155, 155);
+            border-radius: 5px;
+        }
+
+        .action-button {
+            border: none;
+            height: 25px;
+            width: 25px;
+            align-items: center;
+            justify-content: center;
+            background-color: #0d1d47;
+            padding: 0;
+            font-weight: 400;
+            border-radius: 50%;
+        }
+
+        .action-button:hover {
+            background-color: #1b2949;
+            cursor: pointer;
+        }
+
+        .action-button:active {
+            background-color: #0d1d47;
+            cursor: pointer;
+        }
+
+
+        .details-row {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.5s ease-out;
+            /* Adjust the '0.5s' value for a slower or faster transition */
+        }
+
+        .details-row.open {
+            max-height: 100px;
+            /* Adjust this value according to the expected maximum height of your details row */
+        }
+
+
+        .action-button[disabled] {
+            background-color: #0d1d4744;
+            /* Dark gray background color */
+            color: #ffffff;
+            /* Slightly lighter gray text color */
+            cursor: not-allowed;
+            /* Cursor indicates the button is not clickable */
+        }
+
+        .companyInput,
+        .positionInput {
+            height: 40px;
+            width: 250px;
+            padding-left: 15px;
+            border: 1px solid rgb(156, 155, 155);
+            border-radius: 5px;
+        }
+
+        .autocomplete {
+            position: relative;
+        }
+
+        .autocomplete-items {
+            border: 0px solid #ccc;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            width: 100%;
+            z-index: 100;
+            border-radius: 10px;
+            margin-top: 5px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            /* Makes sure the dropdown displays on top of other elements */
+        }
+
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        .autocomplete-items div:hover {
+            background-color: #f5f5f5;
+        }
+
+        .download-button {
+            background-color: #0d1d47;
+            /* width: 250px; */
+            height: 20px;
+            border-radius: 50px;
+            border: none;
+            color: #ffffff;
+            font-weight: 400;
+            margin-right: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Preloader Start -->
+    <!-- TODO: Uncomment preloader -->
+    <!-- <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="static/img/logo/logo.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Preloader Start -->
+    <header>
+        <!-- Header Start -->
+        <div class="header-area header-transparrent">
+            <div class="headder-top header-sticky">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-2">
+                            <!-- Logo -->
+                            <div class="logo">
+                                <a href="{{ url_for('index') }}"><img src="static/img/logo/logo.png" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-9">
+                            <div class="menu-wrapper">
+                                <!-- Main-menu -->
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                            <li><a href="#"></a>
+                                                <ul class="submenu">
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                            </li>
+                                            <li></li>
+                                        </ul>
+
+                                    </nav>
+                                </div>
+                                <!-- Header-btn -->
+                                <div class="header-btn d-none f-right d-lg-block">
+                                    <a href="#" class="btn head-btn1">Register</a>
+                                    <a href="#" class="btn head-btn2">Login</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu -->
+                        <div class="col-12">
+                            <div class="mobile_menu d-block d-lg-none"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+    </header>
+    <main>
+
+
+
+        <!-- Job List Area Start -->
+        <div class="job-listing-area pt-120 pb-120">
+            <div class="container full-width-container">
+
+                <div class="filter-row"
+                    style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                    <!-- Left-aligned Filters -->
+                    <div style="display: flex; align-items: center;">
+                        <select name="student_cohort_filter" class="fixed-width-select">
+                            <option value="">All Cohorts</option>
+                            {% for cohort in students|map(attribute=3)|unique %}
+                            <option value="{{ cohort }}">{{ cohort }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select name="student_level_filter" class="fixed-width-select">
+                            <option value="">All Levels</option>
+                            {% for level in students|map(attribute=5)|unique %}
+                            <option value="{{ level }}">{{ level }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select name="student_programme_filter" class="fixed-width-select">
+                            <option value="">All Programmes</option>
+                            {% for programme in students|map(attribute=4)|unique %}
+                            <option value="{{ programme }}">{{ programme }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <select name="student_tutgrp_filter" class="fixed-width-select">
+                            <option value="">All Tut Groups</option>
+                            {% for tutgrp in students|map(attribute=6)|unique %}
+                            <option value="{{ tutgrp }}">{{ tutgrp }}</option>
+                            {% endfor %}
+                        </select>
+
+                        <div class="filter-actions">
+                            <button type="button" onclick="filterTable()">Apply</button>
+                        </div>
+                    </div>
+
+                    <!-- Right-aligned Email Filter -->
+                    <div class="search-bar">
+                        <input type="text" name="student_email_search" placeholder="Search by Email">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container full-width-container">
+                <form action="{{ url_for('save_assignments') }}" method="post">
+                    <table style="margin: 0 auto; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 10px;">#</th>
+                                <th style="padding: 10px;">Programme</th>
+                                <th style="padding: 10px;">Student ID</th>
+                                <th style="padding: 10px;">Student Name</th>
+                                <th style="padding: 10px;">Student Email</th>
+                                <th style="padding: 10px;">Tut Grp</th>
+                                <th style="padding: 10px;">Level</th>
+                                <th style="padding: 10px;">Cohort</th>
+                                <th style="padding: 10px;">Supervisor</th>
+                                <th style="padding: 10px;">Intern Duration</th>
+                                <th style="padding: 10px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td style="padding: 10px; text-align: center;">{{ loop.index }}</td>
+                                <td style="padding: 10px; text-align: center;">{{ student[4] }}</td>
+                                <td style="padding: 10px;">{{ student[0] }}</td>
+                                <input type="hidden" name="student_id_{{ student[0] }}" value="{{ student[0] }}">
+                                <td style="padding: 10px;">{{ student[1] }}</td>
+                                <td style="padding: 10px;">{{ student[2] }}</td>
+                                <td style="padding: 10px; text-align: center;">{{ student[6] }}</td>
+                                <td style="padding: 10px; text-align: center;">{{ student[5] }}</td>
+                                <td style="padding: 10px;">{{ student[3] }}</td>
+
+
+                                <!-- Inside the loop iterating over students -->
+                                <td style="padding: 10px;">
+                                    <div class="form-select">
+                                        <select name="assigned_supervisor_id_{{ student[0] }}"
+                                            class="fixed-width-select row-selection">
+                                            <option value="" {% if not student[10] %}selected{% endif %} disabled>
+                                                Select Supervisor</option>
+                                            {% for supervisor in supervisors %}
+                                            <option value="{{ supervisor[0] }}" {% if student[10]==supervisor[0]
+                                                %}selected{% endif %}>
+                                                {{ supervisor[1] }}
+                                            </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </td>
+
+
+                                <td style="padding: 10px;">
+                                    <div class="form-select">
+                                        <select name="intern_duration_{{ student[0] }}" class="fixed-width-select">
+                                            <option value="" {% if not student[11] %}selected{% endif %} disabled>
+                                                Select
+                                                Duration</option>
+                                            <option value="3" {% if student[11]=='3' %}selected{% endif %}>3 months
+                                            </option>
+                                            <option value="6" {% if student[11]=='6' %}selected{% endif %}>6 months
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <td style="padding: 10px; text-align: center;">
+                                    <button class="action-button" type="button" onclick="toggleDetails(this)" {% if not
+                                        student[7] or not student[8] or not student[9] or not student[10] %}disabled{%
+                                        endif %}>
+                                        +
+                                    </button>
+                                </td>
+                            </tr>
+                            <!-- Detailed Row -->
+                            <tr class="details-row" style="display: none;">
+                                <td colspan="11">
+                                    <div
+                                        style="display: flex; justify-content: right; margin-left: 10px; margin-top: 10px; margin-bottom: 10px;">
+
+                                        <div
+                                            style="display: flex; align-items: center; width: 40%; justify-content: space-around; margin-right: 50px;">
+                                            <div class="autocomplete">
+                                                <input class="companyInput" type="text"
+                                                    name="company_id_{{ student[0] }}"
+                                                    placeholder="Type to search companies..." 
+                                                    {% for company in companies %} 
+                                                    {% if student[12] ~ ""==company[0] ~ "" %}
+                                                    value="{{ company[1] }}" 
+                                                    {% else %}
+                                                    value=None
+                                                    {% endif %} 
+                                                    {% endfor %}>
+                                                <div class="autocomplete-items"></div>
+                                            </div>
+
+
+
+                                            <div class="autocomplete">
+                                                <input class="positionInput" type="text"
+                                                    name="internship_position_{{ student[0] }}"
+                                                    placeholder="Type to search positions..." value="{{ student[13] }}"
+                                                    {% if not student[12] %} disabled {% endif %}>
+                                                <div class="autocomplete-items"></div>
+                                            </div>
+
+                                        </div>
+                                        <div>
+                                            {% if student[7] %}
+                                            <a href="{{ student.acceptance_letter }}"
+                                                class="btn head-btn1 download-button" download ">Download Offer Letter</a>
+                                        {% else %}
+                                        <button class=" btn btn-primary" disabled>No Offer Letter</button>
+                                                {% endif %}
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div id="noResultMessage" style="text-align: center; margin-top: 20px; display: none;">No result
+                        found.
+                    </div>
+                    <div class="save-actions"
+                        style="text-align: right; margin-top: 20px; position: fixed; bottom: 80px; right: 30px; z-index: 1000;">
+                        <button type="submit" class="btn head-btn1">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
+    </main>
+
+    <footer>
+        <!-- Footer Start-->
+        <div class="footer-area footer-bg footer-padding">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-footer-caption mb-50">
+                            <div class="single-footer-caption mb-30">
+                                <div class="footer-tittle">
+                                    <h4>About Us</h4>
+                                    <div class="footer-pera">
+                                        <p>Heaven frucvitful doesn't cover lesser dvsays appear creeping seasons so
+                                            behold.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Contact Info</h4>
+                                <ul>
+                                    <li>
+                                        <p>Address :Your address goes
+                                            here, your demo address.</p>
+                                    </li>
+                                    <li><a href="#">Phone : +8880 44338899</a></li>
+                                    <li><a href="#">Email : info@colorlib.com</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Important Link</h4>
+                                <ul>
+                                    <li><a href="#"> View Project</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">Testimonial</a></li>
+                                    <li><a href="#">Proparties</a></li>
+                                    <li><a href="#">Support</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="single-footer-caption mb-50">
+                            <div class="footer-tittle">
+                                <h4>Newsletter</h4>
+                                <div class="footer-pera footer-pera2">
+                                    <p>Heaven fruitful doesn't over lesser in days. Appear creeping.</p>
+                                </div>
+                                <!-- Form -->
+                                <div class="footer-form">
+                                    <div id="mc_embed_signup">
+                                        <form target="_blank"
+                                            action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                            method="get" class="subscribe_form relative mail_part">
+                                            <input type="email" name="email" id="newsletter-form-email"
+                                                placeholder="Email Address" class="placeholder hide-on-focus"
+                                                onfocus="this.placeholder = ''"
+                                                onblur="this.placeholder = ' Email Address '">
+                                            <div class="form-icon">
+                                                <button type="submit" name="submit" id="newsletter-submit"
+                                                    class="email_icon newsletter-submit button-contactForm"><img
+                                                        src="static/img/icon/form.png" alt=""></button>
+                                            </div>
+                                            <div class="mt-10 info"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div class="row footer-wejed justify-content-between">
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <!-- logo -->
+                        <div class="footer-logo mb-20">
+                            <a href="{{ url_for('index') }}"><img src="static/img/logo/logo2_footer.png" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="footer-tittle-bottom">
+                            <span>5000+</span>
+                            <p>Talented Hunter</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <div class="footer-tittle-bottom">
+                            <span>451</span>
+                            <p>Talented Hunter</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
+                        <!-- Footer Bottom Tittle -->
+                        <div class="footer-tittle-bottom">
+                            <span>568</span>
+                            <p>Talented Hunter</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer-bottom area -->
+        <div class="footer-bottom-area footer-bg">
+            <div class="container">
+                <div class="footer-border">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-xl-10 col-lg-10 ">
+                            <div class="footer-copy-right">
+                                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script> All rights reserved |
+                                    This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                                        href="https://colorlib.com" target="_blank">Colorlib</a>
+                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2">
+                            <div class="footer-social f-right">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-globe"></i></a>
+                                <a href="#"><i class="fab fa-behance"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+
+    <script>
+        var companies = {{ companies| tojson | safe }};
+        console.log("haha", companies);
+        var job_listings = {{ job_listings| tojson | safe }};
+        console.log("haha", job_listings);
+
+    </script>
+
+
+    <script>
+
+        document.querySelectorAll(".autocomplete .companyInput").forEach((input) => {
+            input.addEventListener("input", function (e) {
+                let value = e.target.value;
+
+                // Find the associated companyList for this input
+                let companyList = this.nextElementSibling;
+                companyList.innerHTML = '';
+
+                // Filter companies based on input
+                for (let company of companies) {
+                    if (company[1].toLowerCase().includes(value.toLowerCase())) {
+                        let div = document.createElement("div");
+                        div.innerHTML = company[1];
+                        div.addEventListener("click", function () {
+                            input.value = company[1];
+                            // Store the company ID in the data attribute of the parent container
+                            input.parentNode.setAttribute('data-company-id', company[0]);
+                            console.log("Selected company ID:", company[0]);
+                            companyList.innerHTML = '';
+                            input.parentNode.nextElementSibling.querySelector(".positionInput").disabled = false;
+                        });
+                        companyList.appendChild(div);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll(".autocomplete .positionInput").forEach((input) => {
+            input.addEventListener("input", function (e) {
+                let value = e.target.value;
+                let positionList = this.nextElementSibling;
+                positionList.innerHTML = '';
+
+                // Get the stored company ID from the related row's data attribute
+                let rowCompanyId = this.parentNode.previousElementSibling.getAttribute('data-company-id');
+
+                // Filter positions based on input and selected company
+                for (let job of job_listings) {
+                    if (job[1].toLowerCase().includes(value.toLowerCase()) && job[2] == rowCompanyId) {
+                        let div = document.createElement("div");
+                        div.innerHTML = job[1];
+                        div.addEventListener("click", function () {
+                            input.value = job[1];
+                            positionList.innerHTML = '';
+                        });
+                        positionList.appendChild(div);
+                    }
+                }
+            });
+        });
+
+
+
+
+
+
+
+
+        function toggleDetails(button) {
+            const detailsRow = button.closest('tr').nextElementSibling;
+            if (detailsRow.style.display === 'none') {
+                detailsRow.style.display = '';
+                button.innerText = '-';
+            } else {
+                detailsRow.style.display = 'none';
+                button.innerText = '+';
+            }
+        }
+
+        function retrieveOfferLetter(studentId) {
+            // Implement your function here
+        }
+
+        document.querySelector("[name='student_cohort_filter']").addEventListener("change", filterTable);
+        document.querySelector("[name='student_level_filter']").addEventListener("change", filterTable);
+        document.querySelector("[name='student_tutgrp_filter']").addEventListener("change", filterTable);
+        document.querySelector("[name='student_programme_filter']").addEventListener("change", filterTable);
+        document.querySelector("[name='student_email_search']").addEventListener("input", filterTable);
+        document.querySelector(".btn-success").addEventListener("click", saveChanges);
+
+
+
+        function filterTable() {
+            let cohortFilter = document.querySelector("[name='student_cohort_filter']").value;
+            let levelFilter = document.querySelector("[name='student_level_filter']").value;
+            let tutgrpFilter = document.querySelector("[name='student_tutgrp_filter']").value;
+            let selectedProgrammeFilter = document.querySelector('[name="student_programme_filter"]').value;
+            let emailSearchValue = document.querySelector("[name='student_email_search']").value.toLowerCase();
+
+            console.log(`Filters applied: Cohort(${cohortFilter}), Level(${levelFilter}), TutGrp(${tutgrpFilter}), programme(${selectedProgrammeFilter}),`);
+
+            let rows = document.querySelectorAll("tbody tr");
+
+            let visibleRowCount = 0;
+
+            let currentVisibleIndex = 1;
+
+            for (let i = 0; i < rows.length; i += 2) {
+                let row = rows[i];
+
+                let cohort = row.children[7].innerText.trim();
+                let level = row.children[6].innerText.trim();
+                let tutgrp = row.children[5].innerText.trim();
+                let programme = row.children[1].innerText.trim();
+                let email = row.children[4].innerText.trim().toLowerCase();
+
+                console.log(`Row[${i}] values: Cohort(${cohort}), Level(${level}), TutGrp(${tutgrp})`);
+
+                if (
+                    (cohortFilter === "" || cohort === cohortFilter) &&
+                    (levelFilter === "" || level === levelFilter) &&
+                    (tutgrpFilter === "" || tutgrp === tutgrpFilter) &&
+                    (selectedProgrammeFilter === "" || programme === selectedProgrammeFilter) &&
+                    (email.includes(emailSearchValue))  // This checks if the email contains the search string
+                ) {
+                    row.children[0].innerText = currentVisibleIndex;  // Adjust the index of the row.
+                    currentVisibleIndex++;  // Increment the counter for the next visible row.
+
+                    row.style.display = "";
+                    rows[i + 1].style.display = "none"; // Hide the details row by default after filtering
+                    console.log(`Row[${i}] is visible`);
+                    visibleRowCount++;
+                } else {
+                    row.style.display = "none";
+                    rows[i + 1].style.display = "none"; // Hide the details row as well
+                    console.log(`Row[${i}] is hidden`);
+                }
+            }
+
+            // Display "No result found" message if no rows are visible
+            const noResultMessage = document.getElementById("noResultMessage");
+            if (visibleRowCount === 0) {
+                noResultMessage.style.display = "block";
+            } else {
+                noResultMessage.style.display = "none";
+            }
+        }
+
+
+    </script>
+
+
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="./static/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./static/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./static/js/popper.min.js"></script>
+    <script src="./static/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./static/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Range -->
+    <script src="./static/js/owl.carousel.min.js"></script>
+    <script src="./static/js/slick.min.js"></script>
+    <script src="./static/js/price_rangs.js"></script>
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./static/js/wow.min.js"></script>
+    <script src="./static/js/animated.headline.js"></script>
+    <script src="./static/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="./static/js/jquery.scrollUp.min.js"></script>
+    <script src="./static/js/jquery.nice-select.min.js"></script>
+    <script src="./static/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="./static/js/contact.js"></script>
+    <script src="./static/js/jquery.form.js"></script>
+    <script src="./static/js/jquery.validate.min.js"></script>
+    <script src="./static/js/mail-script.js"></script>
+    <script src="./static/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="./static/js/plugins.js"></script>
+    <script src="./static/js/main.js"></script>
+
+
+
+</body>
+
+</html>

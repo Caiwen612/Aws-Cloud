@@ -147,6 +147,109 @@ def deleteEmp():
     print("The student data had delete successfully")
     return render_template('AddEmpOutput.html',name=emp_name)
 
+#----------------Admin CRUD------------------
+# Link to adminAssignSup.html
+@app.route('/adminAssignSup', methods=['GET'])
+def adminAssignSup():
+    cursor = db_conn.cursor()
+
+    # Fetch all students from the student table (14)
+    select_students_sql = "SELECT student_id, student_name, student_email, student_cohort, student_programme, student_level, student_tutgrp, acceptance_letter, indemnity_letter, parent_form, supervisor_id, internship_duration, company_id, internship_position FROM student"
+    # Fetch all supervisors' names from the supervisor table
+    select_supervisors_sql = "SELECT supervisor_id, supervisor_name FROM supervisor"
+    
+    # Fetch all companies
+    select_companies_sql = "SELECT company_id, company_name FROM company"
+    # Fetch all job listings
+    select_job_listings_sql = "SELECT listing_id, position, company_id FROM job_listings"
+
+    try:
+        cursor.execute(select_students_sql)
+        students = cursor.fetchall()
+        # Print them out
+        print(students)
+        cursor.execute(select_supervisors_sql)
+        supervisors = cursor.fetchall()
+        # Print
+        print(supervisors)
+        
+        cursor.execute(select_job_listings_sql)
+        job_listings = cursor.fetchall()
+        # Print
+        print(job_listings)
+        cursor.execute(select_companies_sql)
+        companies = cursor.fetchall()
+        # Print
+        print(companies)
+        
+        
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+        students, supervisors, companies, job_listings = [], [], [], []
+    finally:
+        cursor.close()
+
+    return render_template('adminAssignSup.html', students=students, supervisors=supervisors, companies=companies, job_listings=job_listings)
+
+
+@app.route('/save_assignments', methods=['POST'])
+def save_assignments():
+    try:
+        cursor = db_conn.cursor()
+        
+
+        for key in request.form:
+            if key.startswith("student_id_"):
+                student_id = request.form[key]
+                supervisor_id = request.form.get(f"assigned_supervisor_id_{student_id}")
+                company_name = request.form.get(f"company_id_{student_id}")
+                internship_position = request.form.get(f"internship_position_{student_id}")
+                internship_duration = request.form.get(f"intern_duration_{student_id}")
+
+                # Print the fetched data
+                print(student_id, supervisor_id, company_name, internship_position, internship_duration)
+                print("Name: ", company_name)
+                print("Po: ", internship_position)
+
+                # If company name is not none, exeicte the query, else set company id to " "
+                if company_name is not None:
+                    print("IF")
+                    # Convert company name to id based on company table
+                    query = "SELECT company_id FROM company WHERE company_name = %s"
+                    cursor.execute(query, (company_name,))
+                    company_id = cursor.fetchone()[0]
+                    query = """
+                        UPDATE student
+                        SET supervisor_id=%s, company_id=%s, internship_position=%s, internship_duration=%s
+                        WHERE student_id = %s
+                        """
+                    cursor.execute(query, (supervisor_id, company_id, internship_position, internship_duration, student_id))
+                    
+                    
+                else:
+                    print("Else")
+                    query = """
+                        UPDATE student
+                        SET supervisor_id=%s, internship_duration=%s
+                        WHERE student_id = %s
+                        """
+                    # Update the database with the new data for each student
+                    cursor.execute(query, (supervisor_id, internship_duration, student_id))
+                    
+
+                # print(company_id)
+
+        db_conn.commit()
+        cursor.close()
+        flash('Assignments successfully saved!', 'success')  # Flash a success message
+
+    except Exception as e:
+        print(f"Error fetching data: {e}")
+        return "An error occurred while fetching data."
+
+    return redirect(url_for('adminAssignSup'))
+
+
 #----------------Student CRUD----------------
 
 @app.route("/studentDetails", methods=['GET'])
@@ -1015,6 +1118,9 @@ def studentDetails():
 def studentResults():
     return render_template('studentResults.html')
 
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
 
 @app.route('/contact')
 def contact():
@@ -1112,9 +1218,13 @@ def login():
             if user_data:
 
                 # Get the admin_id
-                # TODO: Add admin_id to the database
+                query = "SELECT admin_id FROM admin WHERE admin_email = %s"
+                cursor.execute(query, (email,))
+                admin_id = cursor.fetchone()[0]
 
-
+                # Store the admin id and role in the session
+                session['user_id'] = admin_id
+                session['role'] = 'admin'
                 cursor.close()
                 return redirect(url_for('admin'))
             
