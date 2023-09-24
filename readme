@@ -1,27 +1,10 @@
-# Either add "sudo" before all commands or use "sudo su" first
-# Amazon Linux 2023
-
 #!/bin/bash
+sudo su
 dnf install git -y
-git clone https://github.com/lowchoonkeat/aws-live.git
-cd aws-live
+git clone https://github.com/Caiwen612/Aws-Cloud.git
+cd Aws-Cloud
+git fetch
+git pull
 dnf install python-pip -y
-pip3 install flask pymysql boto3 reportLab
+pip3 install flask pymysql boto3 reportlab
 python3 EmpApp.py
-
-
-Note
- <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"">
- Js also similar
- They are using Jinja2 as template enjine
-
- Get is default
-
- POST = send request
-
-
- https://kanchanardj.medium.com/forming-database-connection-between-maria-db-and-python-flask-31702c86fd95
-
-
-
-
